@@ -45,10 +45,10 @@ Plans:
   2. Filter processes input signal and produces audible lowpass output
   3. Filter remains stable (no blow-up, NaN, or crashes)
   4. Self-oscillation produces audible tone at high resonance
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 02-01: TBD
+- [ ] 02-01-PLAN.md — Trapezoidal SVF implementation with lowpass output and cutoff/resonance controls
 
 ### Phase 3: Filter Modes
 **Goal**: Complete multimode filter with all four outputs
@@ -127,7 +127,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 1/1 | Complete | 2026-01-30 |
-| 2. Core Filter DSP | 0/1 | Not started | - |
+| 2. Core Filter DSP | 0/1 | Ready | - |
 | 3. Filter Modes | 0/1 | Not started | - |
 | 4. Polyphonic Extension | 0/1 | Not started | - |
 | 5. Cutoff Control | 0/1 | Not started | - |
