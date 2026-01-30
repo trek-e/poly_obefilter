@@ -12,7 +12,7 @@ This roadmap delivers the v0.50b initial beta release of HydraQuartet VCF-OB, a 
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - Plugin scaffold, panel design, build infrastructure
+- [x] **Phase 1: Foundation** - Plugin scaffold, panel design, build infrastructure
 - [ ] **Phase 2: Core Filter DSP** - SEM-style 12dB state-variable filter with lowpass mode
 - [ ] **Phase 3: Filter Modes** - Add highpass, bandpass, and notch outputs
 - [ ] **Phase 4: Polyphonic Extension** - 8-voice polyphonic audio processing
@@ -34,7 +34,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 1 plan
 
 Plans:
-- [ ] 01-01-PLAN.md — Plugin infrastructure with panel design, module code, build system, and documentation
+- [x] 01-01-PLAN.md — Plugin infrastructure with panel design, module code, build system, and documentation
 
 ### Phase 2: Core Filter DSP
 **Goal**: Working SEM-style 12dB state-variable filter with lowpass output
@@ -126,7 +126,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/1 | Not started | - |
+| 1. Foundation | 1/1 | Complete | 2026-01-30 |
 | 2. Core Filter DSP | 0/1 | Not started | - |
 | 3. Filter Modes | 0/1 | Not started | - |
 | 4. Polyphonic Extension | 0/1 | Not started | - |

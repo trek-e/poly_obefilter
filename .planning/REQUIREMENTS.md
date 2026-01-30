@@ -9,9 +9,9 @@ Requirements for initial beta release. Each maps to roadmap phases.
 
 ### Foundation
 
-- [ ] **FOUND-01**: Plugin scaffold with Makefile and plugin.json
-- [ ] **FOUND-02**: Panel design (12-14 HP SVG) following VCV guidelines
-- [ ] **FOUND-03**: README with build instructions and usage documentation
+- [x] **FOUND-01**: Plugin scaffold with Makefile and plugin.json
+- [x] **FOUND-02**: Panel design (12-14 HP SVG) following VCV guidelines
+- [x] **FOUND-03**: README with build instructions and usage documentation
 
 ### Filter Core
 
@@ -97,9 +97,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | Phase 1 | Pending |
-| FOUND-02 | Phase 1 | Pending |
-| FOUND-03 | Phase 1 | Pending |
+| FOUND-01 | Phase 1 | Complete |
+| FOUND-02 | Phase 1 | Complete |
+| FOUND-03 | Phase 1 | Complete |
 | FILT-01 | Phase 2 | Pending |
 | FILT-02 | Phase 2 | Pending |
 | FILT-03 | Phase 3 | Pending |
@@ -120,4 +120,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-29*
-*Last updated: 2026-01-29 after roadmap creation*
+*Last updated: 2026-01-30 after Phase 1 completion*
