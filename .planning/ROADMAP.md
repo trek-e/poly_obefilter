@@ -31,10 +31,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Module appears in library browser with correct branding
   3. Panel renders with all control positions marked
   4. README contains build instructions and usage documentation
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 01-01: TBD
+- [ ] 01-01-PLAN.md — Plugin infrastructure with panel design, module code, build system, and documentation
 
 ### Phase 2: Core Filter DSP
 **Goal**: Working SEM-style 12dB state-variable filter with lowpass output
@@ -71,7 +71,7 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. Module accepts polyphonic cable input (1-8 channels)
   2. Each voice processes independently with separate filter state
-  3. Output cable shows correct channel count matching input
+  3. Filter remains stable (no blow-up, NaN, or crashes)
   4. Polyphonic patch produces 8 distinct filtered voices
 **Plans**: TBD
 
