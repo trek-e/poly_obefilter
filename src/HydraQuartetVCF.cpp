@@ -1,4 +1,5 @@
 #include "plugin.hpp"
+#include "SVFilter.hpp"
 
 struct HydraQuartetVCF : Module {
 	enum ParamId {
@@ -25,6 +26,8 @@ struct HydraQuartetVCF : Module {
 		LIGHTS_LEN
 	};
 
+	SVFilter filter;
+
 	HydraQuartetVCF() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 
@@ -44,7 +47,36 @@ struct HydraQuartetVCF : Module {
 	}
 
 	void process(const ProcessArgs& args) override {
-		// DSP implementation in Phase 2
+		// Read cutoff parameter and map to frequency
+		float cutoffParam = params[CUTOFF_PARAM].getValue();
+		float baseCutoffHz = 20.f * std::pow(1000.f, cutoffParam);  // 20Hz-20kHz log
+
+		// Read resonance parameter
+		float resonanceParam = params[RESONANCE_PARAM].getValue();
+
+		// Apply CV modulation if connected
+		float cutoffHz = baseCutoffHz;
+		if (inputs[CUTOFF_CV_INPUT].isConnected()) {
+			float cutoffCV = inputs[CUTOFF_CV_INPUT].getVoltage();
+			float cvAmount = params[CUTOFF_ATTEN_PARAM].getValue();
+			cutoffHz = baseCutoffHz * std::pow(2.f, cutoffCV * cvAmount);
+		}
+
+		// Clamp cutoff to valid range
+		cutoffHz = rack::clamp(cutoffHz, 20.f, 20000.f);
+
+		// Update filter parameters
+		filter.setParams(cutoffHz, resonanceParam, args.sampleRate);
+
+		// Process audio
+		float input = inputs[AUDIO_INPUT].getVoltage();
+		float output = filter.process(input);
+		outputs[LP_OUTPUT].setVoltage(output);
+
+		// Other outputs stubbed for future phases
+		outputs[HP_OUTPUT].setVoltage(0.f);   // Phase 3: multi-mode outputs
+		outputs[BP_OUTPUT].setVoltage(0.f);   // Phase 3: multi-mode outputs
+		outputs[NOTCH_OUTPUT].setVoltage(0.f); // Phase 3: multi-mode outputs
 	}
 };
 
