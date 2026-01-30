@@ -7,5 +7,12 @@
   "author": "Synth-etic Intelligence",
   "authorEmail": "syntheticint@thepainterofsilence.com",
   "sourceUrl": "https://github.com/trek-e/HydraQuartetVCF",
-  "modules": []
+  "modules": [
+    {
+      "slug": "HydraQuartetVCF",
+      "name": "HydraQuartet VCF-OB",
+      "description": "8-voice Oberheim-style multimode filter",
+      "tags": ["Filter", "Polyphonic", "VCF", "Multimode"]
+    }
+  ]
 }
