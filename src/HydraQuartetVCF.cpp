@@ -26,7 +26,7 @@ struct HydraQuartetVCF : Module {
 		LIGHTS_LEN
 	};
 
-	SVFilter filter;
+	SVFilter filters[PORT_MAX_CHANNELS];  // 16 filter instances for polyphony
 
 	HydraQuartetVCF() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
@@ -47,36 +47,51 @@ struct HydraQuartetVCF : Module {
 	}
 
 	void process(const ProcessArgs& args) override {
-		// Read cutoff parameter and map to frequency
+		// Get channel count from audio input (polyphonic: 1-16 channels)
+		int channels = std::max(1, inputs[AUDIO_INPUT].getChannels());
+
+		// Read global parameters (knob positions)
 		float cutoffParam = params[CUTOFF_PARAM].getValue();
 		float baseCutoffHz = 20.f * std::pow(1000.f, cutoffParam);  // 20Hz-20kHz log
-
-		// Read resonance parameter
+		float cvAmount = params[CUTOFF_ATTEN_PARAM].getValue();
 		float resonanceParam = params[RESONANCE_PARAM].getValue();
 
-		// Apply CV modulation if connected
-		float cutoffHz = baseCutoffHz;
-		if (inputs[CUTOFF_CV_INPUT].isConnected()) {
-			float cutoffCV = inputs[CUTOFF_CV_INPUT].getVoltage();
-			float cvAmount = params[CUTOFF_ATTEN_PARAM].getValue();
-			cutoffHz = baseCutoffHz * std::pow(2.f, cutoffCV * cvAmount);
+		// Process each voice independently
+		for (int c = 0; c < channels; c++) {
+			// Read per-voice audio
+			float input = inputs[AUDIO_INPUT].getPolyVoltage(c);
+
+			// Calculate per-voice cutoff (CV is polyphonic)
+			float cutoffHz = baseCutoffHz;
+			if (inputs[CUTOFF_CV_INPUT].isConnected()) {
+				float cutoffCV = inputs[CUTOFF_CV_INPUT].getPolyVoltage(c);
+				cutoffHz = baseCutoffHz * std::pow(2.f, cutoffCV * cvAmount);
+			}
+			cutoffHz = rack::clamp(cutoffHz, 20.f, 20000.f);
+
+			// Calculate per-voice resonance (CV is polyphonic)
+			float resonance = resonanceParam;
+			if (inputs[RESONANCE_CV_INPUT].isConnected()) {
+				float resCV = inputs[RESONANCE_CV_INPUT].getPolyVoltage(c);
+				resonance = rack::clamp(resonanceParam + resCV * 0.1f, 0.f, 1.f);
+			}
+
+			// Process through this voice's filter
+			filters[c].setParams(cutoffHz, resonance, args.sampleRate);
+			SVFilterOutputs out = filters[c].process(input);
+
+			// Write outputs for this channel
+			outputs[LP_OUTPUT].setVoltage(out.lowpass, c);
+			outputs[HP_OUTPUT].setVoltage(out.highpass, c);
+			outputs[BP_OUTPUT].setVoltage(out.bandpass, c);
+			outputs[NOTCH_OUTPUT].setVoltage(out.notch, c);
 		}
 
-		// Clamp cutoff to valid range
-		cutoffHz = rack::clamp(cutoffHz, 20.f, 20000.f);
-
-		// Update filter parameters
-		filter.setParams(cutoffHz, resonanceParam, args.sampleRate);
-
-		// Process audio through filter
-		float input = inputs[AUDIO_INPUT].getVoltage();
-		SVFilterOutputs out = filter.process(input);
-
-		// Output all four filter modes
-		outputs[LP_OUTPUT].setVoltage(out.lowpass);
-		outputs[HP_OUTPUT].setVoltage(out.highpass);
-		outputs[BP_OUTPUT].setVoltage(out.bandpass);
-		outputs[NOTCH_OUTPUT].setVoltage(out.notch);
+		// Set output channel counts (all outputs match input channel count)
+		outputs[LP_OUTPUT].setChannels(channels);
+		outputs[HP_OUTPUT].setChannels(channels);
+		outputs[BP_OUTPUT].setChannels(channels);
+		outputs[NOTCH_OUTPUT].setChannels(channels);
 	}
 };
 
