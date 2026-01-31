@@ -65,18 +65,18 @@ Plans:
 - [x] 03-01-PLAN.md — Expose HP, BP, and Notch outputs from SVF topology
 
 ### Phase 4: Polyphonic Extension
-**Goal**: 8-voice polyphonic audio processing
+**Goal**: 16-voice polyphonic audio processing with per-voice CV modulation
 **Depends on**: Phase 3
 **Requirements**: POLY-01, IO-01
 **Success Criteria** (what must be TRUE):
-  1. Module accepts polyphonic cable input (1-8 channels)
+  1. Module accepts polyphonic cable input (1-16 channels)
   2. Each voice processes independently with separate filter state
   3. Filter remains stable (no blow-up, NaN, or crashes)
-  4. Polyphonic patch produces 8 distinct filtered voices
-**Plans**: TBD
+  4. Polyphonic patch produces distinct filtered voices
+**Plans**: 1 plan
 
 Plans:
-- [ ] 04-01: TBD
+- [ ] 04-01-PLAN.md — Transform module to polyphonic with filter array and per-voice CV
 
 ### Phase 5: Cutoff Control
 **Goal**: Cutoff frequency control with CV modulation
@@ -129,7 +129,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 1. Foundation | 1/1 | Complete | 2026-01-30 |
 | 2. Core Filter DSP | 1/1 | Complete | 2026-01-31 |
 | 3. Filter Modes | 1/1 | Complete | 2026-01-31 |
-| 4. Polyphonic Extension | 0/1 | Not started | - |
+| 4. Polyphonic Extension | 0/1 | Planned | - |
 | 5. Cutoff Control | 0/1 | Not started | - |
 | 6. Resonance Control | 0/1 | Not started | - |
 | 7. Drive Control | 0/1 | Not started | - |
