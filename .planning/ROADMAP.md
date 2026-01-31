@@ -87,10 +87,10 @@ Plans:
   2. CV input modulates cutoff frequency
   3. Attenuverter scales CV input range (positive and negative)
   4. Cutoff control responds smoothly without zipper noise
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 05-01: TBD
+- [ ] 05-01-PLAN.md — Refine cutoff default to fully open with verified V/Oct CV modulation
 
 ### Phase 6: Resonance Control
 **Goal**: Resonance control with CV modulation
