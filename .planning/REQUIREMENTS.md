@@ -15,8 +15,8 @@ Requirements for initial beta release. Each maps to roadmap phases.
 
 ### Filter Core
 
-- [ ] **FILT-01**: SEM-style 12dB/oct state-variable filter implementation
-- [ ] **FILT-02**: Lowpass filter mode with dedicated output
+- [x] **FILT-01**: SEM-style 12dB/oct state-variable filter implementation
+- [x] **FILT-02**: Lowpass filter mode with dedicated output
 - [ ] **FILT-03**: Highpass filter mode with dedicated output
 - [ ] **FILT-04**: Bandpass filter mode with dedicated output
 - [ ] **FILT-05**: Notch filter mode with dedicated output
@@ -100,8 +100,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FOUND-01 | Phase 1 | Complete |
 | FOUND-02 | Phase 1 | Complete |
 | FOUND-03 | Phase 1 | Complete |
-| FILT-01 | Phase 2 | Pending |
-| FILT-02 | Phase 2 | Pending |
+| FILT-01 | Phase 2 | Complete |
+| FILT-02 | Phase 2 | Complete |
 | FILT-03 | Phase 3 | Pending |
 | FILT-04 | Phase 3 | Pending |
 | FILT-05 | Phase 3 | Pending |
@@ -120,4 +120,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-29*
-*Last updated: 2026-01-30 after Phase 1 completion*
+*Last updated: 2026-01-31 after Phase 2 completion*

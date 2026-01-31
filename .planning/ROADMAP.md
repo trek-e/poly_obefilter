@@ -13,7 +13,7 @@ This roadmap delivers the v0.50b initial beta release of HydraQuartet VCF-OB, a 
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Plugin scaffold, panel design, build infrastructure
-- [ ] **Phase 2: Core Filter DSP** - SEM-style 12dB state-variable filter with lowpass mode
+- [x] **Phase 2: Core Filter DSP** - SEM-style 12dB state-variable filter with lowpass mode
 - [ ] **Phase 3: Filter Modes** - Add highpass, bandpass, and notch outputs
 - [ ] **Phase 4: Polyphonic Extension** - 8-voice polyphonic audio processing
 - [ ] **Phase 5: Cutoff Control** - Cutoff frequency parameter with CV input and attenuverter
@@ -48,7 +48,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 02-01-PLAN.md — Trapezoidal SVF implementation with lowpass output and cutoff/resonance controls
+- [x] 02-01-PLAN.md — Trapezoidal SVF implementation with lowpass output and cutoff/resonance controls
 
 ### Phase 3: Filter Modes
 **Goal**: Complete multimode filter with all four outputs
@@ -127,7 +127,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 1/1 | Complete | 2026-01-30 |
-| 2. Core Filter DSP | 0/1 | Ready | - |
+| 2. Core Filter DSP | 1/1 | Complete | 2026-01-31 |
 | 3. Filter Modes | 0/1 | Not started | - |
 | 4. Polyphonic Extension | 0/1 | Not started | - |
 | 5. Cutoff Control | 0/1 | Not started | - |
