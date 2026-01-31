@@ -68,15 +68,15 @@ struct HydraQuartetVCF : Module {
 		// Update filter parameters
 		filter.setParams(cutoffHz, resonanceParam, args.sampleRate);
 
-		// Process audio
+		// Process audio through filter
 		float input = inputs[AUDIO_INPUT].getVoltage();
-		float output = filter.process(input);
-		outputs[LP_OUTPUT].setVoltage(output);
+		SVFilterOutputs out = filter.process(input);
 
-		// Other outputs stubbed for future phases
-		outputs[HP_OUTPUT].setVoltage(0.f);   // Phase 3: multi-mode outputs
-		outputs[BP_OUTPUT].setVoltage(0.f);   // Phase 3: multi-mode outputs
-		outputs[NOTCH_OUTPUT].setVoltage(0.f); // Phase 3: multi-mode outputs
+		// Output all four filter modes
+		outputs[LP_OUTPUT].setVoltage(out.lowpass);
+		outputs[HP_OUTPUT].setVoltage(out.highpass);
+		outputs[BP_OUTPUT].setVoltage(out.bandpass);
+		outputs[NOTCH_OUTPUT].setVoltage(out.notch);
 	}
 };
 
