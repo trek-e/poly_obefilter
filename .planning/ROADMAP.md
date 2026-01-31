@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Plugin scaffold, panel design, build infrastructure
 - [x] **Phase 2: Core Filter DSP** - SEM-style 12dB state-variable filter with lowpass mode
-- [ ] **Phase 3: Filter Modes** - Add highpass, bandpass, and notch outputs
+- [x] **Phase 3: Filter Modes** - Add highpass, bandpass, and notch outputs
 - [ ] **Phase 4: Polyphonic Extension** - 8-voice polyphonic audio processing
 - [ ] **Phase 5: Cutoff Control** - Cutoff frequency parameter with CV input and attenuverter
 - [ ] **Phase 6: Resonance Control** - Resonance parameter with CV input
