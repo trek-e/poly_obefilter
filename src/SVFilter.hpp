@@ -2,6 +2,13 @@
 #include "rack.hpp"
 #include <cmath>
 
+struct SVFilterOutputs {
+	float lowpass;
+	float highpass;
+	float bandpass;
+	float notch;
+};
+
 struct SVFilter {
 	// State variables (integrator outputs)
 	float ic1eq = 0.f;
@@ -55,7 +62,7 @@ struct SVFilter {
 		a3 = g * a2;
 	}
 
-	float process(float input) {
+	SVFilterOutputs process(float input) {
 		// Clamp input to VCV Rack standard range
 		input = rack::clamp(input, -12.f, 12.f);
 
@@ -75,11 +82,16 @@ struct SVFilter {
 		// Check for NaN/infinity and reset if needed
 		if (!std::isfinite(v2)) {
 			reset();
-			return 0.f;
+			return {0.f, 0.f, 0.f, 0.f};
 		}
 
-		// Return lowpass output
-		return v2;
+		// Output taps using CLEAN (unsaturated) v1_raw for authentic SVF response
+		float bp = v1_raw;                    // Bandpass (pre-saturation for clean response)
+		float lp = v2;                        // Lowpass
+		float hp = input - k * v1_raw - v2;   // Highpass (include k coefficient)
+		float notch = lp + hp;                // Notch (LP + HP sum)
+
+		return {lp, hp, bp, notch};
 	}
 
 	void reset() {
