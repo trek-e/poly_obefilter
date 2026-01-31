@@ -88,7 +88,7 @@ struct SVFilter {
 		// Output taps using CLEAN (unsaturated) v1_raw for authentic SVF response
 		float bp = v1_raw;                    // Bandpass (pre-saturation for clean response)
 		float lp = v2;                        // Lowpass
-		float hp = input - k * v1_raw - v2;   // Highpass (include k coefficient)
+		float hp = v3 - g * v1_raw;           // Highpass (Cytomic direct form)
 		float notch = lp + hp;                // Notch (LP + HP sum)
 
 		return {lp, hp, bp, notch};
