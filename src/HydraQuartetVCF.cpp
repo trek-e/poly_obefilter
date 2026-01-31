@@ -31,7 +31,7 @@ struct HydraQuartetVCF : Module {
 	HydraQuartetVCF() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 
-		configParam(CUTOFF_PARAM, 0.f, 1.f, 0.5f, "Cutoff");
+		configParam(CUTOFF_PARAM, 0.f, 1.f, 1.f, "Cutoff");
 		configParam(CUTOFF_ATTEN_PARAM, -1.f, 1.f, 0.f, "Cutoff CV");
 		configParam(RESONANCE_PARAM, 0.f, 1.f, 0.f, "Resonance");
 		configParam(DRIVE_PARAM, 0.f, 1.f, 0.f, "Drive");
