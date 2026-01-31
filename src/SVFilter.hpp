@@ -18,6 +18,8 @@ struct SVFilter {
 	rack::dsp::TExponentialFilter<float> cutoffSmoother;
 	rack::dsp::TExponentialFilter<float> resonanceSmoother;
 
+	bool initialized = false;
+
 	SVFilter() {
 		// Initialize smoothers with ~1ms time constant
 		cutoffSmoother.setTau(0.001f);
@@ -25,12 +27,20 @@ struct SVFilter {
 	}
 
 	void setParams(float cutoffHz, float resonance, float sampleRate) {
+		// Initialize smoothers on first call to avoid ramp-up delay
+		if (!initialized) {
+			cutoffSmoother.out = cutoffHz;
+			resonanceSmoother.out = resonance;
+			initialized = true;
+		}
+
 		// Smooth parameters to avoid zipper noise
 		float smoothedCutoff = cutoffSmoother.process(1.f / sampleRate, cutoffHz);
 		float smoothedResonance = resonanceSmoother.process(1.f / sampleRate, resonance);
 
 		// Clamp cutoff to valid range and normalize
-		float cutoffNorm = rack::clamp(smoothedCutoff / sampleRate, 0.f, 0.49f);
+		// Minimum 0.001 to prevent g=0 which would cause zero output
+		float cutoffNorm = rack::clamp(smoothedCutoff / sampleRate, 0.001f, 0.49f);
 
 		// Frequency warping for trapezoidal integration
 		g = std::tan(M_PI * cutoffNorm);
