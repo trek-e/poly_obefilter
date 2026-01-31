@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation** - Plugin scaffold, panel design, build infrastructure
 - [x] **Phase 2: Core Filter DSP** - SEM-style 12dB state-variable filter with lowpass mode
 - [x] **Phase 3: Filter Modes** - Add highpass, bandpass, and notch outputs
-- [ ] **Phase 4: Polyphonic Extension** - 8-voice polyphonic audio processing
+- [x] **Phase 4: Polyphonic Extension** - 8-voice polyphonic audio processing
 - [ ] **Phase 5: Cutoff Control** - Cutoff frequency parameter with CV input and attenuverter
 - [ ] **Phase 6: Resonance Control** - Resonance parameter with CV input
 - [ ] **Phase 7: Drive Control** - Drive/saturation for filter character
@@ -76,7 +76,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 04-01-PLAN.md — Transform module to polyphonic with filter array and per-voice CV
+- [x] 04-01-PLAN.md — Transform module to polyphonic with filter array and per-voice CV
 
 ### Phase 5: Cutoff Control
 **Goal**: Cutoff frequency control with CV modulation
@@ -129,7 +129,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 1. Foundation | 1/1 | Complete | 2026-01-30 |
 | 2. Core Filter DSP | 1/1 | Complete | 2026-01-31 |
 | 3. Filter Modes | 1/1 | Complete | 2026-01-31 |
-| 4. Polyphonic Extension | 0/1 | Planned | - |
+| 4. Polyphonic Extension | 1/1 | Complete | 2026-01-31 |
 | 5. Cutoff Control | 0/1 | Not started | - |
 | 6. Resonance Control | 0/1 | Not started | - |
 | 7. Drive Control | 0/1 | Not started | - |
