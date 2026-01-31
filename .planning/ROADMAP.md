@@ -62,7 +62,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 03-01-PLAN.md — Expose HP, BP, and Notch outputs from SVF topology
+- [x] 03-01-PLAN.md — Expose HP, BP, and Notch outputs from SVF topology
 
 ### Phase 4: Polyphonic Extension
 **Goal**: 8-voice polyphonic audio processing
@@ -128,7 +128,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 |-------|----------------|--------|-----------|
 | 1. Foundation | 1/1 | Complete | 2026-01-30 |
 | 2. Core Filter DSP | 1/1 | Complete | 2026-01-31 |
-| 3. Filter Modes | 0/1 | Planned | - |
+| 3. Filter Modes | 1/1 | Complete | 2026-01-31 |
 | 4. Polyphonic Extension | 0/1 | Not started | - |
 | 5. Cutoff Control | 0/1 | Not started | - |
 | 6. Resonance Control | 0/1 | Not started | - |
