@@ -6,6 +6,7 @@ struct HydraQuartetVCF : Module {
 		CUTOFF_PARAM,
 		CUTOFF_ATTEN_PARAM,
 		RESONANCE_PARAM,
+		RESONANCE_ATTEN_PARAM,
 		DRIVE_PARAM,
 		PARAMS_LEN
 	};
@@ -34,6 +35,7 @@ struct HydraQuartetVCF : Module {
 		configParam(CUTOFF_PARAM, 0.f, 1.f, 1.f, "Cutoff");
 		configParam(CUTOFF_ATTEN_PARAM, -1.f, 1.f, 0.f, "Cutoff CV");
 		configParam(RESONANCE_PARAM, 0.f, 1.f, 0.f, "Resonance");
+		configParam(RESONANCE_ATTEN_PARAM, -1.f, 1.f, 0.f, "Resonance CV");
 		configParam(DRIVE_PARAM, 0.f, 1.f, 0.f, "Drive");
 
 		configInput(AUDIO_INPUT, "Audio");
@@ -73,7 +75,8 @@ struct HydraQuartetVCF : Module {
 			float resonance = resonanceParam;
 			if (inputs[RESONANCE_CV_INPUT].isConnected()) {
 				float resCV = inputs[RESONANCE_CV_INPUT].getPolyVoltage(c);
-				resonance = rack::clamp(resonanceParam + resCV * 0.1f, 0.f, 1.f);
+				float resCvAmount = params[RESONANCE_ATTEN_PARAM].getValue();
+				resonance = rack::clamp(resonanceParam + resCV * resCvAmount * 0.1f, 0.f, 1.f);
 			}
 
 			// Process through this voice's filter
@@ -109,6 +112,7 @@ struct HydraQuartetVCFWidget : ModuleWidget {
 		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(35.56, 40.0)), module, HydraQuartetVCF::CUTOFF_PARAM));
 		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(35.56, 62.0)), module, HydraQuartetVCF::CUTOFF_ATTEN_PARAM));
 		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(35.56, 88.0)), module, HydraQuartetVCF::RESONANCE_PARAM));
+		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(35.56, 98.0)), module, HydraQuartetVCF::RESONANCE_ATTEN_PARAM));
 		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(55.0, 68.0)), module, HydraQuartetVCF::DRIVE_PARAM));
 
 		// Inputs (green circles in SVG)
