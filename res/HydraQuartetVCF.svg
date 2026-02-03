@@ -111,6 +111,12 @@
        cy="88"
        r="3.5"
        id="resonance-cv-input" />
+    <circle
+       style="fill:#ff0000"
+       cx="35.56"
+       cy="98"
+       r="4"
+       id="resonance-atten-knob" />
 
     <!-- Drive section -->
     <circle
