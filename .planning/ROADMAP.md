@@ -101,10 +101,10 @@ Plans:
   2. CV input modulates resonance amount
   3. Filter remains stable at all resonance settings
   4. Resonance control responds smoothly without zipper noise
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 06-01: TBD
+- [ ] 06-01-PLAN.md — Add resonance attenuverter parameter and CV processing
 
 ### Phase 7: Drive Control
 **Goal**: Drive/saturation for filter character
