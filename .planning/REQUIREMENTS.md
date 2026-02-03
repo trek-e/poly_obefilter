@@ -31,7 +31,7 @@ Requirements for initial beta release. Each maps to roadmap phases.
 - [ ] **CTRL-02**: Cutoff CV input with attenuverter
 - [x] **CTRL-03**: Resonance knob (0-100% range)
 - [x] **CTRL-04**: Resonance CV input
-- [ ] **CTRL-05**: Drive/Saturation control for filter character
+- [x] **CTRL-05**: Drive/Saturation control for filter character
 
 ### I/O
 
@@ -111,7 +111,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CTRL-02 | Phase 5 | Pending |
 | CTRL-03 | Phase 6 | Complete |
 | CTRL-04 | Phase 6 | Complete |
-| CTRL-05 | Phase 7 | Pending |
+| CTRL-05 | Phase 7 | Complete |
 
 **Coverage:**
 - v0.50b requirements: 15 total
