@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Filter Modes** - Add highpass, bandpass, and notch outputs
 - [x] **Phase 4: Polyphonic Extension** - 8-voice polyphonic audio processing
 - [x] **Phase 5: Cutoff Control** - Cutoff frequency parameter with CV input and attenuverter
-- [ ] **Phase 6: Resonance Control** - Resonance parameter with CV input
+- [x] **Phase 6: Resonance Control** - Resonance parameter with CV input
 - [ ] **Phase 7: Drive Control** - Drive/saturation for filter character
 
 ## Phase Details
@@ -104,7 +104,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 06-01-PLAN.md — Add resonance attenuverter parameter and CV processing
+- [x] 06-01-PLAN.md — Add resonance attenuverter parameter and CV processing
 
 ### Phase 7: Drive Control
 **Goal**: Drive/saturation for filter character
@@ -131,7 +131,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 3. Filter Modes | 1/1 | Complete | 2026-01-31 |
 | 4. Polyphonic Extension | 1/1 | Complete | 2026-01-31 |
 | 5. Cutoff Control | 1/1 | Complete | 2026-01-31 |
-| 6. Resonance Control | 0/1 | Not started | - |
+| 6. Resonance Control | 1/1 | Complete | 2026-02-03 |
 | 7. Drive Control | 0/1 | Not started | - |
 
 ---

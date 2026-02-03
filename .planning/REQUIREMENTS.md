@@ -29,8 +29,8 @@ Requirements for initial beta release. Each maps to roadmap phases.
 
 - [ ] **CTRL-01**: Cutoff frequency knob (20Hz - 20kHz range)
 - [ ] **CTRL-02**: Cutoff CV input with attenuverter
-- [ ] **CTRL-03**: Resonance knob (0-100% range)
-- [ ] **CTRL-04**: Resonance CV input
+- [x] **CTRL-03**: Resonance knob (0-100% range)
+- [x] **CTRL-04**: Resonance CV input
 - [ ] **CTRL-05**: Drive/Saturation control for filter character
 
 ### I/O
@@ -109,8 +109,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | IO-01 | Phase 4 | Pending |
 | CTRL-01 | Phase 5 | Pending |
 | CTRL-02 | Phase 5 | Pending |
-| CTRL-03 | Phase 6 | Pending |
-| CTRL-04 | Phase 6 | Pending |
+| CTRL-03 | Phase 6 | Complete |
+| CTRL-04 | Phase 6 | Complete |
 | CTRL-05 | Phase 7 | Pending |
 
 **Coverage:**
@@ -120,4 +120,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-29*
-*Last updated: 2026-01-31 after Phase 2 completion*
+*Last updated: 2026-02-03 after Phase 6 completion*
