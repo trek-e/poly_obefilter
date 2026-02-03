@@ -8,6 +8,16 @@ A polyphonic 16-voice multimode filter module for VCV Rack 2.x by Synth-etic Int
 
 The distinctive Oberheim filter sound — musical, characterful, and versatile — in a polyphonic VCV Rack module.
 
+## Current Milestone: v0.60b OB-X Filter
+
+**Goal:** Add OB-X style 24dB/oct filter with type switching
+
+**Target features:**
+- 24dB/oct lowpass filter via cascaded SVF
+- Panel switch for 12dB SEM / 24dB OB-X selection
+- OB-X character (bright/edgy vs SEM warm/smooth)
+- Lowpass-only output in 24dB mode (authentic OB-Xa)
+
 ## Current State
 
 **Shipped:** v0.50b Initial Beta (2026-02-03)
@@ -121,4 +131,4 @@ The distinctive Oberheim filter sound — musical, characterful, and versatile �
 | Multiple simultaneous outputs | State-variable naturally provides all modes | ✓ Good |
 
 ---
-*Last updated: 2026-02-03 after v0.50b milestone*
+*Last updated: 2026-02-03 after v0.60b milestone initialization*

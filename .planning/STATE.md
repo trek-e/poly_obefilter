@@ -5,39 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-03)
 
 **Core value:** The distinctive Oberheim filter sound in a polyphonic VCV Rack module
-**Current focus:** Planning next milestone (v0.60b)
+**Current focus:** v0.60b — OB-X 24dB Filter
 
 ## Current Position
 
-Phase: Milestone complete
-Plan: N/A
-Status: v0.50b shipped, ready to plan v0.60b
-Last activity: 2026-02-03 — v0.50b milestone complete
+Phase: Not started (defining roadmap)
+Plan: —
+Status: Requirements defined, creating roadmap
+Last activity: 2026-02-03 — Milestone v0.60b started
 
-Progress: [██████████] v0.50b 100% — SHIPPED
+Progress: [░░░░░░░░░░] 0%
 
 ## Performance Metrics
 
-**Velocity:**
+**Velocity (from v0.50b):**
 - Total plans completed: 7
 - Average duration: 10 min
 - Total execution time: 1.1 hours
-
-**By Phase:**
-
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| 01-foundation | 1 | 6min | 6min |
-| 02-core-filter-dsp | 1 | 18min | 18min |
-| 03-filter-modes | 1 | 34min | 34min |
-| 04-polyphonic-extension | 1 | 2min | 2min |
-| 05-cutoff-control | 1 | 2min | 2min |
-| 06-resonance-control | 1 | 2min | 2min |
-| 07-drive-control | 1 | 2min | 2min |
-
-**Recent Trend:**
-- Last 5 plans: 04-01 (2min), 05-01 (2min), 06-01 (2min), 07-01 (2min)
-- Trend: Phases 4-7 extremely fast - following established patterns with minimal new code
 
 *Updated after each plan completion*
 
@@ -46,22 +30,27 @@ Progress: [██████████] v0.50b 100% — SHIPPED
 ### Decisions
 
 Decisions are logged in PROJECT.md Key Decisions table.
-See PROJECT.md for full decision history with outcomes.
+Recent decisions affecting current work:
+
+- v0.60b: 24dB via cascaded SVF (not true 4-pole) — simpler, more stable
+- v0.60b: LP-only in 24dB mode (authentic OB-Xa behavior)
+- v0.60b: Panel switch for type selection (not menu-only)
 
 ### Pending Todos
 
-None — milestone complete.
+None — defining roadmap.
 
 ### Blockers/Concerns
 
-None — ready to plan next milestone.
+None.
 
 ## Session Continuity
 
 Last session: 2026-02-03
-Stopped at: v0.50b milestone complete
+Stopped at: Requirements defined, creating roadmap
 Resume file: None
 
 ---
 *State initialized: 2026-01-29*
 *v0.50b milestone: SHIPPED 2026-02-03*
+*v0.60b milestone: Started 2026-02-03*
