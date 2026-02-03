@@ -30,6 +30,8 @@ struct HydraQuartetVCF : Module {
 	};
 
 	SVFilter filters[PORT_MAX_CHANNELS];  // 16 filter instances for polyphony
+	rack::dsp::TExponentialFilter<float> driveSmoothers[PORT_MAX_CHANNELS];
+	bool driveSmootherInitialized = false;
 
 	HydraQuartetVCF() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
@@ -50,6 +52,10 @@ struct HydraQuartetVCF : Module {
 		configOutput(HP_OUTPUT, "Highpass");
 		configOutput(BP_OUTPUT, "Bandpass");
 		configOutput(NOTCH_OUTPUT, "Notch");
+
+		for (int i = 0; i < PORT_MAX_CHANNELS; i++) {
+			driveSmoothers[i].setTau(0.001f);  // 1ms tau matches cutoff/resonance
+		}
 	}
 
 	void process(const ProcessArgs& args) override {
@@ -61,6 +67,16 @@ struct HydraQuartetVCF : Module {
 		float baseCutoffHz = 20.f * std::pow(1000.f, cutoffParam);  // 20Hz-20kHz log
 		float cvAmount = params[CUTOFF_ATTEN_PARAM].getValue();
 		float resonanceParam = params[RESONANCE_PARAM].getValue();
+		float driveParam = params[DRIVE_PARAM].getValue();
+		float driveCvAmount = params[DRIVE_ATTEN_PARAM].getValue();
+
+		// Initialize smoothers on first call
+		if (!driveSmootherInitialized) {
+			for (int i = 0; i < PORT_MAX_CHANNELS; i++) {
+				driveSmoothers[i].out = driveParam;
+			}
+			driveSmootherInitialized = true;
+		}
 
 		// Process each voice independently
 		for (int c = 0; c < channels; c++) {
@@ -87,11 +103,30 @@ struct HydraQuartetVCF : Module {
 			filters[c].setParams(cutoffHz, resonance, args.sampleRate);
 			SVFilterOutputs out = filters[c].process(input);
 
+			// Calculate per-voice drive (CV is polyphonic, same scaling as resonance: 10%/V)
+			float drive = driveParam;
+			if (inputs[DRIVE_CV_INPUT].isConnected()) {
+				float driveCV = inputs[DRIVE_CV_INPUT].getPolyVoltage(c);
+				drive = rack::clamp(driveParam + driveCV * driveCvAmount * 0.1f, 0.f, 1.f);
+			}
+
+			// Smooth drive parameter
+			float smoothedDrive = driveSmoothers[c].process(1.f / args.sampleRate, drive);
+
+			// Apply drive with output-specific scaling
+			// LP/BP: full drive (low-frequency content saturates naturally)
+			// HP: reduced drive (high-frequency less affected)
+			// Notch: medium drive
+			float lpOut = blendedSaturation(out.lowpass, smoothedDrive * 1.0f);
+			float bpOut = blendedSaturation(out.bandpass, smoothedDrive * 1.0f);
+			float hpOut = blendedSaturation(out.highpass, smoothedDrive * 0.5f);
+			float notchOut = blendedSaturation(out.notch, smoothedDrive * 0.7f);
+
 			// Write outputs for this channel
-			outputs[LP_OUTPUT].setVoltage(out.lowpass, c);
-			outputs[HP_OUTPUT].setVoltage(out.highpass, c);
-			outputs[BP_OUTPUT].setVoltage(out.bandpass, c);
-			outputs[NOTCH_OUTPUT].setVoltage(out.notch, c);
+			outputs[LP_OUTPUT].setVoltage(lpOut, c);
+			outputs[HP_OUTPUT].setVoltage(hpOut, c);
+			outputs[BP_OUTPUT].setVoltage(bpOut, c);
+			outputs[NOTCH_OUTPUT].setVoltage(notchOut, c);
 		}
 
 		// Set output channel counts (all outputs match input channel count)
