@@ -8,12 +8,14 @@ struct HydraQuartetVCF : Module {
 		RESONANCE_PARAM,
 		RESONANCE_ATTEN_PARAM,
 		DRIVE_PARAM,
+		DRIVE_ATTEN_PARAM,
 		PARAMS_LEN
 	};
 	enum InputId {
 		AUDIO_INPUT,
 		CUTOFF_CV_INPUT,
 		RESONANCE_CV_INPUT,
+		DRIVE_CV_INPUT,
 		INPUTS_LEN
 	};
 	enum OutputId {
@@ -37,10 +39,12 @@ struct HydraQuartetVCF : Module {
 		configParam(RESONANCE_PARAM, 0.f, 1.f, 0.f, "Resonance");
 		configParam(RESONANCE_ATTEN_PARAM, -1.f, 1.f, 0.f, "Resonance CV");
 		configParam(DRIVE_PARAM, 0.f, 1.f, 0.f, "Drive");
+		configParam(DRIVE_ATTEN_PARAM, -1.f, 1.f, 0.f, "Drive CV");
 
 		configInput(AUDIO_INPUT, "Audio");
 		configInput(CUTOFF_CV_INPUT, "Cutoff CV");
 		configInput(RESONANCE_CV_INPUT, "Resonance CV");
+		configInput(DRIVE_CV_INPUT, "Drive CV");
 
 		configOutput(LP_OUTPUT, "Lowpass");
 		configOutput(HP_OUTPUT, "Highpass");
@@ -113,12 +117,14 @@ struct HydraQuartetVCFWidget : ModuleWidget {
 		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(35.56, 62.0)), module, HydraQuartetVCF::CUTOFF_ATTEN_PARAM));
 		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(35.56, 88.0)), module, HydraQuartetVCF::RESONANCE_PARAM));
 		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(35.56, 98.0)), module, HydraQuartetVCF::RESONANCE_ATTEN_PARAM));
-		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(55.0, 68.0)), module, HydraQuartetVCF::DRIVE_PARAM));
+		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(55.0, 40.0)), module, HydraQuartetVCF::DRIVE_PARAM));
+		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(55.0, 62.0)), module, HydraQuartetVCF::DRIVE_ATTEN_PARAM));
 
 		// Inputs (green circles in SVG)
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(15.0, 35.0)), module, HydraQuartetVCF::AUDIO_INPUT));
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(20.0, 50.0)), module, HydraQuartetVCF::CUTOFF_CV_INPUT));
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(20.0, 88.0)), module, HydraQuartetVCF::RESONANCE_CV_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(55.0, 50.0)), module, HydraQuartetVCF::DRIVE_CV_INPUT));
 
 		// Outputs (blue circles in SVG)
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(20.0, 107.0)), module, HydraQuartetVCF::LP_OUTPUT));

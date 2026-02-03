@@ -122,9 +122,21 @@
     <circle
        style="fill:#ff0000"
        cx="55"
-       cy="68"
-       r="4"
+       cy="40"
+       r="5"
        id="drive-knob" />
+    <circle
+       style="fill:#00ff00"
+       cx="55"
+       cy="50"
+       r="3.5"
+       id="drive-cv-input" />
+    <circle
+       style="fill:#ff0000"
+       cx="55"
+       cy="62"
+       r="4"
+       id="drive-atten-knob" />
 
     <!-- Outputs section -->
     <circle
