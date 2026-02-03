@@ -5,22 +5,22 @@
 See: .planning/PROJECT.md (updated 2026-01-29)
 
 **Core value:** The distinctive Oberheim filter sound in a polyphonic VCV Rack module
-**Current focus:** Phase 6 - Resonance Control
+**Current focus:** Phase 7 - Drive Control
 
 ## Current Position
 
-Phase: 6 of 7 (Resonance Control) - COMPLETE
+Phase: 7 of 7 (Drive Control) - COMPLETE
 Plan: 1 of 1 in current phase - COMPLETE
-Status: Phase 6 complete, ready for Phase 7
-Last activity: 2026-02-03 - Completed 06-01-PLAN.md (Resonance Attenuverter)
+Status: Phase 7 complete, v0.50b milestone achieved
+Last activity: 2026-02-03 - Completed 07-01-PLAN.md (Drive Saturation with CV)
 
-Progress: [████████░░] 86%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 6
-- Average duration: 11 min
+- Total plans completed: 7
+- Average duration: 10 min
 - Total execution time: 1.1 hours
 
 **By Phase:**
@@ -33,10 +33,11 @@ Progress: [████████░░] 86%
 | 04-polyphonic-extension | 1 | 2min | 2min |
 | 05-cutoff-control | 1 | 2min | 2min |
 | 06-resonance-control | 1 | 2min | 2min |
+| 07-drive-control | 1 | 2min | 2min |
 
 **Recent Trend:**
-- Last 5 plans: 03-01 (34min), 04-01 (2min), 05-01 (2min), 06-01 (2min)
-- Trend: Phases 4-6 extremely fast - following established patterns with minimal new code
+- Last 5 plans: 04-01 (2min), 05-01 (2min), 06-01 (2min), 07-01 (2min)
+- Trend: Phases 4-7 extremely fast - following established patterns with minimal new code
 
 *Updated after each plan completion*
 
@@ -66,6 +67,11 @@ Recent decisions affecting current work:
 - 06-01: Use resCvAmount variable to avoid shadowing cutoff's cvAmount
 - 06-01: Resonance attenuverter positioned at Y=98mm (10mm below resonance knob)
 - 06-01: Attenuverter default 0 for "opt-in" CV control (matches cutoff pattern)
+- 07-01: Blended saturation with tanh + asymmetric shaping for even and odd harmonics
+- 07-01: Drive knob positioned at Y=40mm mirroring cutoff/resonance layout
+- 07-01: Output-specific scaling: LP/BP 100%, HP 50%, Notch 70%
+- 07-01: Drive CV scaling 10%/V matching resonance pattern
+- 07-01: True bypass at drive < 0.01 for clean signal path
 
 ### Pending Todos
 
@@ -78,7 +84,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-03
-Stopped at: Completed 06-01-PLAN.md (Resonance Attenuverter), Phase 6 complete
+Stopped at: Completed 07-01-PLAN.md (Drive Saturation with CV), Phase 7 complete, v0.50b milestone achieved
 Resume file: None
 
 ---
