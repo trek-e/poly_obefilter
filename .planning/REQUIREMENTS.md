@@ -65,19 +65,19 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FILT-06 | TBD | Pending |
-| FILT-07 | TBD | Pending |
-| FILT-08 | TBD | Pending |
-| FILT-09 | TBD | Pending |
-| TYPE-01 | TBD | Pending |
-| TYPE-02 | TBD | Pending |
-| TYPE-03 | TBD | Pending |
+| FILT-06 | Phase 8 | Pending |
+| FILT-07 | Phase 8 | Pending |
+| FILT-08 | Phase 9 | Pending |
+| FILT-09 | Phase 9 | Pending |
+| TYPE-01 | Phase 8 | Pending |
+| TYPE-02 | Phase 8 | Pending |
+| TYPE-03 | Phase 9 | Pending |
 
 **Coverage:**
 - v0.60b requirements: 7 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 7
+- Mapped to phases: 7 (100%)
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-03*
-*Last updated: 2026-02-03 after research completion*
+*Last updated: 2026-02-03 after roadmap creation*
