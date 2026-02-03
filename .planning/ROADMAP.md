@@ -114,15 +114,15 @@ Plans:
   1. Drive knob adds harmonic saturation to filtered signal
   2. Drive control affects tone character without instability
   3. Full drive range produces musical saturation (not harsh clipping)
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 07-01: TBD
+- [ ] 07-01-PLAN.md — Drive saturation with CV, blended tanh/asymmetric waveshaping, output-specific scaling
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
