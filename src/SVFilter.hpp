@@ -9,6 +9,38 @@ struct SVFilterOutputs {
 	float notch;
 };
 
+// Blended saturation for drive control
+// Combines soft tanh (odd harmonics) with asymmetric shaping (even harmonics)
+inline float blendedSaturation(float x, float drive) {
+	// True bypass at zero drive for clean signal
+	if (drive < 0.01f) return x;
+
+	// Input gain: 1x to 5x based on drive
+	float gain = 1.0f + drive * 4.0f;
+	float scaled = x * gain;
+
+	// Soft saturation (symmetric - odd harmonics)
+	float soft = std::tanh(scaled);
+
+	// Asymmetric saturation (even + odd harmonics)
+	float asym;
+	if (scaled >= 0.0f) {
+		asym = std::tanh(scaled);
+	} else {
+		// Harder curve below zero for asymmetry -> even harmonics
+		asym = std::tanh(scaled * 1.3f) / 1.3f + scaled * 0.1f;
+	}
+
+	// Blend: more asymmetry at higher drive (up to 40%)
+	float asymBlend = drive * 0.4f;
+	float saturated = soft * (1.0f - asymBlend) + asym * asymBlend;
+
+	// Moderate gain compensation (slight growth with drive for "excitement")
+	float makeup = 1.0f / (1.0f + drive * 0.5f);
+
+	return saturated * makeup;
+}
+
 struct SVFilter {
 	// State variables (integrator outputs)
 	float ic1eq = 0.f;
