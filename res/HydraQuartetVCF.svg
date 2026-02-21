@@ -60,6 +60,18 @@
        d="m 46,56 h 2 v 1 h -1 v 2 h 1 v 1 h -2 z m 3,0 h 2 v 1 h -1 v 1 h 1 v 1 h -1 v 1 h -1 z m 3,0 h 1 v 4 h -1 z m 2,0 h 2 v 4 h -1 v -1 h -1 z m 0,1 v 1 h 1 v -1 z m 3,0 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z"
        id="drive-label" />
 
+    <!-- 12dB label (above filter type switch) -->
+    <path
+       style="fill:#8888aa;fill-opacity:0.7"
+       d="m 53,24 h 1 v 3 h -1 z m 2,0 h 2 v 1 h -1 v 1 h 1 v 1 h -2 z"
+       id="label-12db" />
+
+    <!-- 24dB label (below filter type switch) -->
+    <path
+       style="fill:#8888aa;fill-opacity:0.7"
+       d="m 53,34 h 2 v 1 h -1 v 1 h 1 v 1 h -2 z m 0,-1 h 2 v 1 h -2 z m 3,0 h 1 v 1 h 1 v 2 h -1 v -1 h -1 z"
+       id="label-24db" />
+
     <!-- OUTPUTS label -->
     <path
        style="fill:#aa8866;fill-opacity:1;font-size:3px"
@@ -117,6 +129,12 @@
        cy="98"
        r="4"
        id="resonance-atten-knob" />
+
+    <!-- Filter Type Switch (CKSS - 2 position toggle) -->
+    <rect
+       style="fill:#333355;stroke:#5555aa;stroke-width:0.3"
+       x="52.8" y="23" width="4.4" height="10" rx="1"
+       id="filter-type-switch-placeholder" />
 
     <!-- Drive section -->
     <circle
