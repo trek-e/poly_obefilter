@@ -59,9 +59,9 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-02-03
-Stopped at: Roadmap created for v0.60b milestone
-Resume file: None
+Last session: 2026-02-21
+Stopped at: Phase 8 context gathered
+Resume file: .planning/phases/08-core-24db-cascade/08-CONTEXT.md
 
 ---
 *State initialized: 2026-01-29*
