@@ -81,10 +81,10 @@ Plans:
   3. Cutoff frequency parameter produces same cutoff frequency in both modes (1kHz stays 1kHz)
   4. Filter self-oscillates at maximum resonance in 24dB mode
   5. 24dB mode remains stable at all resonance settings without crashes or NaN
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 08-01: TBD
+- [ ] 08-01-PLAN.md — Cascaded SVF filter with panel switch, click-free switching, and stable self-oscillation
 
 #### Phase 9: Character & Output
 **Goal**: OB-X sonic character, lowpass-only output routing, and click-free mode switching
