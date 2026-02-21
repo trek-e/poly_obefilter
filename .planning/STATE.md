@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-02-03)
 ## Current Position
 
 Phase: 8 of 9 (Core 24dB Cascade)
-Plan: 0 of ? in current phase
-Status: Ready to plan
-Last activity: 2026-02-03 — Roadmap created for v0.60b
+Plan: 1 of ? in current phase
+Status: Executing
+Last activity: 2026-02-21 — Completed 08-01 (24dB cascade filter + panel switch)
 
 Progress: [██████████░░░░░░░░░░] 78% (7 of 9 phases complete)
 
@@ -48,6 +48,10 @@ Recent decisions affecting current work:
 - v0.60b: LP-only output in 24dB mode (authentic OB-Xa)
 - v0.60b: Panel switch for type selection (CV defer to v0.70b)
 - v0.50b: Split resonance (0.7x per stage) to prevent instability
+- 08-01: Stage2 Q at 0.7x resonance balances stability vs resonance character
+- 08-01: 24dB LP drive at 1.3x for OB-X edge, same knob range
+- 08-01: CKSS switch at (55mm, 28mm) right column above drive
+- 08-01: Interim HP/BP/Notch use stage1 outputs; Phase 9 finalizes routing
 
 ### Pending Todos
 
@@ -60,8 +64,8 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-21
-Stopped at: Phase 8 context gathered
-Resume file: .planning/phases/08-core-24db-cascade/08-CONTEXT.md
+Stopped at: Completed 08-01-PLAN.md (24dB cascade filter core implementation)
+Resume file: .planning/phases/08-core-24db-cascade/08-01-SUMMARY.md
 
 ---
 *State initialized: 2026-01-29*

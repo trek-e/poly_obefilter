@@ -9,15 +9,15 @@ Requirements for OB-X 24dB filter addition. Each maps to roadmap phases.
 
 ### Filter Core
 
-- [ ] **FILT-06**: 24dB/oct OB-X style lowpass filter via cascaded SVF topology
-- [ ] **FILT-07**: Self-oscillation at high resonance in 24dB mode
+- [x] **FILT-06**: 24dB/oct OB-X style lowpass filter via cascaded SVF topology
+- [x] **FILT-07**: Self-oscillation at high resonance in 24dB mode
 - [ ] **FILT-08**: OB-X character tuning (bright/edgy saturation distinct from SEM warm/smooth)
 - [ ] **FILT-09**: Lowpass-only output active in 24dB mode (HP/BP/Notch silent, authentic OB-Xa)
 
 ### Type Switching
 
-- [ ] **TYPE-01**: Panel switch for 12dB SEM / 24dB OB-X filter type selection
-- [ ] **TYPE-02**: Cutoff frequency remains consistent between modes (1kHz stays 1kHz)
+- [x] **TYPE-01**: Panel switch for 12dB SEM / 24dB OB-X filter type selection
+- [x] **TYPE-02**: Cutoff frequency remains consistent between modes (1kHz stays 1kHz)
 - [ ] **TYPE-03**: Click-free mode switching without pops or glitches
 
 ## Future Requirements
@@ -65,12 +65,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FILT-06 | Phase 8 | Pending |
-| FILT-07 | Phase 8 | Pending |
+| FILT-06 | Phase 8 | Complete |
+| FILT-07 | Phase 8 | Complete |
 | FILT-08 | Phase 9 | Pending |
 | FILT-09 | Phase 9 | Pending |
-| TYPE-01 | Phase 8 | Pending |
-| TYPE-02 | Phase 8 | Pending |
+| TYPE-01 | Phase 8 | Complete |
+| TYPE-02 | Phase 8 | Complete |
 | TYPE-03 | Phase 9 | Pending |
 
 **Coverage:**
