@@ -95,10 +95,10 @@ Plans:
   2. Only lowpass output is active in 24dB mode (HP/BP/Notch outputs silent, authentic OB-Xa)
   3. Switching between 12dB and 24dB modes produces no audible clicks or pops
   4. Drive control produces musical saturation in both 12dB and 24dB modes
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 09-01: TBD
+- [ ] 09-01-PLAN.md — OB-X character tuning, LP-only output routing, and click-free switching verification
 
 ## Progress
 
@@ -115,4 +115,4 @@ Phases execute in numeric order: 8 → 9
 | 6. Drive & Saturation | v0.50b | 2/2 | Complete | 2026-02-03 |
 | 7. Final Verification | v0.50b | 1/1 | Complete | 2026-02-03 |
 | 8. Core 24dB Cascade | 1/1 | Complete    | 2026-02-21 | - |
-| 9. Character & Output | v0.60b | 0/? | Not started | - |
+| 9. Character & Output | v0.60b | 0/1 | Not started | - |
