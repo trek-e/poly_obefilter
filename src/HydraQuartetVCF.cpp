@@ -9,6 +9,7 @@ struct HydraQuartetVCF : Module {
 		RESONANCE_ATTEN_PARAM,
 		DRIVE_PARAM,
 		DRIVE_ATTEN_PARAM,
+		FILTER_TYPE_PARAM,    // 0 = 12dB SEM, 1 = 24dB OB-X
 		PARAMS_LEN
 	};
 	enum InputId {
@@ -33,6 +34,17 @@ struct HydraQuartetVCF : Module {
 	rack::dsp::TExponentialFilter<float> driveSmoothers[PORT_MAX_CHANNELS];
 	bool driveSmootherInitialized = false;
 
+	SVFilter filters24dB_stage2[PORT_MAX_CHANNELS];  // Stage 2 for 24dB cascade
+
+	// Click-free mode switching state
+	int prevFilterType = 0;
+	int crossfadeCounter = 0;
+	static constexpr int CROSSFADE_SAMPLES = 128;  // ~2.7ms at 48kHz
+	float xfLP[PORT_MAX_CHANNELS] = {};
+	float xfHP[PORT_MAX_CHANNELS] = {};
+	float xfBP[PORT_MAX_CHANNELS] = {};
+	float xfNotch[PORT_MAX_CHANNELS] = {};
+
 	HydraQuartetVCF() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 
@@ -42,6 +54,7 @@ struct HydraQuartetVCF : Module {
 		configParam(RESONANCE_ATTEN_PARAM, -1.f, 1.f, 0.f, "Resonance CV");
 		configParam(DRIVE_PARAM, 0.f, 1.f, 0.f, "Drive");
 		configParam(DRIVE_ATTEN_PARAM, -1.f, 1.f, 0.f, "Drive CV");
+		configSwitch(FILTER_TYPE_PARAM, 0.f, 1.f, 0.f, "Filter Type", {"12dB SEM", "24dB OB-X"});
 
 		configInput(AUDIO_INPUT, "Audio");
 		configInput(CUTOFF_CV_INPUT, "Cutoff CV");
@@ -61,6 +74,12 @@ struct HydraQuartetVCF : Module {
 	void process(const ProcessArgs& args) override {
 		// Get channel count from audio input (polyphonic: 1-16 channels)
 		int channels = std::max(1, inputs[AUDIO_INPUT].getChannels());
+
+		// Read filter type switch
+		int filterType = (int)(params[FILTER_TYPE_PARAM].getValue() + 0.5f);
+
+		// Detect mode change before the per-voice loop
+		bool modeJustChanged = (filterType != prevFilterType);
 
 		// Read global parameters (knob positions)
 		float cutoffParam = params[CUTOFF_PARAM].getValue();
@@ -99,10 +118,6 @@ struct HydraQuartetVCF : Module {
 				resonance = rack::clamp(resonanceParam + resCV * resCvAmount * 0.1f, 0.f, 1.f);
 			}
 
-			// Process through this voice's filter
-			filters[c].setParams(cutoffHz, resonance, args.sampleRate);
-			SVFilterOutputs out = filters[c].process(input);
-
 			// Calculate per-voice drive (CV is polyphonic, same scaling as resonance: 10%/V)
 			float drive = driveParam;
 			if (inputs[DRIVE_CV_INPUT].isConnected()) {
@@ -113,21 +128,80 @@ struct HydraQuartetVCF : Module {
 			// Smooth drive parameter
 			float smoothedDrive = driveSmoothers[c].process(1.f / args.sampleRate, drive);
 
-			// Apply drive with output-specific scaling
-			// LP/BP: full drive (low-frequency content saturates naturally)
-			// HP: reduced drive (high-frequency less affected)
-			// Notch: medium drive
-			float lpOut = blendedSaturation(out.lowpass, smoothedDrive * 1.0f);
-			float bpOut = blendedSaturation(out.bandpass, smoothedDrive * 1.0f);
-			float hpOut = blendedSaturation(out.highpass, smoothedDrive * 0.5f);
-			float notchOut = blendedSaturation(out.notch, smoothedDrive * 0.7f);
+			// Capture crossfade-from values at mode change (before overwriting outputs)
+			if (modeJustChanged && c == 0) {
+				crossfadeCounter = CROSSFADE_SAMPLES;
+			}
+			if (modeJustChanged) {
+				xfLP[c] = outputs[LP_OUTPUT].getVoltage(c);
+				xfHP[c] = outputs[HP_OUTPUT].getVoltage(c);
+				xfBP[c] = outputs[BP_OUTPUT].getVoltage(c);
+				xfNotch[c] = outputs[NOTCH_OUTPUT].getVoltage(c);
+			}
+
+			float outLP, outHP, outBP, outNotch;
+
+			if (filterType == 0) {
+				// 12dB SEM mode: existing processing, unchanged from v0.50b
+				filters[c].setParams(cutoffHz, resonance, args.sampleRate);
+				SVFilterOutputs out = filters[c].process(input);
+
+				// Apply drive with output-specific scaling
+				// LP/BP: full drive (low-frequency content saturates naturally)
+				// HP: reduced drive (high-frequency less affected)
+				// Notch: medium drive
+				outLP = blendedSaturation(out.lowpass, smoothedDrive * 1.0f);
+				outHP = blendedSaturation(out.highpass, smoothedDrive * 0.5f);
+				outBP = blendedSaturation(out.bandpass, smoothedDrive * 1.0f);
+				outNotch = blendedSaturation(out.notch, smoothedDrive * 0.7f);
+			} else {
+				// 24dB OB-X mode: cascaded SVF topology
+				// Stage 1: full resonance for warm character
+				filters[c].setParams(cutoffHz, resonance, args.sampleRate);
+				SVFilterOutputs s1 = filters[c].process(input);
+
+				// Inter-stage safety: check for NaN/infinity and clamp
+				float interStage;
+				if (!std::isfinite(s1.lowpass)) {
+					filters[c].reset();
+					filters24dB_stage2[c].reset();
+					interStage = 0.f;
+				} else {
+					interStage = rack::clamp(s1.lowpass, -12.f, 12.f);
+				}
+
+				// Stage 2: split resonance (0.7x) for stability
+				float q2 = resonance * 0.7f;
+				filters24dB_stage2[c].setParams(cutoffHz, q2, args.sampleRate);
+				SVFilterOutputs s2 = filters24dB_stage2[c].process(interStage);
+
+				// Output mapping: LP uses stage2, HP/BP/Notch use stage1 (Phase 9 finalizes routing)
+				// 24dB LP drive is 1.3x for OB-X edge
+				outLP = blendedSaturation(s2.lowpass, smoothedDrive * 1.3f);
+				outHP = blendedSaturation(s1.highpass, smoothedDrive * 0.5f);
+				outBP = blendedSaturation(s1.bandpass, smoothedDrive * 1.0f);
+				outNotch = blendedSaturation(s1.notch, smoothedDrive * 0.7f);
+			}
+
+			// Apply crossfade for click-free mode switching
+			if (crossfadeCounter > 0) {
+				float t = 1.f - (float)crossfadeCounter / (float)CROSSFADE_SAMPLES;
+				outLP = xfLP[c] * (1.f - t) + outLP * t;
+				outHP = xfHP[c] * (1.f - t) + outHP * t;
+				outBP = xfBP[c] * (1.f - t) + outBP * t;
+				outNotch = xfNotch[c] * (1.f - t) + outNotch * t;
+			}
 
 			// Write outputs for this channel
-			outputs[LP_OUTPUT].setVoltage(lpOut, c);
-			outputs[HP_OUTPUT].setVoltage(hpOut, c);
-			outputs[BP_OUTPUT].setVoltage(bpOut, c);
-			outputs[NOTCH_OUTPUT].setVoltage(notchOut, c);
+			outputs[LP_OUTPUT].setVoltage(outLP, c);
+			outputs[HP_OUTPUT].setVoltage(outHP, c);
+			outputs[BP_OUTPUT].setVoltage(outBP, c);
+			outputs[NOTCH_OUTPUT].setVoltage(outNotch, c);
 		}
+
+		// Decrement crossfade counter and update prevFilterType after all voices
+		if (crossfadeCounter > 0) crossfadeCounter--;
+		prevFilterType = filterType;
 
 		// Set output channel counts (all outputs match input channel count)
 		outputs[LP_OUTPUT].setChannels(channels);
@@ -154,6 +228,9 @@ struct HydraQuartetVCFWidget : ModuleWidget {
 		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(35.56, 98.0)), module, HydraQuartetVCF::RESONANCE_ATTEN_PARAM));
 		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(55.0, 40.0)), module, HydraQuartetVCF::DRIVE_PARAM));
 		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(55.0, 62.0)), module, HydraQuartetVCF::DRIVE_ATTEN_PARAM));
+
+		// Filter type switch (between title divider and drive knob)
+		addParam(createParamCentered<CKSS>(mm2px(Vec(55.0, 28.0)), module, HydraQuartetVCF::FILTER_TYPE_PARAM));
 
 		// Inputs (green circles in SVG)
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(15.0, 35.0)), module, HydraQuartetVCF::AUDIO_INPUT));
