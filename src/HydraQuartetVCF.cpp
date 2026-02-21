@@ -156,8 +156,11 @@ struct HydraQuartetVCF : Module {
 				outNotch = blendedSaturation(out.notch, smoothedDrive * 0.7f);
 			} else {
 				// 24dB OB-X mode: cascaded SVF topology
-				// Stage 1: full resonance for warm character
-				filters[c].setParams(cutoffHz, resonance, args.sampleRate);
+				// Boosted resonance for bright/edgy OB-X character (1.15x Stage 1, 0.65x Stage 2)
+				float resonance24 = rack::clamp(resonance * 1.15f, 0.f, 0.95f);
+
+				// Stage 1: boosted resonance for aggressive OB-X peaks
+				filters[c].setParams(cutoffHz, resonance24, args.sampleRate);
 				SVFilterOutputs s1 = filters[c].process(input);
 
 				// Inter-stage safety: check for NaN/infinity and clamp
@@ -167,20 +170,22 @@ struct HydraQuartetVCF : Module {
 					filters24dB_stage2[c].reset();
 					interStage = 0.f;
 				} else {
-					interStage = rack::clamp(s1.lowpass, -12.f, 12.f);
+					// Mild tanh saturation for CEM3320 diode-pair nonlinearity character
+					// Level-dependent odd harmonics; unity gain for small signals
+					interStage = rack::clamp(std::tanh(s1.lowpass * 0.12f) / 0.12f, -12.f, 12.f);
 				}
 
-				// Stage 2: split resonance (0.7x) for stability
-				float q2 = resonance * 0.7f;
+				// Stage 2: split resonance (0.65x) for stability with OB-X edge
+				float q2 = resonance24 * 0.65f;
 				filters24dB_stage2[c].setParams(cutoffHz, q2, args.sampleRate);
 				SVFilterOutputs s2 = filters24dB_stage2[c].process(interStage);
 
-				// Output mapping: LP uses stage2, HP/BP/Notch use stage1 (Phase 9 finalizes routing)
-				// 24dB LP drive is 1.3x for OB-X edge
-				outLP = blendedSaturation(s2.lowpass, smoothedDrive * 1.3f);
-				outHP = blendedSaturation(s1.highpass, smoothedDrive * 0.5f);
-				outBP = blendedSaturation(s1.bandpass, smoothedDrive * 1.0f);
-				outNotch = blendedSaturation(s1.notch, smoothedDrive * 0.7f);
+				// Output mapping for 24dB OB-X: LP-only (authentic OB-Xa)
+				// HP/BP/Notch silent — crossfade handles click-free transitions
+				outLP    = blendedSaturation(s2.lowpass, smoothedDrive * 1.3f);
+				outHP    = 0.0f;
+				outBP    = 0.0f;
+				outNotch = 0.0f;
 			}
 
 			// Apply crossfade for click-free mode switching
