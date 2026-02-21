@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-03)
 
 **Core value:** The distinctive Oberheim filter sound in a polyphonic VCV Rack module
-**Current focus:** Phase 8 - Core 24dB Cascade
+**Current focus:** Phase 9 - Character Output (awaiting human verification)
 
 ## Current Position
 
-Phase: 8 of 9 (Core 24dB Cascade)
-Plan: 1 of ? in current phase
-Status: Executing
-Last activity: 2026-02-21 — Completed 08-01 (24dB cascade filter + panel switch)
+Phase: 9 of 9 (Character Output)
+Plan: 1 of 1 in current phase
+Status: Checkpoint — awaiting human verification (Task 2)
+Last activity: 2026-02-21 — Completed 09-01 Task 1 (OB-X character tuning + LP-only routing)
 
-Progress: [██████████░░░░░░░░░░] 78% (7 of 9 phases complete)
+Progress: [████████████████████] 89% (8 of 9 phases + Task 1 of final plan complete)
 
 ## Performance Metrics
 
 **Velocity (from v0.50b):**
-- Total plans completed: 7
+- Total plans completed: 8
 - Average duration: 10 min
-- Total execution time: 1.1 hours
+- Total execution time: 1.2 hours
 
 **By Phase (v0.50b):**
 
@@ -34,6 +34,7 @@ Progress: [██████████░░░░░░░░░░] 78% (7 
 | 5 | 1 | 10 min | 10 min |
 | 6 | 2 | 20 min | 10 min |
 | 7 | 1 | 10 min | 10 min |
+| 8 | 1 | 10 min | 10 min |
 
 *Updated after each plan completion*
 
@@ -52,6 +53,10 @@ Recent decisions affecting current work:
 - 08-01: 24dB LP drive at 1.3x for OB-X edge, same knob range
 - 08-01: CKSS switch at (55mm, 28mm) right column above drive
 - 08-01: Interim HP/BP/Notch use stage1 outputs; Phase 9 finalizes routing
+- 09-01: resonance24 = clamp(resonance * 1.15, 0, 0.95) for OB-X Q boost in 24dB Stage 1
+- 09-01: Stage 2 Q = resonance24 * 0.65 (boosted base cascades character through both stages)
+- 09-01: Inter-stage tanh factor 0.12f — near-linear at typical levels, progressive odd harmonics at high drive/resonance
+- 09-01: outHP = outBP = outNotch = 0.0f in 24dB; existing crossfade handles click-free fade-to/from-zero
 
 ### Pending Todos
 
@@ -59,15 +64,15 @@ None.
 
 ### Blockers/Concerns
 
-None.
+None — awaiting human verification of OB-X character and LP-only routing in VCV Rack.
 
 ## Session Continuity
 
 Last session: 2026-02-21
-Stopped at: Phase 9 context gathered
-Resume file: .planning/phases/09-character-output/09-CONTEXT.md
+Stopped at: 09-01 Task 2 checkpoint:human-verify — awaiting user approval in VCV Rack
+Resume file: .planning/phases/09-character-output/09-01-SUMMARY.md
 
 ---
 *State initialized: 2026-01-29*
 *v0.50b milestone: SHIPPED 2026-02-03*
-*v0.60b milestone: Started 2026-02-03*
+*v0.60b milestone: Started 2026-02-03 — final verification pending*
