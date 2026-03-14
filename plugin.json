@@ -11,7 +11,7 @@
     {
       "slug": "HydraQuartetVCF",
       "name": "HydraQuartet VCF-OB",
-      "description": "8-voice Oberheim-style multimode filter",
+      "description": "16-voice polyphonic Oberheim-style multimode filter with dual 12dB SEM / 24dB OB-X modes, four simultaneous outputs, and comprehensive CV control",
       "tags": ["Filter", "Polyphonic", "VCF", "Multimode"]
     }
   ]

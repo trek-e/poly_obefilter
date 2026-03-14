@@ -1,185 +1,313 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   width="71.12mm"
-   height="128.5mm"
-   viewBox="0 0 71.12 128.5"
-   version="1.1"
-   id="svg1"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs id="defs1" />
-  <g id="layer1">
-    <!-- Background -->
-    <rect
-       style="fill:#1a1a2e;fill-opacity:1;stroke:#3a3a5e;stroke-width:0.5;stroke-opacity:1"
-       id="background"
-       width="70.62"
-       height="128"
-       x="0.25"
-       y="0.25" />
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="71.12mm" height="128.5mm" viewBox="0 0 71.12 128.5">
+  <defs>
+    <linearGradient id="panelBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a2a2e"/>
+      <stop offset="100%" stop-color="#1e1e22"/>
+    </linearGradient>
+    <linearGradient id="sectionBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#33333a"/>
+      <stop offset="100%" stop-color="#2a2a30"/>
+    </linearGradient>
+  </defs>
 
-    <!-- Module Title -->
-    <path
-       style="fill:#8888aa;fill-opacity:1"
-       d="m 10,8 h 2 v 6 h -2 z m 3,0 h 2 v 3 h -2 z m 3,0 h 2 v 6 h -2 z m 3,3 h 2 v 3 h -2 z m 3,-3 h 2 v 6 h -2 z m 3,0 h 6 v 1 h -6 z m 0,2.5 h 5 v 1 h -5 z m 0,2.5 h 6 v 1 h -6 z m 8,-5 h 2 v 6 h -2 z m 3,0 h 5 v 1 h -5 z m 0,2.5 h 4 v 1 h -4 z m 0,2.5 h 5 v 1 h -5 z m 7,-5 h 5 v 1 h -5 z m 2,1 v 2 h 2 v -2 z m 0,2 h -2 v 3 h 5 v -1 h -3 z"
-       id="title" />
+  <!-- Panel background -->
+  <rect width="71.12" height="128.5" fill="url(#panelBg)"/>
 
-    <!-- VCF-OB subtitle -->
-    <path
-       style="fill:#8888aa;fill-opacity:1;opacity:0.8"
-       d="m 27,16 h 2 v 3 h -2 z m 3,0 h 2 v 1 h -2 z m 0,2 h 2 v 1 h -2 z m 3,0 h 2 v 1 h -2 z m 0,-2 h 2 v 1 h -2 z m 3,0 h 3 v 1 h -3 z m 0,1 h 2 v 1 h -2 z m 0,1 h 3 v 1 h -3 z"
-       id="subtitle" />
+  <!-- Panel border -->
+  <rect x="0.5" y="0.5" width="70.12" height="127.5" fill="none" stroke="#444" stroke-width="0.5" rx="0.5"/>
 
-    <!-- Section dividers -->
-    <path
-       style="fill:none;stroke:#3a3a5e;stroke-width:0.3;stroke-opacity:1"
-       d="M 5,22 H 66.12 M 5,52 H 66.12 M 5,77 H 66.12"
-       id="dividers" />
+  <!-- ============================================ -->
+  <!-- MODULE TITLE BAR -->
+  <!-- ============================================ -->
+  <rect x="3" y="3" width="65.12" height="7" rx="1" fill="#c06020" opacity="0.9"/>
 
-    <!-- INPUT label -->
-    <path
-       style="fill:#8888aa;fill-opacity:1;font-size:3px"
-       d="m 8,26 h 1 v 4 h -1 z m 2,0 h 2 v 4 h -1 v -3 h -1 z m 3,0 h 2 v 1 h -2 z m 0,1.5 h 1.5 v 1 h -1.5 z m 0,1.5 h 2 v 1 h -2 z m 3,0 h 1 v -3 h 2 v 4 h -1 v -3 h -1 v 3 h -1 z m 4,0 h 2 v 1 h -2 z m 1,-3 v 3 h 1 v -3 z"
-       id="input-label" />
+  <!-- "VCF-OB" title -->
+  <!-- V -->
+  <path d="M6,4.5 l1.2,4.5 l1.2,-4.5" fill="none" stroke="#fff" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- C -->
+  <path d="M11.5,5.5 a2,2 0 0,0 -2,1.75 a2,2 0 0,0 2,1.75" fill="none" stroke="#fff" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- F -->
+  <path d="M14,9 v-4.5 h2.5 M14,6.75 h2" fill="none" stroke="#fff" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- dash -->
+  <path d="M18,6.75 h1.5" fill="none" stroke="#fff" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- O -->
+  <path d="M22,6.75 a1.8,1.8 0 1,0 3.6,0 a1.8,1.8 0 1,0 -3.6,0" fill="none" stroke="#fff" stroke-width="0.6"/>
+  <!-- B -->
+  <path d="M28,4.5 v4.5 h1.5 a1,1 0 0,0 0,-2.2 h-1.5 h1.3 a1,1 0 0,0 0,-2.3 z" fill="none" stroke="#fff" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
 
-    <!-- CUTOFF label -->
-    <path
-       style="fill:#6688cc;fill-opacity:1;font-size:3px"
-       d="m 22,56 h 2 v 1 h -2 z m 0,1.5 h 1.5 v 1 h -1.5 z m 0,1.5 h 2 v 1 h -2 z m 3,0 h 1 v -3 h 2 v 4 h -1 v -3 h -1 v 3 h -1 z m 3,-3 h 2 v 1 h -2 z m 1,1 v 2 h 1 v -2 z m 0,2 h -1 v 1 h 2 v -1 z m 3,-3 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z m 3,-3 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z"
-       id="cutoff-label" />
-
-    <!-- RESONANCE label -->
-    <path
-       style="fill:#66aa99;fill-opacity:1;font-size:3px"
-       d="m 8,81 h 2 v 1 h -1 v 1 h 1 v 1 h 1 v -2 h 1 v 2 h -2 v 1 h -2 z m 3,0 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z m 3,0 h 1 v 1 h -1 z m 0,-3 h 2 v 1 h -1 v 3 h -1 z m 3,1.5 h 2 v 1 h -2 z m 1,-1.5 v 2 h 1 v -2 z m 0,2 h -1 v 1 h 2 v -1 z m 3,-2 h 2 v 4 h -1 v -3 h -1 z m 3,0 h 3 v 1 h -1 v 3 h -1 v -3 h -1 z m 4,0 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z m 3,0 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z"
-       id="resonance-label" />
-
-    <!-- DRIVE label -->
-    <path
-       style="fill:#aa8866;fill-opacity:1;font-size:3px"
-       d="m 46,56 h 2 v 1 h -1 v 2 h 1 v 1 h -2 z m 3,0 h 2 v 1 h -1 v 1 h 1 v 1 h -1 v 1 h -1 z m 3,0 h 1 v 4 h -1 z m 2,0 h 2 v 4 h -1 v -1 h -1 z m 0,1 v 1 h 1 v -1 z m 3,0 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z"
-       id="drive-label" />
-
-    <!-- 12dB label (above filter type switch) -->
-    <path
-       style="fill:#8888aa;fill-opacity:0.7"
-       d="m 53,24 h 1 v 3 h -1 z m 2,0 h 2 v 1 h -1 v 1 h 1 v 1 h -2 z"
-       id="label-12db" />
-
-    <!-- 24dB label (below filter type switch) -->
-    <path
-       style="fill:#8888aa;fill-opacity:0.7"
-       d="m 53,34 h 2 v 1 h -1 v 1 h 1 v 1 h -2 z m 0,-1 h 2 v 1 h -2 z m 3,0 h 1 v 1 h 1 v 2 h -1 v -1 h -1 z"
-       id="label-24db" />
-
-    <!-- OUTPUTS label -->
-    <path
-       style="fill:#aa8866;fill-opacity:1;font-size:3px"
-       d="m 18,100 h 2 v 1 h -2 z m 1,1 v 2 h 1 v -2 z m 0,2 h -1 v 1 h 2 v -1 z m 3,-3 h 1 v 1 h 2 v 3 h -1 v -3 h -1 v 3 h -1 z m 4,0 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z m 3,-3 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z m 3,-3 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z m 0,1.5 h 2 v 1 h -2 z m 3,0 h 1 v 1 h -1 z m 0,-3 h 2 v 1 h -1 v 3 h -1 z m 3,1.5 h 2 v 1 h -2 z m 1,-1.5 v 2 h 1 v -2 z m 0,2 h -1 v 1 h 2 v -1 z"
-       id="outputs-label" />
+  <!-- "HydraQuartet" brand (small, right side of title bar) -->
+  <g transform="translate(42,5.5)" fill="#fff" fill-opacity="0.6" stroke="none">
+    <!-- H -->
+    <rect x="0" y="0" width="0.3" height="2.5"/>
+    <rect x="1.2" y="0" width="0.3" height="2.5"/>
+    <rect x="0" y="1.05" width="1.5" height="0.3"/>
+    <!-- Q (simplified) -->
+    <rect x="2" y="0" width="1.5" height="0.3"/>
+    <rect x="2" y="0" width="0.3" height="2.5"/>
+    <rect x="3.2" y="0" width="0.3" height="2.5"/>
+    <rect x="2" y="2.2" width="1.5" height="0.3"/>
+    <rect x="3" y="1.8" width="0.7" height="0.3" transform="rotate(30,3.3,1.95)"/>
   </g>
 
-  <g
-     id="components"
-     style="display:none">
-    <!-- Audio Input (top left) -->
-    <circle
-       style="fill:#00ff00"
-       cx="15"
-       cy="35"
-       r="4"
-       id="audio-input" />
+  <!-- ============================================ -->
+  <!-- SECTION: FILTER TYPE -->
+  <!-- ============================================ -->
+  <rect x="3" y="12" width="65.12" height="3.5" rx="0.5" fill="#c06020" opacity="0.6"/>
+  <!-- "FILTER" section label -->
+  <!-- F -->
+  <path d="M5,12.5 v2.5 M5,12.5 h1.8 M5,13.75 h1.3" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- I -->
+  <path d="M8,12.5 v2.5" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round"/>
+  <!-- L -->
+  <path d="M9.5,12.5 v2.5 h1.5" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- T -->
+  <path d="M12.5,12.5 h2 M13.5,12.5 v2.5" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round"/>
+  <!-- E -->
+  <path d="M16.5,12.5 h-1.5 v2.5 h1.5 M15,13.75 h1" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- R -->
+  <path d="M17.5,15 v-2.5 h1 a0.7,0.7 0 0,1 0,1.4 h-1 l1.3,1.1" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- 12dB / 24dB labels flanking switch position -->
+  <g transform="translate(12,17.5)" fill="#aaa" stroke="none">
+    <!-- 1 -->
+    <rect x="0" y="0" width="0.35" height="2.5"/>
+    <!-- 2 -->
+    <rect x="1" y="0" width="1.2" height="0.35"/>
+    <rect x="1.85" y="0" width="0.35" height="1.25"/>
+    <rect x="1" y="1.05" width="1.2" height="0.35"/>
+    <rect x="1" y="1.25" width="0.35" height="1.25"/>
+    <rect x="1" y="2.15" width="1.2" height="0.35"/>
+    <!-- d -->
+    <rect x="2.8" y="0" width="0.35" height="2.5"/>
+    <rect x="2.8" y="0" width="1" height="0.35"/>
+    <rect x="2.8" y="2.15" width="1" height="0.35"/>
+    <rect x="3.5" y="0.35" width="0.35" height="1.8"/>
+    <!-- B -->
+    <rect x="4.3" y="0" width="0.35" height="2.5"/>
+    <rect x="4.3" y="0" width="1.2" height="0.35"/>
+    <rect x="4.3" y="1.05" width="1.2" height="0.35"/>
+    <rect x="4.3" y="2.15" width="1.2" height="0.35"/>
+    <rect x="5.15" y="0" width="0.35" height="1.25"/>
+    <rect x="5.15" y="1.25" width="0.35" height="1.25"/>
+  </g>
+
+  <g transform="translate(12,26)" fill="#aaa" stroke="none">
+    <!-- 2 -->
+    <rect x="0" y="0" width="1.2" height="0.35"/>
+    <rect x="0.85" y="0" width="0.35" height="1.25"/>
+    <rect x="0" y="1.05" width="1.2" height="0.35"/>
+    <rect x="0" y="1.25" width="0.35" height="1.25"/>
+    <rect x="0" y="2.15" width="1.2" height="0.35"/>
+    <!-- 4 -->
+    <rect x="1.7" y="0" width="0.35" height="1.5"/>
+    <rect x="2.7" y="0" width="0.35" height="2.5"/>
+    <rect x="1.7" y="1.05" width="1.35" height="0.35"/>
+    <!-- d -->
+    <rect x="3.6" y="0" width="0.35" height="2.5"/>
+    <rect x="3.6" y="0" width="1" height="0.35"/>
+    <rect x="3.6" y="2.15" width="1" height="0.35"/>
+    <rect x="4.3" y="0.35" width="0.35" height="1.8"/>
+    <!-- B -->
+    <rect x="5.1" y="0" width="0.35" height="2.5"/>
+    <rect x="5.1" y="0" width="1.2" height="0.35"/>
+    <rect x="5.1" y="1.05" width="1.2" height="0.35"/>
+    <rect x="5.1" y="2.15" width="1.2" height="0.35"/>
+    <rect x="5.95" y="0" width="0.35" height="1.25"/>
+    <rect x="5.95" y="1.25" width="0.35" height="1.25"/>
+  </g>
+
+  <!-- Filter type switch dot indicator -->
+  <circle cx="24" cy="22" r="0.6" fill="#c06020" opacity="0.5"/>
+
+  <!-- ============================================ -->
+  <!-- SECTION: CUTOFF -->
+  <!-- ============================================ -->
+  <rect x="3" y="32" width="32" height="3.5" rx="0.5" fill="#3060a0" opacity="0.6"/>
+  <!-- "CUTOFF" label -->
+  <!-- C -->
+  <path d="M5.5,33 a1,1 0 0,0 -1,0.75 a1,1 0 0,0 1,0.75" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round"/>
+  <!-- U -->
+  <path d="M7,33 v1.5 a0.8,0.8 0 0,0 1.6,0 v-1.5" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round"/>
+  <!-- T -->
+  <path d="M10,33 h1.6 M10.8,33 v2.5" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round"/>
+  <!-- O -->
+  <path d="M13,34.25 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0" fill="none" stroke="#fff" stroke-width="0.4"/>
+  <!-- F -->
+  <path d="M16.5,33 v2.5 M16.5,33 h1.5 M16.5,34.25 h1.2" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- F -->
+  <path d="M19,33 v2.5 M19,33 h1.5 M19,34.25 h1.2" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Cutoff knob dot indicator -->
+  <circle cx="20" cy="43" r="0.6" fill="#3060a0" opacity="0.5"/>
+
+  <!-- CV label -->
+  <g transform="translate(7,46)" fill="#888" stroke="none">
+    <rect x="0" y="0" width="1.2" height="0.3"/>
+    <rect x="0" y="0" width="0.3" height="2"/>
+    <rect x="0" y="1.7" width="1.2" height="0.3"/>
+  </g>
+
+  <!-- CV input dot indicator -->
+  <circle cx="10" cy="52" r="0.5" fill="#3060a0" opacity="0.4"/>
+
+  <!-- Attenuverter dot indicator -->
+  <circle cx="28" cy="52" r="0.5" fill="#3060a0" opacity="0.4"/>
+
+  <!-- ============================================ -->
+  <!-- SECTION: DRIVE -->
+  <!-- ============================================ -->
+  <rect x="37" y="32" width="31.12" height="3.5" rx="0.5" fill="#a04020" opacity="0.6"/>
+  <!-- "DRIVE" label -->
+  <!-- D -->
+  <path d="M39,33 v2.5 h0.8 a1.25,1.25 0 0,0 0,-2.5 z" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- R -->
+  <path d="M42.5,35.5 v-2.5 h1 a0.7,0.7 0 0,1 0,1.4 h-1 l1.3,1.1" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- I -->
+  <path d="M45.5,33 v2.5" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round"/>
+  <!-- V -->
+  <path d="M47,33 l0.8,2.5 l0.8,-2.5" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- E -->
+  <path d="M51,33 h-1.2 v2.5 h1.2 M49.8,34.25 h0.8" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Drive knob dot indicator -->
+  <circle cx="52" cy="43" r="0.6" fill="#a04020" opacity="0.5"/>
+
+  <!-- Drive CV dot indicator -->
+  <circle cx="42" cy="52" r="0.5" fill="#a04020" opacity="0.4"/>
+
+  <!-- Drive attenuverter dot indicator -->
+  <circle cx="60" cy="52" r="0.5" fill="#a04020" opacity="0.4"/>
+
+  <!-- ============================================ -->
+  <!-- SECTION: RESONANCE -->
+  <!-- ============================================ -->
+  <rect x="3" y="60" width="65.12" height="3.5" rx="0.5" fill="#206050" opacity="0.6"/>
+  <!-- "RESONANCE" label -->
+  <!-- R -->
+  <path d="M5,61 v2.5 M5,61 h1 a0.7,0.7 0 0,1 0,1.4 h-1 l1.3,1.1" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- E -->
+  <path d="M9,61 h-1.2 v2.5 h1.2 M7.8,62.25 h0.8" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- S -->
+  <path d="M11,61.3 a0.6,0.6 0 0,0 -1,0.5 a0.6,0.6 0 0,0 1,0.5 a0.6,0.6 0 0,1 -1,0.5" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round"/>
+  <!-- O -->
+  <path d="M12.5,62.25 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0" fill="none" stroke="#fff" stroke-width="0.4"/>
+  <!-- N -->
+  <path d="M15.5,63.5 v-2.5 l1.5,2.5 v-2.5" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Resonance knob dot indicator -->
+  <circle cx="35.56" cy="72" r="0.6" fill="#206050" opacity="0.5"/>
+
+  <!-- Resonance CV dot indicator -->
+  <circle cx="15" cy="72" r="0.5" fill="#206050" opacity="0.4"/>
+
+  <!-- Resonance attenuverter dot indicator -->
+  <circle cx="56" cy="72" r="0.5" fill="#206050" opacity="0.4"/>
+
+  <!-- ============================================ -->
+  <!-- SECTION: INPUT -->
+  <!-- ============================================ -->
+  <rect x="3" y="80" width="30" height="3.5" rx="0.5" fill="#3060a0" opacity="0.6"/>
+  <!-- "INPUT" label -->
+  <!-- I -->
+  <path d="M5.5,80.5 v2.5" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round"/>
+  <!-- N -->
+  <path d="M7.5,83 v-2.5 l1.5,2.5 v-2.5" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Audio input dot indicator -->
+  <circle cx="18" cy="90" r="0.5" fill="#3060a0" opacity="0.4"/>
+
+  <!-- ============================================ -->
+  <!-- SECTION: OUTPUTS -->
+  <!-- ============================================ -->
+  <rect x="3" y="97" width="65.12" height="3.5" rx="0.5" fill="#20a050" opacity="0.6"/>
+  <!-- "OUTPUTS" label -->
+  <!-- O -->
+  <path d="M5.5,98.75 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0" fill="none" stroke="#fff" stroke-width="0.4"/>
+  <!-- U -->
+  <path d="M9,98 v1.5 a0.7,0.7 0 0,0 1.4,0 v-1.5" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round"/>
+  <!-- T -->
+  <path d="M12,98 h1.6 M12.8,98 v2.5" fill="none" stroke="#fff" stroke-width="0.4" stroke-linecap="round"/>
+
+  <!-- Output labels -->
+  <g transform="translate(7,103)" fill="#aaa" stroke="none">
+    <!-- LP -->
+    <rect x="0" y="0" width="0.3" height="2"/>
+    <rect x="0" y="1.7" width="1.2" height="0.3"/>
+  </g>
+  <g transform="translate(22,103)" fill="#aaa" stroke="none">
+    <!-- HP -->
+    <rect x="0" y="0" width="0.3" height="2"/>
+    <rect x="1.2" y="0" width="0.3" height="2"/>
+    <rect x="0" y="0.85" width="1.5" height="0.3"/>
+  </g>
+  <g transform="translate(37,103)" fill="#aaa" stroke="none">
+    <!-- BP -->
+    <rect x="0" y="0" width="0.3" height="2"/>
+    <rect x="0" y="0" width="1.2" height="0.3"/>
+    <rect x="0" y="0.85" width="1.2" height="0.3"/>
+    <rect x="1" y="0" width="0.3" height="1.1"/>
+  </g>
+  <g transform="translate(51,103)" fill="#aaa" stroke="none">
+    <!-- N -->
+    <rect x="0" y="0" width="0.3" height="2"/>
+    <rect x="1.2" y="0" width="0.3" height="2"/>
+    <rect x="0" y="0" width="1.5" height="0.3"/>
+  </g>
+
+  <!-- Output jack dot indicators -->
+  <circle cx="10" cy="109" r="0.5" fill="#20a050" opacity="0.4"/>
+  <circle cx="26" cy="109" r="0.5" fill="#20a050" opacity="0.4"/>
+  <circle cx="42" cy="109" r="0.5" fill="#20a050" opacity="0.4"/>
+  <circle cx="58" cy="109" r="0.5" fill="#20a050" opacity="0.4"/>
+
+  <!-- ============================================ -->
+  <!-- BRAND FOOTER -->
+  <!-- ============================================ -->
+  <rect x="3" y="118" width="65.12" height="4" rx="0.5" fill="#333" opacity="0.5"/>
+  <!-- "SYNTH-ETIC" brand mark -->
+  <!-- S -->
+  <path d="M6,119 a0.6,0.6 0 0,0 -0.8,0.5 a0.6,0.6 0 0,0 0.8,0.5 a0.6,0.6 0 0,1 -0.8,0.5" fill="none" stroke="#666" stroke-width="0.35" stroke-linecap="round"/>
+  <!-- I -->
+  <path d="M8,119 v2" fill="none" stroke="#666" stroke-width="0.35" stroke-linecap="round"/>
+
+  <!-- Screw hole indicators -->
+  <circle cx="5.08" cy="5.08" r="2" fill="none" stroke="#555" stroke-width="0.2" opacity="0.3"/>
+  <circle cx="66.04" cy="5.08" r="2" fill="none" stroke="#555" stroke-width="0.2" opacity="0.3"/>
+  <circle cx="5.08" cy="123.42" r="2" fill="none" stroke="#555" stroke-width="0.2" opacity="0.3"/>
+  <circle cx="66.04" cy="123.42" r="2" fill="none" stroke="#555" stroke-width="0.2" opacity="0.3"/>
+
+  <!-- ============================================ -->
+  <!-- COMPONENTS LAYER (hidden - for helper.py) -->
+  <!-- ============================================ -->
+  <g id="components" style="display:none">
+    <!-- Audio Input -->
+    <circle style="fill:#00ff00" cx="18" cy="90" r="4" id="audio-input"/>
+
+    <!-- Filter type switch (CKSS - 2 position toggle) -->
+    <rect style="fill:#333355;stroke:#5555aa;stroke-width:0.3"
+       x="21.8" y="17" width="4.4" height="10" rx="1"
+       id="filter-type-switch-placeholder"/>
 
     <!-- Cutoff section -->
-    <circle
-       style="fill:#ff0000"
-       cx="35.56"
-       cy="40"
-       r="5"
-       id="cutoff-knob" />
-    <circle
-       style="fill:#00ff00"
-       cx="20"
-       cy="50"
-       r="3.5"
-       id="cutoff-cv-input" />
-    <circle
-       style="fill:#ff0000"
-       cx="35.56"
-       cy="62"
-       r="4"
-       id="cutoff-atten-knob" />
-
-    <!-- Resonance section -->
-    <circle
-       style="fill:#ff0000"
-       cx="35.56"
-       cy="88"
-       r="5"
-       id="resonance-knob" />
-    <circle
-       style="fill:#00ff00"
-       cx="20"
-       cy="88"
-       r="3.5"
-       id="resonance-cv-input" />
-    <circle
-       style="fill:#ff0000"
-       cx="35.56"
-       cy="98"
-       r="4"
-       id="resonance-atten-knob" />
-
-    <!-- Filter Type Switch (CKSS - 2 position toggle) -->
-    <rect
-       style="fill:#333355;stroke:#5555aa;stroke-width:0.3"
-       x="52.8" y="23" width="4.4" height="10" rx="1"
-       id="filter-type-switch-placeholder" />
+    <circle style="fill:#ff0000" cx="20" cy="43" r="5" id="cutoff-knob"/>
+    <circle style="fill:#00ff00" cx="10" cy="52" r="3.5" id="cutoff-cv-input"/>
+    <circle style="fill:#ff0000" cx="28" cy="52" r="4" id="cutoff-atten-knob"/>
 
     <!-- Drive section -->
-    <circle
-       style="fill:#ff0000"
-       cx="55"
-       cy="40"
-       r="5"
-       id="drive-knob" />
-    <circle
-       style="fill:#00ff00"
-       cx="55"
-       cy="50"
-       r="3.5"
-       id="drive-cv-input" />
-    <circle
-       style="fill:#ff0000"
-       cx="55"
-       cy="62"
-       r="4"
-       id="drive-atten-knob" />
+    <circle style="fill:#ff0000" cx="52" cy="43" r="5" id="drive-knob"/>
+    <circle style="fill:#00ff00" cx="42" cy="52" r="3.5" id="drive-cv-input"/>
+    <circle style="fill:#ff0000" cx="60" cy="52" r="4" id="drive-atten-knob"/>
+
+    <!-- Resonance section -->
+    <circle style="fill:#ff0000" cx="35.56" cy="72" r="5" id="resonance-knob"/>
+    <circle style="fill:#00ff00" cx="15" cy="72" r="3.5" id="resonance-cv-input"/>
+    <circle style="fill:#ff0000" cx="56" cy="72" r="4" id="resonance-atten-knob"/>
 
     <!-- Outputs section -->
-    <circle
-       style="fill:#0000ff"
-       cx="20"
-       cy="107"
-       r="3.5"
-       id="lp-output" />
-    <circle
-       style="fill:#0000ff"
-       cx="35.56"
-       cy="107"
-       r="3.5"
-       id="hp-output" />
-    <circle
-       style="fill:#0000ff"
-       cx="51"
-       cy="107"
-       r="3.5"
-       id="bp-output" />
-    <circle
-       style="fill:#0000ff"
-       cx="20"
-       cy="118"
-       r="3.5"
-       id="notch-output" />
+    <circle style="fill:#0000ff" cx="10" cy="109" r="3.5" id="lp-output"/>
+    <circle style="fill:#0000ff" cx="26" cy="109" r="3.5" id="hp-output"/>
+    <circle style="fill:#0000ff" cx="42" cy="109" r="3.5" id="bp-output"/>
+    <circle style="fill:#0000ff" cx="58" cy="109" r="3.5" id="notch-output"/>
   </g>
 </svg>

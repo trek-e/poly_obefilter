@@ -1,0 +1,4 @@
+build/
+plugin.dylib
+dist/
+.bg-shell/

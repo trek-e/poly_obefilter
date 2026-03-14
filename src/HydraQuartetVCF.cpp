@@ -230,28 +230,32 @@ struct HydraQuartetVCFWidget : ModuleWidget {
 		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
-		// Parameters (red circles in SVG)
-		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(35.56, 40.0)), module, HydraQuartetVCF::CUTOFF_PARAM));
-		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(35.56, 62.0)), module, HydraQuartetVCF::CUTOFF_ATTEN_PARAM));
-		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(35.56, 88.0)), module, HydraQuartetVCF::RESONANCE_PARAM));
-		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(35.56, 98.0)), module, HydraQuartetVCF::RESONANCE_ATTEN_PARAM));
-		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(55.0, 40.0)), module, HydraQuartetVCF::DRIVE_PARAM));
-		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(55.0, 62.0)), module, HydraQuartetVCF::DRIVE_ATTEN_PARAM));
+		// Cutoff section
+		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(20.0, 43.0)), module, HydraQuartetVCF::CUTOFF_PARAM));
+		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(28.0, 52.0)), module, HydraQuartetVCF::CUTOFF_ATTEN_PARAM));
 
-		// Filter type switch (between title divider and drive knob)
-		addParam(createParamCentered<CKSS>(mm2px(Vec(55.0, 28.0)), module, HydraQuartetVCF::FILTER_TYPE_PARAM));
+		// Drive section
+		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(52.0, 43.0)), module, HydraQuartetVCF::DRIVE_PARAM));
+		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(60.0, 52.0)), module, HydraQuartetVCF::DRIVE_ATTEN_PARAM));
 
-		// Inputs (green circles in SVG)
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(15.0, 35.0)), module, HydraQuartetVCF::AUDIO_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(20.0, 50.0)), module, HydraQuartetVCF::CUTOFF_CV_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(20.0, 88.0)), module, HydraQuartetVCF::RESONANCE_CV_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(55.0, 50.0)), module, HydraQuartetVCF::DRIVE_CV_INPUT));
+		// Resonance section
+		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(35.56, 72.0)), module, HydraQuartetVCF::RESONANCE_PARAM));
+		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(56.0, 72.0)), module, HydraQuartetVCF::RESONANCE_ATTEN_PARAM));
 
-		// Outputs (blue circles in SVG)
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(20.0, 107.0)), module, HydraQuartetVCF::LP_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(35.56, 107.0)), module, HydraQuartetVCF::HP_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(51.0, 107.0)), module, HydraQuartetVCF::BP_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(20.0, 118.0)), module, HydraQuartetVCF::NOTCH_OUTPUT));
+		// Filter type switch
+		addParam(createParamCentered<CKSS>(mm2px(Vec(24.0, 22.0)), module, HydraQuartetVCF::FILTER_TYPE_PARAM));
+
+		// Inputs
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(18.0, 90.0)), module, HydraQuartetVCF::AUDIO_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(10.0, 52.0)), module, HydraQuartetVCF::CUTOFF_CV_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(15.0, 72.0)), module, HydraQuartetVCF::RESONANCE_CV_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(42.0, 52.0)), module, HydraQuartetVCF::DRIVE_CV_INPUT));
+
+		// Outputs
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(10.0, 109.0)), module, HydraQuartetVCF::LP_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(26.0, 109.0)), module, HydraQuartetVCF::HP_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(42.0, 109.0)), module, HydraQuartetVCF::BP_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(58.0, 109.0)), module, HydraQuartetVCF::NOTCH_OUTPUT));
 	}
 };
 
