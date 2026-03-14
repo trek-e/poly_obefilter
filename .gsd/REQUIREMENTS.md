@@ -8,6 +8,7 @@
 - Class: core-capability
 - Source: M002-CONTEXT
 - Primary Slice: M002/S01
+- Progress: S01 implemented — per-voice Schmitt trigger CV input, build-verified. Awaiting runtime UAT.
 
 CV input that accepts a gate, trigger, or continuous CV to switch between 12dB SEM and 24dB OB-X filter modes. Polyphonic (per-voice switching).
 
@@ -35,6 +36,7 @@ Dedicated 1V/Oct input for pitch tracking. No attenuverter — true tracking. Su
 - Class: convention
 - Source: M002-RESEARCH (candidate requirement)
 - Primary Slice: M002/S01
+- Progress: S01 implemented — isConnected() branching logic, build-verified. Awaiting runtime UAT.
 
 When filter type CV is patched, CV determines filter type and panel switch has no effect. When CV is disconnected, panel switch works normally.
 
@@ -44,6 +46,7 @@ When filter type CV is patched, CV determines filter type and panel switch has n
 - Class: convention
 - Source: M002-RESEARCH (candidate requirement)
 - Primary Slice: M002/S01
+- Progress: S01 implemented — 200mV hysteresis band (2.4V falling, 2.6V rising), per-voice state arrays, build-verified. Awaiting runtime UAT.
 
 Filter type CV uses Schmitt trigger with ~0.1V hysteresis (switch at 2.6V rising, 2.4V falling) to prevent chatter near threshold.
 

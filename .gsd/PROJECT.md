@@ -8,9 +8,9 @@ A polyphonic 16-voice multimode filter module for VCV Rack 2.x by Synth-etic Int
 
 The distinctive Oberheim filter sound — musical, characterful, and versatile — in a polyphonic VCV Rack module.
 
-## Current Milestone: v0.70b CV Control (next)
+## Current Milestone: v0.70b CV Control (in progress)
 
-**Goal:** Add CV inputs for filter type switching and mode selection
+**Goal:** Add CV inputs for filter type switching, FM, and pitch tracking
 
 ## Current State
 
@@ -25,7 +25,9 @@ The distinctive Oberheim filter sound — musical, characterful, and versatile �
 - SEM-style 12dB/oct state-variable filter
 - OB-X style 24dB/oct cascaded SVF with character tuning
 - Panel toggle switch for 12dB SEM / 24dB OB-X mode selection
-- Click-free 128-sample crossfade on mode switching
+- Filter type CV input with per-voice Schmitt trigger switching (2.6V/2.4V hysteresis)
+- CV overrides panel switch when connected; switch resumes when disconnected
+- Click-free 128-sample per-voice crossfade on mode switching
 - LP-only output in 24dB mode (HP/BP/Notch silent, authentic OB-Xa)
 - 4 simultaneous outputs (LP, HP, BP, Notch) in 12dB mode
 - 16-voice polyphony with independent filter state
@@ -58,7 +60,7 @@ The distinctive Oberheim filter sound — musical, characterful, and versatile �
 
 - [ ] OB-X style 24dB/oct filter (v0.60b)
 - [ ] Filter type selection switch (v0.60b)
-- [ ] CV input for filter type switching (v0.70b)
+- [x] CV input for filter type switching (v0.70b, S01)
 - [ ] CV input for mode selection (v0.70b)
 - [ ] FM input with attenuverter (v0.70b)
 - [ ] 1V/Oct pitch tracking input (v0.70b)
@@ -129,4 +131,4 @@ The distinctive Oberheim filter sound — musical, characterful, and versatile �
 | Multiple simultaneous outputs | State-variable naturally provides all modes | ✓ Good |
 
 ---
-*Last updated: 2026-03-13 after v0.60b milestone completion*
+*Last updated: 2026-03-13 after M002/S01 completion*

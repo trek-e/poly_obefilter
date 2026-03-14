@@ -39,3 +39,6 @@
 - "FM bypasses cutoffSmoother — 1ms tau kills audio-rate FM above ~160Hz; FM applied after smoothing in frequency calculation"
 - "1V/Oct input has no attenuverter — true pitch tracking; knob sets base, 1V/Oct offsets in log domain"
 - "Per-voice crossfade arrays replace global crossfadeCounter/prevFilterType — required for polyphonic CV-driven type switching"
+- "filterTypeCVConnected check hoisted outside per-voice loop — one isConnected() call per sample block, not per voice (avoids redundant port queries)"
+- "prevFilterType[c] updated after crossfade application, not before — avoids one-sample glitch where crossfade reads wrong from-values on transition start"
+- "Panel label 'CV' (not 'TYPE CV') for filter type CV jack — matches terse convention of cutoff/drive/resonance CV labels, section header already says 'FILTER'"

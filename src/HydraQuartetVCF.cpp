@@ -17,6 +17,7 @@ struct HydraQuartetVCF : Module {
 		CUTOFF_CV_INPUT,
 		RESONANCE_CV_INPUT,
 		DRIVE_CV_INPUT,
+		FILTER_TYPE_CV_INPUT,
 		INPUTS_LEN
 	};
 	enum OutputId {
@@ -36,9 +37,10 @@ struct HydraQuartetVCF : Module {
 
 	SVFilter filters24dB_stage2[PORT_MAX_CHANNELS];  // Stage 2 for 24dB cascade
 
-	// Click-free mode switching state
-	int prevFilterType = 0;
-	int crossfadeCounter = 0;
+	// Click-free mode switching state (per-voice for independent CV-driven transitions)
+	int prevFilterType[PORT_MAX_CHANNELS] = {};
+	int crossfadeCounter[PORT_MAX_CHANNELS] = {};
+	bool filterTypeHigh[PORT_MAX_CHANNELS] = {};  // Schmitt trigger state for filter type CV
 	static constexpr int CROSSFADE_SAMPLES = 128;  // ~2.7ms at 48kHz
 	float xfLP[PORT_MAX_CHANNELS] = {};
 	float xfHP[PORT_MAX_CHANNELS] = {};
@@ -60,6 +62,7 @@ struct HydraQuartetVCF : Module {
 		configInput(CUTOFF_CV_INPUT, "Cutoff CV");
 		configInput(RESONANCE_CV_INPUT, "Resonance CV");
 		configInput(DRIVE_CV_INPUT, "Drive CV");
+		configInput(FILTER_TYPE_CV_INPUT, "Filter Type CV");
 
 		configOutput(LP_OUTPUT, "Lowpass");
 		configOutput(HP_OUTPUT, "Highpass");
@@ -75,11 +78,8 @@ struct HydraQuartetVCF : Module {
 		// Get channel count from audio input (polyphonic: 1-16 channels)
 		int channels = std::max(1, inputs[AUDIO_INPUT].getChannels());
 
-		// Read filter type switch
-		int filterType = (int)(params[FILTER_TYPE_PARAM].getValue() + 0.5f);
-
-		// Detect mode change before the per-voice loop
-		bool modeJustChanged = (filterType != prevFilterType);
+		// Check if filter type CV is connected (used per-voice below)
+		bool filterTypeCVConnected = inputs[FILTER_TYPE_CV_INPUT].isConnected();
 
 		// Read global parameters (knob positions)
 		float cutoffParam = params[CUTOFF_PARAM].getValue();
@@ -105,6 +105,23 @@ struct HydraQuartetVCF : Module {
 			// Analog noise floor: tiny dither enables self-oscillation from zero state
 			// ~1µV RMS, completely inaudible, mimics thermal noise in analog circuits
 			input += 1e-6f * ((float)((c * 1013 + args.frame * 2731) & 0xFFFF) / 32768.f - 1.f);
+
+			// Determine filter type per-voice (CV overrides panel switch when connected)
+			int filterType;
+			if (filterTypeCVConnected) {
+				float cv = inputs[FILTER_TYPE_CV_INPUT].getPolyVoltage(c);
+				if (cv >= 2.6f)
+					filterTypeHigh[c] = true;
+				else if (cv <= 2.4f)
+					filterTypeHigh[c] = false;
+				// else: hold previous state (hysteresis dead zone)
+				filterType = filterTypeHigh[c] ? 1 : 0;
+			} else {
+				filterType = (int)(params[FILTER_TYPE_PARAM].getValue() + 0.5f);
+			}
+
+			// Detect per-voice mode change
+			bool modeJustChanged = (filterType != prevFilterType[c]);
 
 			// Calculate per-voice cutoff (CV is polyphonic)
 			float cutoffHz = baseCutoffHz;
@@ -132,11 +149,9 @@ struct HydraQuartetVCF : Module {
 			// Smooth drive parameter
 			float smoothedDrive = driveSmoothers[c].process(1.f / args.sampleRate, drive);
 
-			// Capture crossfade-from values at mode change (before overwriting outputs)
-			if (modeJustChanged && c == 0) {
-				crossfadeCounter = CROSSFADE_SAMPLES;
-			}
+			// Capture crossfade-from values at per-voice mode change
 			if (modeJustChanged) {
+				crossfadeCounter[c] = CROSSFADE_SAMPLES;
 				xfLP[c] = outputs[LP_OUTPUT].getVoltage(c);
 				xfHP[c] = outputs[HP_OUTPUT].getVoltage(c);
 				xfBP[c] = outputs[BP_OUTPUT].getVoltage(c);
@@ -192,14 +207,18 @@ struct HydraQuartetVCF : Module {
 				outNotch = 0.0f;
 			}
 
-			// Apply crossfade for click-free mode switching
-			if (crossfadeCounter > 0) {
-				float t = 1.f - (float)crossfadeCounter / (float)CROSSFADE_SAMPLES;
+			// Apply crossfade for click-free mode switching (per-voice)
+			if (crossfadeCounter[c] > 0) {
+				float t = 1.f - (float)crossfadeCounter[c] / (float)CROSSFADE_SAMPLES;
 				outLP = xfLP[c] * (1.f - t) + outLP * t;
 				outHP = xfHP[c] * (1.f - t) + outHP * t;
 				outBP = xfBP[c] * (1.f - t) + outBP * t;
 				outNotch = xfNotch[c] * (1.f - t) + outNotch * t;
+				crossfadeCounter[c]--;
 			}
+
+			// Update per-voice previous filter type
+			prevFilterType[c] = filterType;
 
 			// Write outputs for this channel
 			outputs[LP_OUTPUT].setVoltage(outLP, c);
@@ -207,10 +226,6 @@ struct HydraQuartetVCF : Module {
 			outputs[BP_OUTPUT].setVoltage(outBP, c);
 			outputs[NOTCH_OUTPUT].setVoltage(outNotch, c);
 		}
-
-		// Decrement crossfade counter and update prevFilterType after all voices
-		if (crossfadeCounter > 0) crossfadeCounter--;
-		prevFilterType = filterType;
 
 		// Set output channel counts (all outputs match input channel count)
 		outputs[LP_OUTPUT].setChannels(channels);
@@ -250,6 +265,7 @@ struct HydraQuartetVCFWidget : ModuleWidget {
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(10.0, 52.0)), module, HydraQuartetVCF::CUTOFF_CV_INPUT));
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(15.0, 72.0)), module, HydraQuartetVCF::RESONANCE_CV_INPUT));
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(42.0, 52.0)), module, HydraQuartetVCF::DRIVE_CV_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(24.0, 32.0)), module, HydraQuartetVCF::FILTER_TYPE_CV_INPUT));
 
 		// Outputs
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(10.0, 109.0)), module, HydraQuartetVCF::LP_OUTPUT));
