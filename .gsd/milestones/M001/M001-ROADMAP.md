@@ -13,7 +13,7 @@
 ## Slices
 
 - [x] **S01: Foundation** `risk:medium` `depends:[]`
-  > After this: Establish complete plugin infrastructure and panel design for HydraQuartet VCF-OB.
+  > After this: Establish complete plugin infrastructure and panel design for CIPHER · OB.
 - [x] **S02: Core Filter Dsp** `risk:medium` `depends:[S01]`
   > After this: Implement the core SEM-style 12dB state-variable filter DSP that processes audio through the module.
 - [x] **S03: Filter Modes** `risk:medium` `depends:[S02]`
@@ -21,7 +21,7 @@
 
 Purpose: Complete the multimode filter by exposing all four filter modes that the SVF topology already computes internally.
 - [x] **S04: Polyphonic Extension** `risk:medium` `depends:[S03]`
-  > After this: Transform the monophonic HydraQuartetVCF into a polyphonic processor supporting up to 16 voices.
+  > After this: Transform the monophonic CipherOB into a polyphonic processor supporting up to 16 voices.
 - [x] **S05: Cutoff Control** `risk:medium` `depends:[S04]`
   > After this: Refine cutoff frequency control default position
 

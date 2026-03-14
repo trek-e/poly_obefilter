@@ -31,7 +31,7 @@ score: 6/6 must-haves verified
 
 | Artifact | Expected | Status | Details |
 |----------|----------|--------|---------|
-| `src/HydraQuartetVCF.cpp` | Cutoff param with default 1.f | VERIFIED | 127 lines, no stubs, properly wired |
+| `src/CipherOB.cpp` | Cutoff param with default 1.f | VERIFIED | 127 lines, no stubs, properly wired |
 | `src/SVFilter.hpp` | Parameter smoothing for zipper-free control | VERIFIED | 101 lines, exponential filter with 1ms tau |
 
 ### Key Link Verification

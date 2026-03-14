@@ -104,9 +104,9 @@ src/
 ├── plugin.hpp           # unchanged
 ├── plugin.cpp           # unchanged
 ├── SVFilter.hpp         # unchanged — reused for both stages
-└── HydraQuartetVCF.cpp  # ALL Phase 8 changes go here (+40-55 lines)
+└── CipherOB.cpp  # ALL Phase 8 changes go here (+40-55 lines)
 res/
-└── HydraQuartetVCF.svg  # Add CKSS switch rectangle near top of panel
+└── CipherOB.svg  # Add CKSS switch rectangle near top of panel
 ```
 
 ### Pattern 1: Enum + configSwitch for Filter Type
@@ -115,7 +115,7 @@ res/
 **When to use:** Any time a parameter has discrete labeled values; VCV Rack right-click menu shows the labels automatically.
 
 ```cpp
-// In HydraQuartetVCF ParamId enum
+// In CipherOB ParamId enum
 enum ParamId {
     CUTOFF_PARAM,
     CUTOFF_ATTEN_PARAM,
@@ -140,7 +140,7 @@ int filterType = (int)std::floor(params[FILTER_TYPE_PARAM].getValue() + 0.5f);
 **When to use:** Any time polyphonic processing needs additional per-voice DSP state.
 
 ```cpp
-// Member variables in HydraQuartetVCF struct
+// Member variables in CipherOB struct
 SVFilter filters[PORT_MAX_CHANNELS];           // Stage 1 (existing — 12dB always)
 SVFilter filters24dB_stage2[PORT_MAX_CHANNELS]; // Stage 2 (NEW — only active in 24dB mode)
 ```
@@ -250,11 +250,11 @@ if (crossfadeCounter > 0) {
 The panel currently has a gap between divider at y=22mm and the cutoff knob at y=40mm. A CKSS switch placed around y=28mm, x=55mm (right side, near Drive column) is clear of all existing controls.
 
 ```cpp
-// In HydraQuartetVCFWidget constructor
+// In CipherOBWidget constructor
 addParam(createParamCentered<CKSS>(
     mm2px(Vec(55.0, 28.0)),  // Right column, below title, above drive knob
     module,
-    HydraQuartetVCF::FILTER_TYPE_PARAM));
+    CipherOB::FILTER_TYPE_PARAM));
 ```
 
 Label the switch position in SVG: "12dB" above and "24dB" below the switch, using the existing pixel-path label style.
@@ -264,7 +264,7 @@ Label the switch position in SVG: "12dB" above and "24dB" below the switch, usin
 - **Identical Q on both stages:** Never use `resonance` unmodified on stage2. Two high-Q SVFs in series compound resonance exponentially. Always scale stage2 Q down (0.5–0.8x range).
 - **No inter-stage NaN check:** The existing NaN check is inside SVFilter::process() for stage2's own state. Without an inter-stage check, stage1 NaN silently corrupts stage2 before any detection.
 - **Hard state reset on mode switch:** Calling `filters24dB_stage2[c].reset()` when switching modes creates a discontinuity that sounds like a click. Use crossfade instead; only reset on NaN recovery.
-- **Separate OBXFilter.hpp:** Prior research confirmed this adds indirection with no benefit. All cascade logic stays in HydraQuartetVCF::process().
+- **Separate OBXFilter.hpp:** Prior research confirmed this adds indirection with no benefit. All cascade logic stays in CipherOB::process().
 - **Using `round()` to read filterType:** `std::round(0.5f)` is implementation-defined (rounds to 1 on most platforms but not guaranteed). Use `floor(x + 0.5f)` or `(int)(x + 0.5f)` for safety.
 
 ---
@@ -335,7 +335,7 @@ Label the switch position in SVG: "12dB" above and "24dB" below the switch, usin
 
 ```cpp
 // Source: existing codebase + Phase 8 additions
-struct HydraQuartetVCF : Module {
+struct CipherOB : Module {
     enum ParamId {
         CUTOFF_PARAM,
         CUTOFF_ATTEN_PARAM,
@@ -366,7 +366,7 @@ struct HydraQuartetVCF : Module {
 ### Constructor Addition
 
 ```cpp
-// In HydraQuartetVCF()
+// In CipherOB()
 configSwitch(FILTER_TYPE_PARAM, 0.f, 1.f, 0.f, "Filter Type", {"12dB SEM", "24dB OB-X"});
 ```
 
@@ -456,7 +456,7 @@ void process(const ProcessArgs& args) override {
 
 ### SVG Panel Change — CKSS Switch Region
 
-Add to `HydraQuartetVCF.svg` inside `<g id="components">`:
+Add to `CipherOB.svg` inside `<g id="components">`:
 
 ```xml
 <!-- Filter Type Switch (CKSS - 2 position toggle) -->
@@ -469,13 +469,13 @@ Add to `HydraQuartetVCF.svg` inside `<g id="components">`:
 <!-- Labels: "12" above, "24" below (rendered as pixel paths in final SVG) -->
 ```
 
-Add to `HydraQuartetVCFWidget` constructor:
+Add to `CipherOBWidget` constructor:
 
 ```cpp
 addParam(createParamCentered<CKSS>(
     mm2px(Vec(55.0, 28.0)),
     module,
-    HydraQuartetVCF::FILTER_TYPE_PARAM));
+    CipherOB::FILTER_TYPE_PARAM));
 ```
 
 ---
@@ -568,8 +568,8 @@ Both stages receive identical `cutoffHz`, which maps to identical `g = tan(pi * 
 - **`.planning/research-v060b/STACK.md`** — No new dependencies, cascade-in-process() pattern, configSwitch usage; researched 2026-02-03
 - **`.planning/research-v060b/PITFALLS.md`** — 10 pitfalls catalogued; critical: NaN propagation, explosive resonance, inter-stage clipping; researched 2026-02-03
 - **`src/SVFilter.hpp`** (codebase) — Exact trapezoidal SVF implementation; tanh in v1_raw feedback path confirmed; existing NaN check behavior confirmed
-- **`src/HydraQuartetVCF.cpp`** (codebase) — Current ParamId enum, process() structure, drive smoother pattern; baseline for additions
-- **`res/HydraQuartetVCF.svg`** (codebase) — Panel dimensions (71.12mm × 128.5mm = 14HP); component positions confirmed; y=28mm gap available for switch
+- **`src/CipherOB.cpp`** (codebase) — Current ParamId enum, process() structure, drive smoother pattern; baseline for additions
+- **`res/CipherOB.svg`** (codebase) — Panel dimensions (71.12mm × 128.5mm = 14HP); component positions confirmed; y=28mm gap available for switch
 - **VCV Rack API — componentlibrary.hpp source** (https://vcvrack.com/docs-v2/componentlibrary_8hpp_source) — CKSS loads CKSS_0.svg + CKSS_1.svg, inherits from SvgSwitch; confirmed via web fetch
 - **VCV Rack Plugin API Guide** (https://vcvrack.com/manual/PluginGuide) — configSwitch() signature, labeled-value switches, right-click menu behavior; confirmed via web fetch
 

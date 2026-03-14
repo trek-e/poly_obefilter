@@ -63,7 +63,7 @@ Each task was committed atomically:
 - `src/SVFilter.hpp` - Header-only state-variable filter class with trapezoidal integration, parameter smoothing (TExponentialFilter), soft saturation in feedback path, NaN protection, and state reset method
 
 ### Modified
-- `src/HydraQuartetVCF.cpp` - Added SVFilter member, implemented process() method with parameter reading (cutoff/resonance), CV modulation (1V/oct scaling with attenuverter), exponential frequency mapping (20Hz-20kHz), audio I/O, and stubbed multi-mode outputs for Phase 3
+- `src/CipherOB.cpp` - Added SVFilter member, implemented process() method with parameter reading (cutoff/resonance), CV modulation (1V/oct scaling with attenuverter), exponential frequency mapping (20Hz-20kHz), audio I/O, and stubbed multi-mode outputs for Phase 3
 
 ## Decisions Made
 

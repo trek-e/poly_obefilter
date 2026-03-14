@@ -1,7 +1,7 @@
 #include "plugin.hpp"
 #include "SVFilter.hpp"
 
-struct HydraQuartetVCF : Module {
+struct CipherOB : Module {
 	enum ParamId {
 		CUTOFF_PARAM,
 		CUTOFF_ATTEN_PARAM,
@@ -10,6 +10,7 @@ struct HydraQuartetVCF : Module {
 		DRIVE_PARAM,
 		DRIVE_ATTEN_PARAM,
 		FILTER_TYPE_PARAM,    // 0 = 12dB SEM, 1 = 24dB OB-X
+		FM_ATTEN_PARAM,
 		PARAMS_LEN
 	};
 	enum InputId {
@@ -18,6 +19,8 @@ struct HydraQuartetVCF : Module {
 		RESONANCE_CV_INPUT,
 		DRIVE_CV_INPUT,
 		FILTER_TYPE_CV_INPUT,
+		FM_CV_INPUT,
+		VOCT_INPUT,
 		INPUTS_LEN
 	};
 	enum OutputId {
@@ -47,7 +50,7 @@ struct HydraQuartetVCF : Module {
 	float xfBP[PORT_MAX_CHANNELS] = {};
 	float xfNotch[PORT_MAX_CHANNELS] = {};
 
-	HydraQuartetVCF() {
+	CipherOB() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 
 		configParam(CUTOFF_PARAM, 0.f, 1.f, 1.f, "Cutoff");
@@ -63,6 +66,9 @@ struct HydraQuartetVCF : Module {
 		configInput(RESONANCE_CV_INPUT, "Resonance CV");
 		configInput(DRIVE_CV_INPUT, "Drive CV");
 		configInput(FILTER_TYPE_CV_INPUT, "Filter Type CV");
+		configParam(FM_ATTEN_PARAM, -1.f, 1.f, 0.f, "FM Depth");
+		configInput(FM_CV_INPUT, "FM");
+		configInput(VOCT_INPUT, "V/Oct");
 
 		configOutput(LP_OUTPUT, "Lowpass");
 		configOutput(HP_OUTPUT, "Highpass");
@@ -78,8 +84,10 @@ struct HydraQuartetVCF : Module {
 		// Get channel count from audio input (polyphonic: 1-16 channels)
 		int channels = std::max(1, inputs[AUDIO_INPUT].getChannels());
 
-		// Check if filter type CV is connected (used per-voice below)
+		// Check if CV inputs are connected (used per-voice below)
 		bool filterTypeCVConnected = inputs[FILTER_TYPE_CV_INPUT].isConnected();
+		bool fmCVConnected = inputs[FM_CV_INPUT].isConnected();
+		bool voctConnected = inputs[VOCT_INPUT].isConnected();
 
 		// Read global parameters (knob positions)
 		float cutoffParam = params[CUTOFF_PARAM].getValue();
@@ -123,12 +131,17 @@ struct HydraQuartetVCF : Module {
 			// Detect per-voice mode change
 			bool modeJustChanged = (filterType != prevFilterType[c]);
 
-			// Calculate per-voice cutoff (CV is polyphonic)
-			float cutoffHz = baseCutoffHz;
+			// Calculate per-voice cutoff (accumulate exponent in log domain, then apply once)
+			float cutoffExponent = 0.f;
 			if (inputs[CUTOFF_CV_INPUT].isConnected()) {
 				float cutoffCV = inputs[CUTOFF_CV_INPUT].getPolyVoltage(c);
-				cutoffHz = baseCutoffHz * std::pow(2.f, cutoffCV * cvAmount);
+				cutoffExponent += cutoffCV * cvAmount;
 			}
+			if (voctConnected) {
+				float voct = inputs[VOCT_INPUT].getPolyVoltage(c);
+				cutoffExponent += voct;
+			}
+			float cutoffHz = baseCutoffHz * std::pow(2.f, cutoffExponent);
 			cutoffHz = rack::clamp(cutoffHz, 20.f, 20000.f);
 
 			// Calculate per-voice resonance (CV is polyphonic)
@@ -149,6 +162,14 @@ struct HydraQuartetVCF : Module {
 			// Smooth drive parameter
 			float smoothedDrive = driveSmoothers[c].process(1.f / args.sampleRate, drive);
 
+			// Calculate FM offset (bypasses cutoff smoother for audio-rate modulation)
+			float fmOffsetVoct = 0.f;
+			if (fmCVConnected) {
+				float fmCV = inputs[FM_CV_INPUT].getPolyVoltage(c);
+				float fmAmount = params[FM_ATTEN_PARAM].getValue();
+				fmOffsetVoct = fmCV * fmAmount;
+			}
+
 			// Capture crossfade-from values at per-voice mode change
 			if (modeJustChanged) {
 				crossfadeCounter[c] = CROSSFADE_SAMPLES;
@@ -162,7 +183,7 @@ struct HydraQuartetVCF : Module {
 
 			if (filterType == 0) {
 				// 12dB SEM mode: existing processing, unchanged from v0.50b
-				filters[c].setParams(cutoffHz, resonance, args.sampleRate);
+				filters[c].setParams(cutoffHz, resonance, args.sampleRate, fmOffsetVoct);
 				SVFilterOutputs out = filters[c].process(input);
 
 				// Apply drive with output-specific scaling
@@ -179,7 +200,7 @@ struct HydraQuartetVCF : Module {
 				float resonance24 = rack::clamp(resonance * 1.15f, 0.f, 0.95f);
 
 				// Stage 1: boosted resonance for aggressive OB-X peaks
-				filters[c].setParams(cutoffHz, resonance24, args.sampleRate);
+				filters[c].setParams(cutoffHz, resonance24, args.sampleRate, fmOffsetVoct);
 				SVFilterOutputs s1 = filters[c].process(input);
 
 				// Inter-stage safety: check for NaN/infinity and clamp
@@ -196,7 +217,7 @@ struct HydraQuartetVCF : Module {
 
 				// Stage 2: split resonance (0.65x) for stability with OB-X edge
 				float q2 = resonance24 * 0.65f;
-				filters24dB_stage2[c].setParams(cutoffHz, q2, args.sampleRate);
+				filters24dB_stage2[c].setParams(cutoffHz, q2, args.sampleRate, fmOffsetVoct);
 				SVFilterOutputs s2 = filters24dB_stage2[c].process(interStage);
 
 				// Output mapping for 24dB OB-X: LP-only (authentic OB-Xa)
@@ -235,10 +256,10 @@ struct HydraQuartetVCF : Module {
 	}
 };
 
-struct HydraQuartetVCFWidget : ModuleWidget {
-	HydraQuartetVCFWidget(HydraQuartetVCF* module) {
+struct CipherOBWidget : ModuleWidget {
+	CipherOBWidget(CipherOB* module) {
 		setModule(module);
-		setPanel(createPanel(asset::plugin(pluginInstance, "res/HydraQuartetVCF.svg")));
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/CipherOB.svg")));
 
 		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, 0)));
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
@@ -246,33 +267,36 @@ struct HydraQuartetVCFWidget : ModuleWidget {
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
 		// Cutoff section
-		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(20.0, 43.0)), module, HydraQuartetVCF::CUTOFF_PARAM));
-		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(28.0, 52.0)), module, HydraQuartetVCF::CUTOFF_ATTEN_PARAM));
+		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(20.0, 43.0)), module, CipherOB::CUTOFF_PARAM));
+		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(28.0, 52.0)), module, CipherOB::CUTOFF_ATTEN_PARAM));
 
 		// Drive section
-		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(52.0, 43.0)), module, HydraQuartetVCF::DRIVE_PARAM));
-		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(60.0, 52.0)), module, HydraQuartetVCF::DRIVE_ATTEN_PARAM));
+		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(52.0, 43.0)), module, CipherOB::DRIVE_PARAM));
+		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(60.0, 52.0)), module, CipherOB::DRIVE_ATTEN_PARAM));
 
 		// Resonance section
-		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(35.56, 72.0)), module, HydraQuartetVCF::RESONANCE_PARAM));
-		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(56.0, 72.0)), module, HydraQuartetVCF::RESONANCE_ATTEN_PARAM));
+		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(35.56, 72.0)), module, CipherOB::RESONANCE_PARAM));
+		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(56.0, 72.0)), module, CipherOB::RESONANCE_ATTEN_PARAM));
 
 		// Filter type switch
-		addParam(createParamCentered<CKSS>(mm2px(Vec(24.0, 22.0)), module, HydraQuartetVCF::FILTER_TYPE_PARAM));
+		addParam(createParamCentered<CKSS>(mm2px(Vec(24.0, 22.0)), module, CipherOB::FILTER_TYPE_PARAM));
 
 		// Inputs
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(18.0, 90.0)), module, HydraQuartetVCF::AUDIO_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(10.0, 52.0)), module, HydraQuartetVCF::CUTOFF_CV_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(15.0, 72.0)), module, HydraQuartetVCF::RESONANCE_CV_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(42.0, 52.0)), module, HydraQuartetVCF::DRIVE_CV_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(24.0, 32.0)), module, HydraQuartetVCF::FILTER_TYPE_CV_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(18.0, 90.0)), module, CipherOB::AUDIO_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(10.0, 52.0)), module, CipherOB::CUTOFF_CV_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(15.0, 72.0)), module, CipherOB::RESONANCE_CV_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(42.0, 52.0)), module, CipherOB::DRIVE_CV_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(24.0, 32.0)), module, CipherOB::FILTER_TYPE_CV_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(34.0, 90.0)), module, CipherOB::FM_CV_INPUT));
+		addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(42.0, 84.0)), module, CipherOB::FM_ATTEN_PARAM));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(58.0, 90.0)), module, CipherOB::VOCT_INPUT));
 
 		// Outputs
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(10.0, 109.0)), module, HydraQuartetVCF::LP_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(26.0, 109.0)), module, HydraQuartetVCF::HP_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(42.0, 109.0)), module, HydraQuartetVCF::BP_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(58.0, 109.0)), module, HydraQuartetVCF::NOTCH_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(10.0, 109.0)), module, CipherOB::LP_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(26.0, 109.0)), module, CipherOB::HP_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(42.0, 109.0)), module, CipherOB::BP_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(58.0, 109.0)), module, CipherOB::NOTCH_OUTPUT));
 	}
 };
 
-Model* modelHydraQuartetVCF = createModel<HydraQuartetVCF, HydraQuartetVCFWidget>("HydraQuartetVCF");
+Model* modelCipherOB = createModel<CipherOB, CipherOBWidget>("CipherOB");

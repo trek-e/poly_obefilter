@@ -1,4 +1,4 @@
-# HydraQuartet VCF-OB
+# CIPHER · OB
 
 **16-voice polyphonic Oberheim-style multimode filter for [VCV Rack](https://vcvrack.com/)**
 
@@ -9,7 +9,7 @@ by [Synth-etic Intelligence](https://github.com/trek-e)
 
 ---
 
-HydraQuartet VCF-OB brings two classic Oberheim filter voices into VCV Rack — the warm, musical SEM 12dB/oct state-variable filter and the bright, aggressive OB-X 24dB/oct cascaded topology. Switch between them with a single toggle, get four simultaneous filter outputs, and run up to 16 voices of polyphony.
+CIPHER · OB brings two classic Oberheim filter voices into VCV Rack — the warm, musical SEM 12dB/oct state-variable filter and the bright, aggressive OB-X 24dB/oct cascaded topology. Switch between them with a single toggle, get four simultaneous filter outputs, and run up to 16 voices of polyphony.
 
 ## Features
 
@@ -69,8 +69,8 @@ Requires the [VCV Rack SDK](https://vcvrack.com/manual/PluginDevelopmentTutorial
 
 ```bash
 # Clone the repository
-git clone https://github.com/trek-e/HydraQuartetVCF
-cd HydraQuartetVCF
+git clone https://github.com/trek-e/CipherOB
+cd CipherOB
 
 # Build (Rack SDK must be one level up, or set RACK_DIR)
 make
@@ -96,7 +96,7 @@ export RACK_DIR=~/Rack-SDK
 
 ## Quick Start
 
-1. Add **HydraQuartet VCF-OB** from the module browser (under Synth-etic Intelligence)
+1. Add **CIPHER · OB** from the module browser (under Synth-etic Intelligence)
 2. Connect a polyphonic audio source to the **Input** jack
 3. Patch one or more **Output** jacks (LP, HP, BP, Notch) to your mixer
 4. Turn the **Cutoff** knob down from maximum — you'll hear the filter close
@@ -119,7 +119,7 @@ The DSP is implemented in two files with no external dependencies beyond the VCV
 | File | Purpose |
 |------|---------|
 | `src/SVFilter.hpp` | Trapezoidal state-variable filter core, blended saturation function |
-| `src/HydraQuartetVCF.cpp` | Module implementation: dual-mode process(), crossfade, parameter handling |
+| `src/CipherOB.cpp` | Module implementation: dual-mode process(), crossfade, parameter handling |
 
 **Total: 391 lines of C++**
 
@@ -169,4 +169,4 @@ Copyright © 2026 Synth-etic Intelligence
 
 ---
 
-*Part of the HydraQuartet series — bringing classic analog character to VCV Rack*
+*Part of the COLOSSUS · 16 series — bringing classic analog character to VCV Rack*

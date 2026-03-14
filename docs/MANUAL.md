@@ -1,8 +1,8 @@
-# HydraQuartet VCF-OB — User Manual
+# CIPHER · OB — User Manual
 
 ## Overview
 
-HydraQuartet VCF-OB is a dual-mode multimode filter inspired by two iconic Oberheim filter circuits:
+CIPHER · OB is a dual-mode multimode filter inspired by two iconic Oberheim filter circuits:
 
 - **SEM (Synthesizer Expander Module)** — a 12dB/oct state-variable filter known for its warm, musical character
 - **OB-X / OB-Xa** — a 24dB/oct cascaded topology with brighter, more aggressive resonance

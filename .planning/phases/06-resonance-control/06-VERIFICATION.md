@@ -30,18 +30,18 @@ score: 5/5 must-haves verified
 
 | Artifact                     | Expected                                         | Status     | Details                                                                                   |
 | ---------------------------- | ------------------------------------------------ | ---------- | ----------------------------------------------------------------------------------------- |
-| `src/HydraQuartetVCF.cpp`    | RESONANCE_ATTEN_PARAM with CV processing         | VERIFIED   | 131 lines, enum (line 9), configParam (line 38), getValue (line 78), widget (line 115)   |
-| `res/HydraQuartetVCF.svg`    | Visual marker for resonance attenuverter position | VERIFIED   | resonance-atten-knob circle at (35.56, 98) matching C++ widget position                   |
+| `src/CipherOB.cpp`    | RESONANCE_ATTEN_PARAM with CV processing         | VERIFIED   | 131 lines, enum (line 9), configParam (line 38), getValue (line 78), widget (line 115)   |
+| `res/CipherOB.svg`    | Visual marker for resonance attenuverter position | VERIFIED   | resonance-atten-knob circle at (35.56, 98) matching C++ widget position                   |
 
 **Artifact Verification Details:**
 
-**src/HydraQuartetVCF.cpp:**
+**src/CipherOB.cpp:**
 - Level 1 (Exists): EXISTS (131 lines)
 - Level 2 (Substantive): SUBSTANTIVE (131 lines, no stubs, has exports)
 - Level 3 (Wired): WIRED (RoundSmallBlackKnob imported and used, params accessed in process loop)
 - RESONANCE_ATTEN_PARAM appears exactly 4 times (enum, configParam, getValue, widget creation)
 
-**res/HydraQuartetVCF.svg:**
+**res/CipherOB.svg:**
 - Level 1 (Exists): EXISTS (156 lines)
 - Level 2 (Substantive): SUBSTANTIVE (resonance-atten-knob element at line 119)
 - Level 3 (Wired): WIRED (position matches C++ code Vec(35.56, 98.0))
@@ -64,7 +64,7 @@ score: 5/5 must-haves verified
    - Pattern matches plan: `resCV * resCvAmount` (note: plan had typo "resCV * cvAmount", code correctly uses resCvAmount)
 
 2. **RoundSmallBlackKnob widget → RESONANCE_ATTEN_PARAM:**
-   - WIRED: Widget created at line 115 with HydraQuartetVCF::RESONANCE_ATTEN_PARAM
+   - WIRED: Widget created at line 115 with CipherOB::RESONANCE_ATTEN_PARAM
    - WIRED: Position (35.56, 98.0) matches SVG marker position
    - WIRED: createParamCentered connects widget to parameter system
 

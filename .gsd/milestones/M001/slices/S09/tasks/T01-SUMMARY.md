@@ -56,7 +56,7 @@ Each task was committed atomically:
 **Plan metadata:** (pending final commit)
 
 ## Files Created/Modified
-- `/Users/trekkie/projects/vcvrack_modules/poly_obefilter/src/HydraQuartetVCF.cpp` - OB-X character tuning (resonance24 boost, inter-stage tanh, LP-only output routing)
+- `/Users/trekkie/projects/vcvrack_modules/poly_obefilter/src/CipherOB.cpp` - OB-X character tuning (resonance24 boost, inter-stage tanh, LP-only output routing)
 
 ## Decisions Made
 - `resonance24` factor of 1.15x provides noticeable OB-X edge without pushing Stage 1 past self-oscillation at max knob setting (capped at 0.95)

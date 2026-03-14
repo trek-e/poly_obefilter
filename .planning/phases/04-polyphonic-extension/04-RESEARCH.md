@@ -48,7 +48,7 @@ The established patterns for VCV Rack polyphonic modules:
 ```
 src/
 ├── SVFilter.hpp           # Templated filter class (T = float or float_4)
-├── HydraQuartetVCF.cpp    # Module with filter array
+├── CipherOB.cpp    # Module with filter array
 └── plugin.hpp             # Plugin declarations
 ```
 
@@ -58,7 +58,7 @@ src/
 **Example:**
 ```cpp
 // Source: VCV Rack Plugin Guide
-struct HydraQuartetVCF : Module {
+struct CipherOB : Module {
     SVFilter filters[PORT_MAX_CHANNELS];  // 16 filter instances
 
     void process(const ProcessArgs& args) override {

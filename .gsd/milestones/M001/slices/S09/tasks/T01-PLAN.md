@@ -8,7 +8,7 @@ Tune OB-X sonic character for the 24dB cascade mode, silence HP/BP/Notch outputs
 
 Purpose: Complete the v0.60b milestone by making the 24dB mode sound like a genuinely different synth architecture (bright, edgy, aggressive OB-Xa character) while the 12dB SEM path remains warm and smooth. This is the final phase before milestone completion.
 
-Output: Modified `src/HydraQuartetVCF.cpp` with OB-X character tuning and LP-only output routing in the 24dB branch. Compiled `plugin.dylib` passing build verification.
+Output: Modified `src/CipherOB.cpp` with OB-X character tuning and LP-only output routing in the 24dB branch. Compiled `plugin.dylib` passing build verification.
 
 ## Must-Haves
 
@@ -21,4 +21,4 @@ Output: Modified `src/HydraQuartetVCF.cpp` with OB-X character tuning and LP-onl
 
 ## Files
 
-- `src/HydraQuartetVCF.cpp`
+- `src/CipherOB.cpp`

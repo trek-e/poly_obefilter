@@ -12,8 +12,8 @@ requires: []
 affects:
   - S02
 key_files:
-  - src/HydraQuartetVCF.cpp
-  - res/HydraQuartetVCF.svg
+  - src/CipherOB.cpp
+  - res/CipherOB.svg
 key_decisions:
   - Per-voice crossfade arrays replace global crossfadeCounter/prevFilterType — required for polyphonic CV-driven type switching
   - filterTypeCVConnected check hoisted outside per-voice loop — one isConnected() call per sample block, not per voice
@@ -24,8 +24,8 @@ patterns_established:
   - CV-overrides-switch pattern: check isConnected() once, branch per-voice between CV read and param read
   - Panel SVG jack: dot indicator circle (r=0.5, section color, opacity 0.4) + component layer circle (fill:#00ff00, r=3.5, id attribute)
 observability_surfaces:
-  - "grep -n 'prevFilterType\b\|crossfadeCounter\b' src/HydraQuartetVCF.cpp" — all matches must be array declarations or [c] indexed. Bare scalar = regression.
-  - "xmllint --noout res/HydraQuartetVCF.svg" — exit 0 = valid SVG
+  - "grep -n 'prevFilterType\b\|crossfadeCounter\b' src/CipherOB.cpp" — all matches must be array declarations or [c] indexed. Bare scalar = regression.
+  - "xmllint --noout res/CipherOB.svg" — exit 0 = valid SVG
   - Filter Type CV port tooltip shows "Filter Type CV" in VCV Rack
 drill_down_paths:
   - .gsd/milestones/M002/slices/S01/tasks/T01-SUMMARY.md
@@ -50,8 +50,8 @@ Refactored the global crossfade state machine to per-voice arrays and added a ne
 ## Verification
 
 - `make -j4 2>&1 | grep -E "warning|error"` — zero output ✅
-- `grep -n "prevFilterType\b\|crossfadeCounter\b" src/HydraQuartetVCF.cpp` — all 8 matches are array declarations or `[c]`-indexed accesses, zero bare scalars ✅
-- `xmllint --noout res/HydraQuartetVCF.svg` — exit 0, valid XML ✅
+- `grep -n "prevFilterType\b\|crossfadeCounter\b" src/CipherOB.cpp` — all 8 matches are array declarations or `[c]`-indexed accesses, zero bare scalars ✅
+- `xmllint --noout res/CipherOB.svg` — exit 0, valid XML ✅
 - SVG coordinates (24, 32) match widget code `Vec(24.0, 32.0)` ✅
 - No component overlap: nearest elements are CKSS switch at (24, 22) [10mm] and cutoff knob at (20, 43) [~12mm] ✅
 - Runtime UAT (VCV Rack listening tests) deferred to human tester — see S01-UAT.md
@@ -90,8 +90,8 @@ None.
 
 ## Files Created/Modified
 
-- `src/HydraQuartetVCF.cpp` — per-voice crossfade arrays, Schmitt trigger, CV input enum/config/widget, CV override logic
-- `res/HydraQuartetVCF.svg` — filter type CV jack dot indicator, "CV" label, component layer entry
+- `src/CipherOB.cpp` — per-voice crossfade arrays, Schmitt trigger, CV input enum/config/widget, CV override logic
+- `res/CipherOB.svg` — filter type CV jack dot indicator, "CV" label, component layer entry
 
 ## Forward Intelligence
 
@@ -105,7 +105,7 @@ None.
 - The 128-sample crossfade window (~2.7ms at 48kHz) is tight. If sample rate is very low (e.g., 22050Hz), the crossfade is ~5.8ms — still fine. At very high rates (192kHz), it's ~0.67ms, which may be audible. No action needed now, but worth knowing.
 
 ### Authoritative diagnostics
-- `grep -n "prevFilterType\b\|crossfadeCounter\b" src/HydraQuartetVCF.cpp` — every match must be an array or `[c]` access. Any bare scalar is a regression.
+- `grep -n "prevFilterType\b\|crossfadeCounter\b" src/CipherOB.cpp` — every match must be an array or `[c]` access. Any bare scalar is a regression.
 - `make -j4 2>&1 | grep -E "warning|error"` — must produce zero output.
 
 ### What assumptions changed

@@ -53,9 +53,9 @@ Each task was committed atomically:
 3. **Task 3: Wire drive processing into audio path with output-specific scaling** - `dd28412` (feat)
 
 ## Files Created/Modified
-- `src/HydraQuartetVCF.cpp` - Added DRIVE_ATTEN_PARAM, DRIVE_CV_INPUT, drive parameter smoothing, CV modulation, output-specific saturation processing
+- `src/CipherOB.cpp` - Added DRIVE_ATTEN_PARAM, DRIVE_CV_INPUT, drive parameter smoothing, CV modulation, output-specific saturation processing
 - `src/SVFilter.hpp` - Added blendedSaturation function with tanh + asymmetric blending
-- `res/HydraQuartetVCF.svg` - Added drive CV input and attenuverter placeholders at Y=50 and Y=62
+- `res/CipherOB.svg` - Added drive CV input and attenuverter placeholders at Y=50 and Y=62
 
 ## Decisions Made
 - **Blended saturation algorithm:** Combines symmetric tanh (odd harmonics) with asymmetric shaping (even harmonics) for rich, musical saturation. Asymmetry blend increases with drive amount (up to 40% at max).

@@ -4,7 +4,7 @@
 
 ## Description
 
-Establish complete plugin infrastructure and panel design for HydraQuartet VCF-OB.
+Establish complete plugin infrastructure and panel design for CIPHER · OB.
 
 Purpose: Create the foundation that compiles, loads in VCV Rack, and provides visual panel design ready for DSP implementation in Phase 2.
 
@@ -16,7 +16,7 @@ Output: Working plugin scaffold with complete panel design, module code, and doc
 - [ ] "Plugin loads in VCV Rack library browser"
 - [ ] "Module appears with correct branding (Synth-etic Intelligence)"
 - [ ] "Panel shows all control positions (knobs, ports, sections)"
-- [ ] "Panel matches HydraQuartet VCO visual style"
+- [ ] "Panel matches PHANTOM · 8 visual style"
 - [ ] "README contains build instructions"
 
 ## Files
@@ -24,6 +24,6 @@ Output: Working plugin scaffold with complete panel design, module code, and doc
 - `plugin.json`
 - `Makefile`
 - `src/plugin.cpp`
-- `res/HydraQuartetVCF.svg`
-- `src/HydraQuartetVCF.cpp`
+- `res/CipherOB.svg`
+- `src/CipherOB.cpp`
 - `README.md`

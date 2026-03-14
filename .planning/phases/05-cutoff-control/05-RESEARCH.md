@@ -6,7 +6,7 @@
 
 ## Summary
 
-This research covers refining the cutoff frequency control for the HydraQuartet VCF-OB module. The existing implementation already has a functional cutoff knob (0-1 mapped to 20Hz-20kHz), CV input with attenuverter, and V/Oct scaling. This phase ensures the controls work correctly according to VCV Rack conventions and user decisions from CONTEXT.md.
+This research covers refining the cutoff frequency control for the CIPHER · OB module. The existing implementation already has a functional cutoff knob (0-1 mapped to 20Hz-20kHz), CV input with attenuverter, and V/Oct scaling. This phase ensures the controls work correctly according to VCV Rack conventions and user decisions from CONTEXT.md.
 
 The standard approach for filter cutoff in VCV Rack uses exponential (logarithmic) frequency mapping for the knob (frequency doubles per equal knob increment), 1V/octave exponential scaling for CV input (frequency doubles per volt), and bipolar attenuverters (-1 to +1) that default to center (0) for no CV effect. The existing implementation follows these patterns closely but needs refinement: the default cutoff position should be 1.0 (fully open, 20kHz) rather than 0.5, and the configParam tooltip should display the actual frequency in Hz.
 
@@ -34,7 +34,7 @@ The established patterns for VCV Rack filter cutoff control:
 | Unit label | Not implemented | Add " Hz" suffix |
 | Display base | Not used | Can use exponential base 2 |
 
-### Existing Code (from HydraQuartetVCF.cpp)
+### Existing Code (from CipherOB.cpp)
 ```cpp
 // Current implementation
 configParam(CUTOFF_PARAM, 0.f, 1.f, 0.5f, "Cutoff");  // Default 0.5 - should be 1.0
@@ -167,7 +167,7 @@ Verified patterns from existing implementation and VCV standards:
 
 ### Current Cutoff Calculation (Verified Correct)
 ```cpp
-// Source: HydraQuartetVCF.cpp lines 54-70
+// Source: CipherOB.cpp lines 54-70
 // Read global parameters (knob positions)
 float cutoffParam = params[CUTOFF_PARAM].getValue();
 float baseCutoffHz = 20.f * std::pow(1000.f, cutoffParam);  // 20Hz-20kHz log
@@ -274,7 +274,7 @@ Things that couldn't be fully resolved:
 - [VCV Rack Voltage Standards](https://vcvrack.com/manual/VoltageStandards) - CV ranges, 1V/oct standard
 - [VCV Rack Plugin Guide](https://vcvrack.com/manual/PluginGuide) - configParam syntax and display options
 - [VCV Rack TExponentialFilter API](https://vcvrack.com/docs-v2/structrack_1_1dsp_1_1TExponentialFilter) - Parameter smoothing
-- Existing implementation in `src/HydraQuartetVCF.cpp` and `src/SVFilter.hpp` - Current working code
+- Existing implementation in `src/CipherOB.cpp` and `src/SVFilter.hpp` - Current working code
 - Phase 05 CONTEXT.md - User decisions on defaults and behavior
 
 ### Secondary (MEDIUM confidence)

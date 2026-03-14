@@ -5,7 +5,7 @@
 
 ## Project Description
 
-HydraQuartet VCF-OB is a polyphonic 16-voice multimode filter module for VCV Rack 2.x. v0.60b shipped with dual filter modes (12dB SEM / 24dB OB-X) selectable via a panel toggle switch. The module currently has CV inputs for cutoff, resonance, and drive — all with attenuverters. The filter type switch and the lack of FM/pitch-tracking inputs are the remaining control gaps.
+CIPHER · OB is a polyphonic 16-voice multimode filter module for VCV Rack 2.x. v0.60b shipped with dual filter modes (12dB SEM / 24dB OB-X) selectable via a panel toggle switch. The module currently has CV inputs for cutoff, resonance, and drive — all with attenuverters. The filter type switch and the lack of FM/pitch-tracking inputs are the remaining control gaps.
 
 ## Why This Milestone
 
@@ -49,9 +49,9 @@ To call this milestone complete, we must prove:
 
 ## Existing Codebase / Prior Art
 
-- `src/HydraQuartetVCF.cpp` — 258 LOC, all module logic including process() with 12dB/24dB branches
+- `src/CipherOB.cpp` — 258 LOC, all module logic including process() with 12dB/24dB branches
 - `src/SVFilter.hpp` — 133 LOC, SVFilter struct and blendedSaturation
-- `res/HydraQuartetVCF.svg` — 14 HP panel SVG
+- `res/CipherOB.svg` — 14 HP panel SVG
 - Existing CV pattern: 10%/volt scaling with attenuverter for resonance and drive; V/Oct exponential scaling with attenuverter for cutoff
 
 > See `.gsd/DECISIONS.md` for all architectural and pattern decisions — it is an append-only register; read it during planning, append to it during execution.

@@ -44,7 +44,7 @@ None — discussion stayed within phase scope.
 
 ## Summary
 
-Phase 9 is a focused C++ tuning phase: no new architecture, no new parameters, no new files. Everything is contained in `src/HydraQuartetVCF.cpp` and `src/SVFilter.hpp`. All three requirements touch the 24dB branch of the `process()` method that Phase 8 created.
+Phase 9 is a focused C++ tuning phase: no new architecture, no new parameters, no new files. Everything is contained in `src/CipherOB.cpp` and `src/SVFilter.hpp`. All three requirements touch the 24dB branch of the `process()` method that Phase 8 created.
 
 **FILT-08 (OB-X character):** The OB-Xa hardware used two completely different filter topologies — a 12dB state-variable SEM filter and a 24dB OTA ladder (CEM3320). Their sonic difference comes from fundamentally different feedback structures: the SEM's multimode topology produces a smooth, mellow resonance that tapers at high Q, while the OTA ladder produces a sharper, more aggressive resonance peak. In a cascaded SVF emulation, this character difference must be synthesized through DSP choices: resonance Q scaling, nonlinearity placement, and saturation shaping. The current code already runs `smoothedDrive * 1.3f` for the 24dB LP path; the remaining work is tuning the resonance curve and inter-stage saturation to maximize the architectural contrast.
 
@@ -52,7 +52,7 @@ Phase 9 is a focused C++ tuning phase: no new architecture, no new parameters, n
 
 **TYPE-03 (click-free switching):** The 128-sample linear crossfade state machine from Phase 8 is already correct. The click risk in Phase 9 is the asymmetric scenario: when switching FROM 24dB back TO 12dB, HP/BP/Notch must fade in from 0.0f (not from arbitrary stage1 values). The crossfade from-values (`xfHP`, `xfBP`, `xfNotch`) are captured from `outputs[X_OUTPUT].getVoltage(c)` — which will correctly be 0.0f if Phase 9 has been setting them to 0.0f in 24dB mode. This makes the fade-in symmetric automatically.
 
-**Primary recommendation:** Phase 9 requires two targeted edits to `HydraQuartetVCF.cpp`: (1) tune 24dB character by scaling resonance Q upward and enhancing inter-stage saturation, and (2) replace interim HP/BP/Notch outputs in the 24dB branch with `0.0f` targets. The crossfade handles the rest automatically.
+**Primary recommendation:** Phase 9 requires two targeted edits to `CipherOB.cpp`: (1) tune 24dB character by scaling resonance Q upward and enhancing inter-stage saturation, and (2) replace interim HP/BP/Notch outputs in the 24dB branch with `0.0f` targets. The crossfade handles the rest automatically.
 
 ---
 
@@ -175,7 +175,7 @@ float ob24Saturate(float x, float drive) {
 - **Abrupt silence in 24dB mode:** Setting HP/BP/Notch to 0.0f only works click-free because the crossfade handles the transition. If crossfade is bypassed or reset() is called at mode switch, clicks occur. Never reset the crossfade on mode change — only start it.
 - **Clearing port channels in 24dB mode:** `setChannels(0)` does NOT produce 0-channel output per the VCV API docs ("if 0 is given, channels is set to 1 but all voltages are cleared"). It's simpler and more compatible to keep `setChannels(channels)` always and control output via voltage values. The port will still show as active — this is fine per VCV conventions, and the user context left this to Claude's discretion.
 - **Modifying the SEM 12dB path:** All Phase 9 changes must be in the `filterType == 1` branch only. The 12dB path is explicitly "bitwise identical to v0.50b" per Phase 8 decision and must stay that way.
-- **Touching SVFilter.hpp internals for character:** The `v1` saturation inside `SVFilter::process()` (`std::tanh(v1_raw * 2.f) * 0.5f`) affects both modes equally. Do not modify this for OB-X character. Character tuning belongs in the `HydraQuartetVCF.cpp` process() branch.
+- **Touching SVFilter.hpp internals for character:** The `v1` saturation inside `SVFilter::process()` (`std::tanh(v1_raw * 2.f) * 0.5f`) affects both modes equally. Do not modify this for OB-X character. Character tuning belongs in the `CipherOB.cpp` process() branch.
 
 ---
 
@@ -361,7 +361,7 @@ Sources: [Wikipedia OB-Xa](https://en.wikipedia.org/wiki/Oberheim_OB-Xa), [Vinta
 ## Sources
 
 ### Primary (HIGH confidence)
-- `src/HydraQuartetVCF.cpp` — Current Phase 8 implementation, direct code inspection
+- `src/CipherOB.cpp` — Current Phase 8 implementation, direct code inspection
 - `src/SVFilter.hpp` — Filter internals, `blendedSaturation`, Q mapping formula
 - `.planning/phases/08-core-24db-cascade/08-01-SUMMARY.md` — Phase 8 decisions
 - [VCV Rack Port API docs](https://vcvrack.com/docs-v2/structrack_1_1engine_1_1Port) — `setChannels(0)` behavior, `clearVoltages()`

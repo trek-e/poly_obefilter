@@ -7,7 +7,7 @@ provides:
   - Schmitt trigger CV input for filter type switching
   - FILTER_TYPE_CV_INPUT enum, configInput, and addInput wiring
 key_files:
-  - src/HydraQuartetVCF.cpp
+  - src/CipherOB.cpp
 key_decisions:
   - Schmitt trigger thresholds at 2.6V rising / 2.4V falling (200mV hysteresis band)
   - filterTypeCVConnected check hoisted outside loop — one isConnected() call per sample block, not per voice
@@ -51,7 +51,7 @@ Removed the post-loop global `crossfadeCounter--` and `prevFilterType = filterTy
 
 - `make -j4 2>&1 | grep -cE "warning:|error:"` → `0` (clean build, zero warnings, zero errors)
 - `make -j4 2>&1 | grep -E "warning|error"` → empty output (slice-level build check)
-- `grep -n "prevFilterType\b\|crossfadeCounter\b" src/HydraQuartetVCF.cpp` → all 8 matches are array declarations or `[c]` indexed accesses. No bare scalar references remain.
+- `grep -n "prevFilterType\b\|crossfadeCounter\b" src/CipherOB.cpp` → all 8 matches are array declarations or `[c]` indexed accesses. No bare scalar references remain.
 - Code review confirmed: no global crossfade state anywhere in the process loop.
 
 **Slice-level checks (partial — intermediate task):**
@@ -63,7 +63,7 @@ Removed the post-loop global `crossfadeCounter--` and `prevFilterType = filterTy
 
 ## Diagnostics
 
-- **Regression detection:** `grep -n "prevFilterType\b\|crossfadeCounter\b" src/HydraQuartetVCF.cpp` — every match must be array declaration or `[c]` access.
+- **Regression detection:** `grep -n "prevFilterType\b\|crossfadeCounter\b" src/CipherOB.cpp` — every match must be array declaration or `[c]` access.
 - **Runtime:** Right-click module in VCV Rack → port tooltip for Filter Type CV shows per-channel voltage.
 - **Debug:** Set breakpoint on `crossfadeCounter[c] = CROSSFADE_SAMPLES` to observe per-voice transitions.
 
@@ -77,6 +77,6 @@ None.
 
 ## Files Created/Modified
 
-- `src/HydraQuartetVCF.cpp` — per-voice crossfade arrays, Schmitt trigger, CV input enum/config/widget, CV override logic
+- `src/CipherOB.cpp` — per-voice crossfade arrays, Schmitt trigger, CV input enum/config/widget, CV override logic
 - `.gsd/milestones/M002/slices/S01/S01-PLAN.md` — added Observability / Diagnostics section
 - `.gsd/milestones/M002/slices/S01/tasks/T01-PLAN.md` — added Observability Impact section

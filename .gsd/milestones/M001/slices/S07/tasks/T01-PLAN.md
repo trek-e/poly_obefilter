@@ -25,6 +25,6 @@ Output: Working drive control with:
 
 ## Files
 
-- `src/HydraQuartetVCF.cpp`
+- `src/CipherOB.cpp`
 - `src/SVFilter.hpp`
-- `res/HydraQuartetVCF.svg`
+- `res/CipherOB.svg`

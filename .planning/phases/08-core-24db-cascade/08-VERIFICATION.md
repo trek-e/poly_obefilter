@@ -29,7 +29,7 @@ human_verification:
 
 | # | Truth | Status | Evidence |
 |---|-------|--------|----------|
-| 1 | User can select between 12dB SEM and 24dB OB-X modes via a 2-position toggle switch on the panel | VERIFIED | `configSwitch(FILTER_TYPE_PARAM, 0.f, 1.f, 0.f, "Filter Type", {"12dB SEM", "24dB OB-X"})` at line 57; `createParamCentered<CKSS>(mm2px(Vec(55.0, 28.0)), module, HydraQuartetVCF::FILTER_TYPE_PARAM)` at line 233 |
+| 1 | User can select between 12dB SEM and 24dB OB-X modes via a 2-position toggle switch on the panel | VERIFIED | `configSwitch(FILTER_TYPE_PARAM, 0.f, 1.f, 0.f, "Filter Type", {"12dB SEM", "24dB OB-X"})` at line 57; `createParamCentered<CKSS>(mm2px(Vec(55.0, 28.0)), module, CipherOB::FILTER_TYPE_PARAM)` at line 233 |
 | 2 | 24dB mode produces steeper lowpass rolloff (-24dB/octave) than 12dB mode (-12dB/octave) | VERIFIED | Two-stage cascade topology: `s1 = filters[c].process(input)` then `s2 = filters24dB_stage2[c].process(interStage)` where interStage is `s1.lowpass` (lines 161-176). Each SVFilter stage is a 2-pole SVF; cascading gives 4-pole (24dB/oct) rolloff |
 | 3 | Cutoff frequency parameter produces the same cutoff frequency in both modes | VERIFIED | Single `cutoffHz` variable computed once per voice (lines 106-111) is passed identically to `filters[c].setParams(cutoffHz, ...)` in both the 12dB branch (line 146) and `filters24dB_stage2[c].setParams(cutoffHz, ...)` in 24dB branch (line 175) |
 | 4 | Filter self-oscillates at maximum resonance in 24dB mode with warm, slightly distorted character | VERIFIED (code path) / HUMAN NEEDED (character) | SVFilter maps `resonance=1.0` to Q=20 (k=0.05); stage1 runs full Q=20 in 24dB mode. SVFilter includes `tanh(v1_raw * 2.f)` saturation in feedback path (SVFilter.hpp line 106) for harmonic richness. Perceptual warmth requires human listening test |
@@ -42,16 +42,16 @@ human_verification:
 
 | Artifact | Expected | Status | Details |
 |----------|----------|--------|---------|
-| `src/HydraQuartetVCF.cpp` | FILTER_TYPE_PARAM enum entry, configSwitch, second-stage filter array, cascade logic in process(), crossfade state machine, CKSS widget | VERIFIED | All required elements present; file compiles with zero errors and zero warnings. 249 lines, substantive implementation |
-| `res/HydraQuartetVCF.svg` | Switch placeholder rectangle with 12dB/24dB labels, id="filter-type-switch-placeholder" | VERIFIED | `id="filter-type-switch-placeholder"` rect at (52.8, 23) in components layer; `id="label-12db"` and `id="label-24db"` paths in visible layer (lines 63-73) |
+| `src/CipherOB.cpp` | FILTER_TYPE_PARAM enum entry, configSwitch, second-stage filter array, cascade logic in process(), crossfade state machine, CKSS widget | VERIFIED | All required elements present; file compiles with zero errors and zero warnings. 249 lines, substantive implementation |
+| `res/CipherOB.svg` | Switch placeholder rectangle with 12dB/24dB labels, id="filter-type-switch-placeholder" | VERIFIED | `id="filter-type-switch-placeholder"` rect at (52.8, 23) in components layer; `id="label-12db"` and `id="label-24db"` paths in visible layer (lines 63-73) |
 
 ### Key Link Verification
 
 | From | To | Via | Status | Details |
 |------|----|-----|--------|---------|
-| `src/HydraQuartetVCF.cpp` | `src/SVFilter.hpp` | `SVFilter filters24dB_stage2[PORT_MAX_CHANNELS]` | WIRED | Declaration at line 37; `.setParams()` at line 175; `.process(interStage)` at line 176; `.reset()` at lines 166-167 |
-| `src/HydraQuartetVCF.cpp` (process) | cascade filterType branch | `stage1.lowpass feeds stage2.process()` | WIRED | `interStage = rack::clamp(s1.lowpass, -12.f, 12.f)` (line 170); `filters24dB_stage2[c].process(interStage)` (line 176) |
-| `src/HydraQuartetVCF.cpp` (widget) | CKSS toggle switch | `createParamCentered<CKSS>` | WIRED | `addParam(createParamCentered<CKSS>(mm2px(Vec(55.0, 28.0)), module, HydraQuartetVCF::FILTER_TYPE_PARAM))` at line 233 |
+| `src/CipherOB.cpp` | `src/SVFilter.hpp` | `SVFilter filters24dB_stage2[PORT_MAX_CHANNELS]` | WIRED | Declaration at line 37; `.setParams()` at line 175; `.process(interStage)` at line 176; `.reset()` at lines 166-167 |
+| `src/CipherOB.cpp` (process) | cascade filterType branch | `stage1.lowpass feeds stage2.process()` | WIRED | `interStage = rack::clamp(s1.lowpass, -12.f, 12.f)` (line 170); `filters24dB_stage2[c].process(interStage)` (line 176) |
+| `src/CipherOB.cpp` (widget) | CKSS toggle switch | `createParamCentered<CKSS>` | WIRED | `addParam(createParamCentered<CKSS>(mm2px(Vec(55.0, 28.0)), module, CipherOB::FILTER_TYPE_PARAM))` at line 233 |
 
 ### Requirements Coverage
 
@@ -72,7 +72,7 @@ human_verification:
 |------|------|---------|----------|--------|
 | None | — | — | — | — |
 
-No TODOs, FIXMEs, placeholders, empty implementations, or stub patterns found in `src/HydraQuartetVCF.cpp`. The SVG uses `id="filter-type-switch-placeholder"` in an id attribute (not a TODO comment) — this is an SVG element name for a legitimate visual element that the CKSS widget overlays at runtime, not a code stub.
+No TODOs, FIXMEs, placeholders, empty implementations, or stub patterns found in `src/CipherOB.cpp`. The SVG uses `id="filter-type-switch-placeholder"` in an id attribute (not a TODO comment) — this is an SVG element name for a legitimate visual element that the CKSS widget overlays at runtime, not a code stub.
 
 ### Human Verification Required
 
@@ -105,8 +105,8 @@ No TODOs, FIXMEs, placeholders, empty implementations, or stub patterns found in
 
 | Commit | Hash | Contents | Verified |
 |--------|------|----------|----------|
-| Task 1: Cascade filter implementation | `3b90f7f` | `src/HydraQuartetVCF.cpp` (+93/-16 lines) | EXISTS in git log |
-| Task 2: SVG panel update | `2235cf9` | `res/HydraQuartetVCF.svg` (+18 lines) | EXISTS in git log |
+| Task 1: Cascade filter implementation | `3b90f7f` | `src/CipherOB.cpp` (+93/-16 lines) | EXISTS in git log |
+| Task 2: SVG panel update | `2235cf9` | `res/CipherOB.svg` (+18 lines) | EXISTS in git log |
 
 ## Summary
 

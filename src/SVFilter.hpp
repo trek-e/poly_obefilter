@@ -65,7 +65,7 @@ struct SVFilter {
 		resonanceSmoother.setTau(0.001f);
 	}
 
-	void setParams(float cutoffHz, float resonance, float sampleRate) {
+	void setParams(float cutoffHz, float resonance, float sampleRate, float fmOffsetVoct = 0.f) {
 		// Initialize smoothers on first call to avoid ramp-up delay
 		if (!initialized) {
 			cutoffSmoother.out = cutoffHz;
@@ -76,6 +76,9 @@ struct SVFilter {
 		// Smooth parameters to avoid zipper noise
 		float smoothedCutoff = cutoffSmoother.process(1.f / sampleRate, cutoffHz);
 		float smoothedResonance = resonanceSmoother.process(1.f / sampleRate, resonance);
+
+		// Apply FM offset post-smoothing (preserves audio-rate modulation)
+		smoothedCutoff *= std::pow(2.f, fmOffsetVoct);
 
 		// Clamp cutoff to valid range and normalize
 		// Minimum 0.001 to prevent g=0 which would cause zero output

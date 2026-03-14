@@ -24,7 +24,7 @@ Add highpass, bandpass, and notch outputs to the existing SVF. The trapezoidal s
 - Self-oscillation behavior on all outputs (natural SVF behavior)
 - Soft saturation application (all outputs or LP only)
 - CPU optimization (compute all vs only connected outputs)
-- Visual indicators (LEDs or clean panel — match HydraQuartet VCO style)
+- Visual indicators (LEDs or clean panel — match PHANTOM · 8 style)
 - Notch width control (resonance-dependent per SVF standard)
 - Notch null depth at maximum resonance
 - Notch frequency tracking (identical to other outputs)

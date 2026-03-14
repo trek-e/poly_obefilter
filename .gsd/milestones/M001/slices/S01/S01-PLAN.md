@@ -1,7 +1,7 @@
 # S01: Foundation
 
-**Goal:** Establish complete plugin infrastructure and panel design for HydraQuartet VCF-OB.
-**Demo:** Establish complete plugin infrastructure and panel design for HydraQuartet VCF-OB.
+**Goal:** Establish complete plugin infrastructure and panel design for CIPHER · OB.
+**Demo:** Establish complete plugin infrastructure and panel design for CIPHER · OB.
 
 ## Must-Haves
 
@@ -9,7 +9,7 @@
 ## Tasks
 
 - [x] **T01: 01-foundation 01** `est:6min`
-  - Establish complete plugin infrastructure and panel design for HydraQuartet VCF-OB.
+  - Establish complete plugin infrastructure and panel design for CIPHER · OB.
 
 Purpose: Create the foundation that compiles, loads in VCV Rack, and provides visual panel design ready for DSP implementation in Phase 2.
 
@@ -20,6 +20,6 @@ Output: Working plugin scaffold with complete panel design, module code, and doc
 - `plugin.json`
 - `Makefile`
 - `src/plugin.cpp`
-- `res/HydraQuartetVCF.svg`
-- `src/HydraQuartetVCF.cpp`
+- `res/CipherOB.svg`
+- `src/CipherOB.cpp`
 - `README.md`

@@ -28,7 +28,7 @@ score: 3/3 must-haves verified
 
 | Artifact | Expected | Status | Details |
 |----------|----------|--------|---------|
-| `src/HydraQuartetVCF.cpp` | Polyphonic filter processing | VERIFIED | 127 lines, contains `SVFilter filters[PORT_MAX_CHANNELS]` at line 29, polyphonic loop lines 60-88, output channel setting lines 91-94 |
+| `src/CipherOB.cpp` | Polyphonic filter processing | VERIFIED | 127 lines, contains `SVFilter filters[PORT_MAX_CHANNELS]` at line 29, polyphonic loop lines 60-88, output channel setting lines 91-94 |
 | `src/SVFilter.hpp` | Per-voice filter state and stability | VERIFIED | 101 lines, independent state variables (ic1eq, ic2eq), NaN protection with reset(), no global/shared state |
 
 ### Key Link Verification

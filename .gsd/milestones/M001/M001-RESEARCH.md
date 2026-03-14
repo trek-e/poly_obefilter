@@ -1,13 +1,13 @@
 # Project Research Summary
 
-**Project:** HydraQuartet VCF-OB (VCV Rack Module)
+**Project:** CIPHER · OB (VCV Rack Module)
 **Domain:** VCV Rack Polyphonic Filter Module Development
 **Researched:** 2026-01-29
 **Confidence:** HIGH
 
 ## Executive Summary
 
-HydraQuartet VCF-OB is a polyphonic multimode filter module for VCV Rack 2.x, inspired by classic Oberheim SEM (12dB) and OB-X (24dB) filters. VCV Rack modules are built using the official VCV Rack SDK 2.6.6+ with C++11, following a well-established architecture pattern: Module class for DSP/state management, ModuleWidget for UI, and configuration in constructor using config*() methods. The recommended approach uses state-variable filter topology to provide simultaneous lowpass/highpass/bandpass/notch outputs, polyphonic processing with SIMD optimization (rack::simd::float_4), and standard VCV voltage conventions.
+CIPHER · OB is a polyphonic multimode filter module for VCV Rack 2.x, inspired by classic Oberheim SEM (12dB) and OB-X (24dB) filters. VCV Rack modules are built using the official VCV Rack SDK 2.6.6+ with C++11, following a well-established architecture pattern: Module class for DSP/state management, ModuleWidget for UI, and configuration in constructor using config*() methods. The recommended approach uses state-variable filter topology to provide simultaneous lowpass/highpass/bandpass/notch outputs, polyphonic processing with SIMD optimization (rack::simd::float_4), and standard VCV voltage conventions.
 
 The critical success factors are: (1) implementing resonance stability controls from the start to prevent filter blow-up and NaN propagation, (2) correct polyphonic channel handling with setChannels() and proper CV summing patterns, and (3) following VCV voltage standards without hard-clipping outputs. The main risk is that a basic state-variable filter implementation will sound "clinical" compared to analog Oberheim hardware - this requires accepting character loss in MVP and planning iterative refinement for analog modeling post-launch. Performance target is <5% CPU for 16 voices, achievable with SIMD optimization and efficient coefficient caching.
 
@@ -403,8 +403,8 @@ All gaps are implementation-level details, not architectural unknowns. Roadmap c
 src/
 ├── plugin.hpp              # Plugin metadata, model declarations
 ├── plugin.cpp              # Plugin initialization, model registration
-├── HydraQuartetVCF.cpp     # Main module implementation
-│   ├── struct HydraQuartetVCF : Module
+├── CipherOB.cpp     # Main module implementation
+│   ├── struct CipherOB : Module
 │   ├── enum ParamId (knobs, switches)
 │   ├── enum InputId (audio in, CV ins)
 │   ├── enum OutputId (filter outputs)
@@ -416,9 +416,9 @@ src/
 │   ├── OBXFilter.hpp            # OB-X 24dB filter topology
 │   └── ResonanceProcessor.hpp   # Self-oscillation handling
 ├── ui/                     # User interface components
-│   └── HydraQuartetWidget.cpp   # Panel layout and widget placement
+│   └── COLOSSUS · 16Widget.cpp   # Panel layout and widget placement
 └── res/                    # Resources
-    ├── HydraQuartet.svg         # Panel design
+    ├── COLOSSUS · 16.svg         # Panel design
     └── components/              # Custom UI components
 ```
 
@@ -567,7 +567,7 @@ class StateVariableFilter {
 
 **Example:**
 ```cpp
-struct HydraQuartetVCF : Module {
+struct CipherOB : Module {
     enum ParamId {
         CUTOFF_PARAM,
         RESONANCE_PARAM,
@@ -582,7 +582,7 @@ struct HydraQuartetVCF : Module {
         INPUTS_LEN
     };
 
-    HydraQuartetVCF() {
+    CipherOB() {
         config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 
         // Configure parameters with ranges, defaults, labels, units
@@ -617,10 +617,10 @@ struct HydraQuartetVCF : Module {
 
 **Example:**
 ```cpp
-struct HydraQuartetVCF : Module {
+struct CipherOB : Module {
     dsp::ClockDivider lightDivider;
 
-    HydraQuartetVCF() {
+    CipherOB() {
         // ... config ...
         lightDivider.setDivision(512);  // Update lights every 512 samples (~10ms at 48kHz)
     }
@@ -813,7 +813,7 @@ Nonlinear processes (saturation, resonance clipping) generate harmonics above Ny
 3. **Bandlimited Algorithms:** For oscillators/waveforms (not directly applicable to filters).
 4. **Pre/Post Filtering:** Lowpass before nonlinear stage, lowpass after. Adds latency.
 
-**Recommendation for HydraQuartet:**
+**Recommendation for COLOSSUS · 16:**
 - Start with soft clipping (tanh) in feedback path (low CPU cost, effective)
 - Add optional 2x oversampling if CPU budget allows (right-click menu toggle)
 - Monitor for aliasing during testing with spectrum analyzer
@@ -940,7 +940,7 @@ outputs[AUDIO_OUTPUT].setChannels(channels);
 
 VCV Rack community expectation: modules should use <5% CPU per instance on mid-range system (16 polyphonic voices).
 
-**Budget Breakdown for HydraQuartet (16 voices):**
+**Budget Breakdown for COLOSSUS · 16 (16 voices):**
 - **Input/Output handling:** <0.5% (trivial operations)
 - **Parameter processing:** <0.5% (reading params, CV, clamping)
 - **Filter DSP (per voice):** ~3.0% (main cost, optimize here)
@@ -1051,13 +1051,13 @@ These can be developed concurrently:
 - [State Space Filters (DSP Related)](https://www.dsprelated.com/freebooks/filters/State_Space_Filters.html) - Advanced filter theory
 
 ---
-*Architecture research for: HydraQuartet VCF-OB — 8-voice polyphonic Oberheim-style filter module*
+*Architecture research for: CIPHER · OB — 8-voice polyphonic Oberheim-style filter module*
 *Researched: 2026-01-29*
 *Confidence: HIGH (verified with official VCV Rack documentation and community implementations)*
 
 # Technology Stack
 
-**Project:** HydraQuartet VCF-OB (VCV Rack Module)
+**Project:** CIPHER · OB (VCV Rack Module)
 **Researched:** 2026-01-29
 **Confidence:** HIGH
 
@@ -1279,8 +1279,8 @@ CXXFLAGS += -O3 -march=nehalem -funsafe-math-optimizations
 {
   "modules": [
     {
-      "slug": "HydraQuartetVCF",
-      "name": "HydraQuartet VCF-OB",
+      "slug": "CipherOB",
+      "name": "CIPHER · OB",
       "description": "8-voice polyphonic multimode filter (SEM 12dB, OB-X 24dB)",
       "tags": ["Filter", "Polyphonic"],
       "keywords": ["oberheim", "sem", "obx", "state variable", "multimode"]

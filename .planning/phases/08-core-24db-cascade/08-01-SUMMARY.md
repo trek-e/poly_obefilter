@@ -29,8 +29,8 @@ tech-stack:
 key-files:
   created: []
   modified:
-    - src/HydraQuartetVCF.cpp
-    - res/HydraQuartetVCF.svg
+    - src/CipherOB.cpp
+    - res/CipherOB.svg
 
 key-decisions:
   - "Stage2 Q at 0.7x resonance (not 0.5x or equal) balances stability against resonance character"
@@ -78,8 +78,8 @@ Each task was committed atomically:
 
 ## Files Created/Modified
 
-- `/Users/trekkie/projects/vcvrack_modules/poly_obefilter/src/HydraQuartetVCF.cpp` - Added FILTER_TYPE_PARAM enum entry and configSwitch, filters24dB_stage2 array, crossfade state (prevFilterType, crossfadeCounter, CROSSFADE_SAMPLES=128, xfLP/HP/BP/Notch arrays), dual-branch process() with cascade logic, inter-stage NaN safety, CKSS widget registration
-- `/Users/trekkie/projects/vcvrack_modules/poly_obefilter/res/HydraQuartetVCF.svg` - Added filter-type-switch-placeholder rect in components layer, label-12db and label-24db paths in visible layer
+- `/Users/trekkie/projects/vcvrack_modules/poly_obefilter/src/CipherOB.cpp` - Added FILTER_TYPE_PARAM enum entry and configSwitch, filters24dB_stage2 array, crossfade state (prevFilterType, crossfadeCounter, CROSSFADE_SAMPLES=128, xfLP/HP/BP/Notch arrays), dual-branch process() with cascade logic, inter-stage NaN safety, CKSS widget registration
+- `/Users/trekkie/projects/vcvrack_modules/poly_obefilter/res/CipherOB.svg` - Added filter-type-switch-placeholder rect in components layer, label-12db and label-24db paths in visible layer
 
 ## Decisions Made
 
@@ -113,8 +113,8 @@ None - no external service configuration required.
 
 ## Self-Check: PASSED
 
-- FOUND: src/HydraQuartetVCF.cpp
-- FOUND: res/HydraQuartetVCF.svg
+- FOUND: src/CipherOB.cpp
+- FOUND: res/CipherOB.svg
 - FOUND: .planning/phases/08-core-24db-cascade/08-01-SUMMARY.md
 - FOUND: plugin.dylib
 - FOUND commit 3b90f7f (Task 1 - cascade filter implementation)

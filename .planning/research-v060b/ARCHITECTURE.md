@@ -15,7 +15,7 @@ This research addresses how to integrate a 24dB/oct (4-pole) OB-X-style filter w
 
 The existing module uses:
 - **SVFilter struct** (SVFilter.hpp): Trapezoidal state-variable filter with two integrators (ic1eq, ic2eq)
-- **Per-voice processing**: `SVFilter filters[16]` array in HydraQuartetVCF
+- **Per-voice processing**: `SVFilter filters[16]` array in CipherOB
 - **Four simultaneous outputs**: LP, HP, BP, Notch from single SVF pass
 - **Parameter smoothing**: Built into SVFilter via TExponentialFilter
 - **Saturation**: Applied post-filter via blendedSaturation function
@@ -82,7 +82,7 @@ When cascading two resonant filters, the combined resonance peak can become exce
 **Recommended Approach: Split Resonance**
 
 ```cpp
-// In HydraQuartetVCF::process() for 24dB mode
+// In CipherOB::process() for 24dB mode
 
 // Calculate split resonance (distribute across stages)
 float stage1Resonance = resonance * 0.7f;  // 70% to stage 1
@@ -146,7 +146,7 @@ Option A simpler for MVP. Option B can be added if users report switching artifa
 
 ### Parameter Definition
 
-Add to HydraQuartetVCF enums:
+Add to CipherOB enums:
 
 ```cpp
 enum ParamId {
@@ -164,7 +164,7 @@ enum ParamId {
 ### Configuration in Constructor
 
 ```cpp
-HydraQuartetVCF() {
+CipherOB() {
     config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 
     // ... existing params ...
@@ -231,14 +231,14 @@ void process(const ProcessArgs& args) override {
 
 ### UI Widget Placement
 
-Add switch widget to panel (HydraQuartetVCFWidget):
+Add switch widget to panel (CipherOBWidget):
 
 ```cpp
 // Add filter type switch (e.g., at top center of panel)
 addParam(createParamCentered<CKSS>(
     mm2px(Vec(35.56, 20.0)),
     module,
-    HydraQuartetVCF::FILTER_TYPE_PARAM));
+    CipherOB::FILTER_TYPE_PARAM));
 ```
 
 `CKSS` is a standard VCV Rack 2-position toggle switch. Position on panel should be prominent since it fundamentally changes filter character.
@@ -514,6 +514,6 @@ Expected 3-4x speedup. Defer until CPU profiling shows need.
 
 ---
 
-*Architecture research for: HydraQuartet VCF-OB v0.60b milestone*
+*Architecture research for: CIPHER · OB v0.60b milestone*
 *Researched: 2026-02-03*
 *Confidence: HIGH (Cascading approach well-documented, VCV Rack patterns established, existing SVFilter proven stable)*

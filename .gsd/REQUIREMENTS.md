@@ -18,6 +18,7 @@ CV input that accepts a gate, trigger, or continuous CV to switch between 12dB S
 - Class: core-capability
 - Source: M002-CONTEXT
 - Primary Slice: M002/S02
+- Progress: S02 implemented — bipolar attenuverter (-1 to +1), post-smoothing FM offset via pow(2, fmOffsetVoct), build-verified. Awaiting runtime UAT.
 
 Dedicated FM input with attenuverter knob for modulating cutoff frequency. Must work at audio rates (bypass parameter smoothing). Exponential FM (V/Oct scaled).
 
@@ -27,6 +28,7 @@ Dedicated FM input with attenuverter knob for modulating cutoff frequency. Must 
 - Class: core-capability
 - Source: M002-CONTEXT
 - Primary Slice: M002/S02
+- Progress: S02 implemented — V/Oct summed in exponent accumulator with cutoff CV, single pow(2, ...) call, build-verified. Awaiting runtime UAT.
 
 Dedicated 1V/Oct input for pitch tracking. No attenuverter — true tracking. Sums with cutoff knob in logarithmic domain.
 
@@ -56,6 +58,7 @@ Filter type CV uses Schmitt trigger with ~0.1V hysteresis (switch at 2.6V rising
 - Class: domain-standard
 - Source: M002-RESEARCH (candidate requirement)
 - Primary Slice: M002/S02
+- Progress: S02 implemented — fmOffsetVoct applied after cutoffSmoother.process() in setParams(), build-verified. Awaiting runtime UAT.
 
 FM modulation component bypasses the SVFilter's cutoffSmoother so audio-rate FM is not attenuated above ~160Hz. Base cutoff (knob + cutoff CV) still smoothed.
 
@@ -65,6 +68,7 @@ FM modulation component bypasses the SVFilter's cutoffSmoother so audio-rate FM 
 - Class: convention
 - Source: M002-RESEARCH (candidate requirement)
 - Primary Slice: M002/S02
+- Progress: S02 implemented — V/Oct accumulated in exponent with cutoff CV, then single pow(2, cutoffExponent) scales base cutoff, build-verified. Awaiting runtime UAT.
 
 1V/Oct input sums in V/Oct (logarithmic) domain: `cutoffHz * pow(2, voct)`. Knob sets base frequency, 1V/Oct offsets it.
 

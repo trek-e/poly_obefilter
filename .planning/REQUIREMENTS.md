@@ -1,4 +1,4 @@
-# Requirements: HydraQuartet VCF-OB
+# Requirements: CIPHER · OB
 
 **Defined:** 2026-02-03
 **Core Value:** The distinctive Oberheim filter sound in a polyphonic VCV Rack module

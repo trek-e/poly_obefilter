@@ -25,7 +25,7 @@ tech-stack:
 key-files:
   created: []
   modified:
-    - src/HydraQuartetVCF.cpp
+    - src/CipherOB.cpp
 
 key-decisions:
   - "Tasks 1+2 committed together (filter array and process loop are interdependent)"
@@ -70,7 +70,7 @@ Each task was committed atomically:
 Note: Tasks 1 and 2 were committed together because the filter array replacement (Task 1) requires the process loop update (Task 2) to compile.
 
 ## Files Created/Modified
-- `src/HydraQuartetVCF.cpp` - Polyphonic filter processing with filters[16] array and per-voice CV modulation
+- `src/CipherOB.cpp` - Polyphonic filter processing with filters[16] array and per-voice CV modulation
 
 ## Decisions Made
 - **Tasks 1+2 atomic commit:** The filter array replacement makes the code non-compilable until the process loop is updated. Committed together as a single atomic change.
@@ -85,7 +85,7 @@ Note: Tasks 1 and 2 were committed together because the filter array replacement
 - **Found during:** Task 1 (Add Filter Array)
 - **Issue:** Task 1's verification "make -j4 succeeds" cannot pass because the process() method still references `filter.` instead of `filters[c].`
 - **Fix:** Completed both tasks before first commit since they form an atomic compilable unit
-- **Files modified:** src/HydraQuartetVCF.cpp
+- **Files modified:** src/CipherOB.cpp
 - **Verification:** Build succeeds after both tasks complete
 - **Committed in:** 8316e4d (combined Task 1+2 commit)
 

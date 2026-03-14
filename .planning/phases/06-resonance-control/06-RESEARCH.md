@@ -6,7 +6,7 @@
 
 ## Summary
 
-This research covers adding user-accessible resonance control with CV modulation to the HydraQuartet VCF-OB filter module. The resonance DSP implementation already exists from Phase 2 (Q range 0.5-20 mapped from 0-1 parameter, soft saturation in feedback path for Oberheim character). This phase exposes that functionality through panel controls: a resonance knob, CV input jack, and CV attenuverter knob.
+This research covers adding user-accessible resonance control with CV modulation to the CIPHER · OB filter module. The resonance DSP implementation already exists from Phase 2 (Q range 0.5-20 mapped from 0-1 parameter, soft saturation in feedback path for Oberheim character). This phase exposes that functionality through panel controls: a resonance knob, CV input jack, and CV attenuverter knob.
 
 The standard approach for resonance control in VCV Rack modules mirrors cutoff control patterns: a main parameter knob (0-1 range), a bipolar attenuverter (-1 to +1, default 0) for CV depth/polarity control, and additive CV combination (knob + scaled CV, clamped to valid range). The existing cutoff control implementation provides a proven reference pattern - resonance should follow the same architecture for consistency.
 
@@ -36,7 +36,7 @@ The established patterns for VCV Rack resonance control:
 
 ### Reference Implementation (from Cutoff)
 ```cpp
-// Existing cutoff pattern (lines 7, 35, 56, 110 in HydraQuartetVCF.cpp)
+// Existing cutoff pattern (lines 7, 35, 56, 110 in CipherOB.cpp)
 enum ParamId {
     CUTOFF_PARAM,
     CUTOFF_ATTEN_PARAM,  // <-- Attenuverter parameter
@@ -52,12 +52,12 @@ if (inputs[CUTOFF_CV_INPUT].isConnected()) {
 }
 
 addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(35.56, 62.0)),
-    module, HydraQuartetVCF::CUTOFF_ATTEN_PARAM));
+    module, CipherOB::CUTOFF_ATTEN_PARAM));
 ```
 
 ### Current Resonance Implementation (Needs Attenuverter)
 ```cpp
-// Current resonance code (lines 8, 36, 57, 74-76, 111 in HydraQuartetVCF.cpp)
+// Current resonance code (lines 8, 36, 57, 74-76, 111 in CipherOB.cpp)
 enum ParamId {
     RESONANCE_PARAM,
     // MISSING: RESONANCE_ATTEN_PARAM should go here
@@ -75,7 +75,7 @@ if (inputs[RESONANCE_CV_INPUT].isConnected()) {
 }
 
 addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(35.56, 88.0)),
-    module, HydraQuartetVCF::RESONANCE_PARAM));
+    module, CipherOB::RESONANCE_PARAM));
 // MISSING: RoundSmallBlackKnob for attenuverter
 ```
 
@@ -141,17 +141,17 @@ if (inputs[RESONANCE_CV_INPUT].isConnected()) {
 ```cpp
 // Cutoff section (vertical stack)
 addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(35.56, 40.0)),
-    module, HydraQuartetVCF::CUTOFF_PARAM));           // Main knob
+    module, CipherOB::CUTOFF_PARAM));           // Main knob
 addInput(createInputCentered<PJ301MPort>(mm2px(Vec(20.0, 50.0)),
-    module, HydraQuartetVCF::CUTOFF_CV_INPUT));        // CV jack (left of knob)
+    module, CipherOB::CUTOFF_CV_INPUT));        // CV jack (left of knob)
 addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(35.56, 62.0)),
-    module, HydraQuartetVCF::CUTOFF_ATTEN_PARAM));     // Attenuverter (below main knob)
+    module, CipherOB::CUTOFF_ATTEN_PARAM));     // Attenuverter (below main knob)
 
 // Resonance section (should mirror)
 addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(35.56, 88.0)),
-    module, HydraQuartetVCF::RESONANCE_PARAM));        // Main knob
+    module, CipherOB::RESONANCE_PARAM));        // Main knob
 addInput(createInputCentered<PJ301MPort>(mm2px(Vec(20.0, 88.0)),
-    module, HydraQuartetVCF::RESONANCE_CV_INPUT));     // CV jack (already exists)
+    module, CipherOB::RESONANCE_CV_INPUT));     // CV jack (already exists)
 // MISSING: Small attenuverter knob below resonance knob
 ```
 
@@ -255,7 +255,7 @@ Verified patterns from existing implementation and VCV standards:
 
 ### Complete Attenuverter Implementation Pattern
 ```cpp
-// Source: Existing cutoff attenuverter in HydraQuartetVCF.cpp
+// Source: Existing cutoff attenuverter in CipherOB.cpp
 // STEP 1: Add parameter to enum (line 7, after RESONANCE_PARAM)
 enum ParamId {
     CUTOFF_PARAM,
@@ -289,9 +289,9 @@ if (inputs[RESONANCE_CV_INPUT].isConnected()) {
 
 // STEP 4: Add widget to panel (after line 111, after RESONANCE_PARAM widget)
 addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(35.56, 88.0)),
-    module, HydraQuartetVCF::RESONANCE_PARAM));
+    module, CipherOB::RESONANCE_PARAM));
 addParam(createParamCentered<RoundSmallBlackKnob>(mm2px(Vec(35.56, 100.0)),  // <-- Add this
-    module, HydraQuartetVCF::RESONANCE_ATTEN_PARAM));  // Y position TBD based on panel space
+    module, CipherOB::RESONANCE_ATTEN_PARAM));  // Y position TBD based on panel space
 ```
 
 ### CV Scaling Math Verification
@@ -361,7 +361,7 @@ effect = cv * cvAmount * 0.1f;  // = 5 * -0.5 * 0.1 = -0.25 (half-depth negative
 
 ### Panel Widget Position Calculation
 ```cpp
-// Source: Existing panel layout in HydraQuartetVCF.cpp
+// Source: Existing panel layout in CipherOB.cpp
 // Cutoff section layout (reference):
 //   - Main knob: Y = 40.0mm
 //   - CV jack: Y = 50.0mm (10mm below main knob)
@@ -443,7 +443,7 @@ Things that couldn't be fully resolved:
 - [VCV Community: Attenuator Best Practices](https://community.vcvrack.com/t/attenuator-best-practices/13022) - Bipolar range, additive combination
 - [VCV Rack Panel Design Guide](https://vcvrack.com/manual/Panel) - Component spacing, thumb clearance
 - [VCV Rack RoundSmallBlackKnob API](https://vcvrack.com/docs-v2/structrack_1_1componentlibrary_1_1RoundSmallBlackKnob) - Widget for attenuverters
-- Existing implementation in `src/HydraQuartetVCF.cpp` - Cutoff attenuverter pattern, resonance CV code
+- Existing implementation in `src/CipherOB.cpp` - Cutoff attenuverter pattern, resonance CV code
 - Existing implementation in `src/SVFilter.hpp` - Q mapping, parameter smoothing
 - Phase 4 STATE.md decision - "Resonance CV scaled 0.1 (1V = 10% change)"
 - Phase 2 RESEARCH.md - Q range 0.5-20, soft saturation, trapezoidal SVF

@@ -1,4 +1,4 @@
-# Project Milestones: HydraQuartet VCF-OB
+# Project Milestones: CIPHER · OB
 
 ## v0.50b Initial Beta (Shipped: 2026-02-03)
 
@@ -7,7 +7,7 @@
 **Phases completed:** 1-7 (7 plans total)
 
 **Key accomplishments:**
-- Plugin infrastructure with 14 HP dark industrial panel matching HydraQuartet VCO aesthetic
+- Plugin infrastructure with 14 HP dark industrial panel matching PHANTOM · 8 aesthetic
 - SEM-style 12dB state-variable filter with trapezoidal integration and soft saturation
 - Four simultaneous filter outputs (LP, HP, BP, Notch) with Cytomic-derived formulas
 - 16-voice polyphony with independent filter state per voice

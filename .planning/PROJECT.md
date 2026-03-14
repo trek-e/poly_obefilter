@@ -1,4 +1,4 @@
-# HydraQuartet VCF-OB
+# CIPHER · OB
 
 ## What This Is
 
@@ -23,7 +23,7 @@ The distinctive Oberheim filter sound — musical, characterful, and versatile �
 **Shipped:** v0.50b Initial Beta (2026-02-03)
 
 **Codebase:**
-- 322 LOC C++ (src/HydraQuartetVCF.cpp, src/SVFilter.hpp)
+- 322 LOC C++ (src/CipherOB.cpp, src/SVFilter.hpp)
 - 14 HP panel with dark industrial aesthetic
 - Builds on macOS with VCV Rack 2.x SDK
 
@@ -84,7 +84,7 @@ The distinctive Oberheim filter sound — musical, characterful, and versatile �
 ## Context
 
 **Brand:** Synth-etic Intelligence
-**Module:** HydraQuartet VCF-OB
+**Module:** CIPHER · OB
 
 **Oberheim Filter Background:**
 - SEM (Synthesizer Expander Module): 12dB/oct state-variable filter known for smooth, musical character

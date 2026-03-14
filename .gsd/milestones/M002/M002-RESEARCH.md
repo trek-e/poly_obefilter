@@ -27,12 +27,12 @@ Panel SVG work should be its own slice after DSP is validated, or combined with 
 
 ## Existing Code and Patterns
 
-- **`src/HydraQuartetVCF.cpp` lines 79-82** — Filter type read + mode change detection. This is where CV override logic must be inserted. Current: `int filterType = (int)(params[FILTER_TYPE_PARAM].getValue() + 0.5f)` reads from panel switch only.
-- **`src/HydraQuartetVCF.cpp` lines 110-113** — Cutoff CV pattern. V/Oct exponential: `cutoffHz = baseCutoffHz * pow(2, cutoffCV * cvAmount)`. FM and 1V/Oct should sum into cutoff similarly but with different scaling.
-- **`src/HydraQuartetVCF.cpp` lines 136-144** — Crossfade-from capture. Currently `modeJustChanged` is computed once (line 82) and applied to all voices. Must become per-voice: `modeJustChanged[c]` comparing `filterType[c]` with `prevFilterType[c]`.
-- **`src/HydraQuartetVCF.cpp` lines 196-213** — Crossfade application + counter decrement. `crossfadeCounter` is decremented once after all voices. Must become `crossfadeCounter[c]` decremented per-voice within the loop.
+- **`src/CipherOB.cpp` lines 79-82** — Filter type read + mode change detection. This is where CV override logic must be inserted. Current: `int filterType = (int)(params[FILTER_TYPE_PARAM].getValue() + 0.5f)` reads from panel switch only.
+- **`src/CipherOB.cpp` lines 110-113** — Cutoff CV pattern. V/Oct exponential: `cutoffHz = baseCutoffHz * pow(2, cutoffCV * cvAmount)`. FM and 1V/Oct should sum into cutoff similarly but with different scaling.
+- **`src/CipherOB.cpp` lines 136-144** — Crossfade-from capture. Currently `modeJustChanged` is computed once (line 82) and applied to all voices. Must become per-voice: `modeJustChanged[c]` comparing `filterType[c]` with `prevFilterType[c]`.
+- **`src/CipherOB.cpp` lines 196-213** — Crossfade application + counter decrement. `crossfadeCounter` is decremented once after all voices. Must become `crossfadeCounter[c]` decremented per-voice within the loop.
 - **`src/SVFilter.hpp`** — Filter DSP. Untouched by this milestone. FM modulates cutoff frequency *before* `setParams()` is called — no SVFilter changes needed.
-- **`../vco/src/HydraQuartetVCO.cpp` lines 586-601** — FM implementation reference. Uses linear FM (`freq + freq * modulator * depth`). Filter FM should use exponential FM instead (`cutoffHz * pow(2, fmCV * fmAmount)`), which is the VCV convention for filter cutoff modulation.
+- **`../vco/src/PhantomEight.cpp` lines 586-601** — FM implementation reference. Uses linear FM (`freq + freq * modulator * depth`). Filter FM should use exponential FM instead (`cutoffHz * pow(2, fmCV * fmAmount)`), which is the VCV convention for filter cutoff modulation.
 
 ## Constraints
 
@@ -84,6 +84,6 @@ Advisory only (not candidate requirements):
 - VCV Rack SDK `engine/Port.hpp` — `getPolyVoltage()`, `isConnected()`, polyphonic port API
 - VCV Rack SDK `dsp/approx.hpp` — `exp2_taylor5()` for V/Oct conversion
 - VCV Rack SDK `dsp/common.hpp` — `FREQ_C4 = 261.6256f` constant
-- `../vco/src/HydraQuartetVCO.cpp` — FM implementation (linear, through-zero), V/Oct pitch handling, polyphonic CV reading patterns
-- `src/HydraQuartetVCF.cpp` — Current module: CV patterns, crossfade state machine, filter type switching
+- `../vco/src/PhantomEight.cpp` — FM implementation (linear, through-zero), V/Oct pitch handling, polyphonic CV reading patterns
+- `src/CipherOB.cpp` — Current module: CV patterns, crossfade state machine, filter type switching
 - `src/SVFilter.hpp` — Filter internals: `cutoffSmoother` with 1ms tau, `setParams()` interface

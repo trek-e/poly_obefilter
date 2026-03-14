@@ -1,13 +1,13 @@
 # Project Research Summary
 
-**Project:** HydraQuartet VCF-OB (VCV Rack Module)
+**Project:** CIPHER · OB (VCV Rack Module)
 **Domain:** VCV Rack Polyphonic Filter Module Development
 **Researched:** 2026-01-29
 **Confidence:** HIGH
 
 ## Executive Summary
 
-HydraQuartet VCF-OB is a polyphonic multimode filter module for VCV Rack 2.x, inspired by classic Oberheim SEM (12dB) and OB-X (24dB) filters. VCV Rack modules are built using the official VCV Rack SDK 2.6.6+ with C++11, following a well-established architecture pattern: Module class for DSP/state management, ModuleWidget for UI, and configuration in constructor using config*() methods. The recommended approach uses state-variable filter topology to provide simultaneous lowpass/highpass/bandpass/notch outputs, polyphonic processing with SIMD optimization (rack::simd::float_4), and standard VCV voltage conventions.
+CIPHER · OB is a polyphonic multimode filter module for VCV Rack 2.x, inspired by classic Oberheim SEM (12dB) and OB-X (24dB) filters. VCV Rack modules are built using the official VCV Rack SDK 2.6.6+ with C++11, following a well-established architecture pattern: Module class for DSP/state management, ModuleWidget for UI, and configuration in constructor using config*() methods. The recommended approach uses state-variable filter topology to provide simultaneous lowpass/highpass/bandpass/notch outputs, polyphonic processing with SIMD optimization (rack::simd::float_4), and standard VCV voltage conventions.
 
 The critical success factors are: (1) implementing resonance stability controls from the start to prevent filter blow-up and NaN propagation, (2) correct polyphonic channel handling with setChannels() and proper CV summing patterns, and (3) following VCV voltage standards without hard-clipping outputs. The main risk is that a basic state-variable filter implementation will sound "clinical" compared to analog Oberheim hardware - this requires accepting character loss in MVP and planning iterative refinement for analog modeling post-launch. Performance target is <5% CPU for 16 voices, achievable with SIMD optimization and efficient coefficient caching.
 

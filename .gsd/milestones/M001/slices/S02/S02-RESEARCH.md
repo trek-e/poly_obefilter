@@ -48,7 +48,7 @@ VCV Rack SDK is installed via the Rack development environment. No additional de
 ### Recommended Module Structure
 ```
 src/
-├── HydraQuartetVCF.cpp      # Main module (UI, params, process())
+├── CipherOB.cpp      # Main module (UI, params, process())
 ├── SVFilter.hpp             # SVF filter class (reusable)
 └── plugin.hpp               # Plugin definitions
 ```

@@ -241,7 +241,7 @@ for (int i = 0; i < sampleRate; i++) {
 
 ### VCV Module Output Wiring
 ```cpp
-// In HydraQuartetVCF.cpp process() function
+// In CipherOB.cpp process() function
 void process(const ProcessArgs& args) override {
     // ... parameter setup code ...
 

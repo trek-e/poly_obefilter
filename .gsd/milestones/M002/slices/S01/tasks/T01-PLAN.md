@@ -19,7 +19,7 @@ The key insight: with CV-driven type switching, voice 0 might switch to 24dB whi
 1. Append `FILTER_TYPE_CV_INPUT` to `InputId` enum, before `INPUTS_LEN`. Never insert — append only to preserve patch compatibility.
 2. Replace member variables: `int prevFilterType = 0` → `int prevFilterType[PORT_MAX_CHANNELS] = {}`, `int crossfadeCounter = 0` → `int crossfadeCounter[PORT_MAX_CHANNELS] = {}`. Add `bool filterTypeHigh[PORT_MAX_CHANNELS] = {}` for Schmitt trigger state.
 3. Add `configInput(FILTER_TYPE_CV_INPUT, "Filter Type CV")` in the constructor.
-4. Add `addInput(createInputCentered<PJ301MPort>(mm2px(Vec(X, Y)), module, HydraQuartetVCF::FILTER_TYPE_CV_INPUT))` in the widget constructor. Choose coordinates that place the jack near the filter type switch without overlapping existing components. A good candidate: `Vec(24.0, 32.0)` — directly below the CKSS switch at (24.0, 22.0), with 10mm spacing.
+4. Add `addInput(createInputCentered<PJ301MPort>(mm2px(Vec(X, Y)), module, CipherOB::FILTER_TYPE_CV_INPUT))` in the widget constructor. Choose coordinates that place the jack near the filter type switch without overlapping existing components. A good candidate: `Vec(24.0, 32.0)` — directly below the CKSS switch at (24.0, 22.0), with 10mm spacing.
 5. Refactor `process()` to determine `filterType` per-voice inside the channel loop:
    - If `FILTER_TYPE_CV_INPUT` is connected: read `getPolyVoltage(c)`, apply Schmitt trigger (set `filterTypeHigh[c] = true` when CV ≥ 2.6V, set `false` when CV ≤ 2.4V, hold previous state otherwise). `filterType = filterTypeHigh[c] ? 1 : 0`.
    - If not connected: `filterType = (int)(params[FILTER_TYPE_PARAM].getValue() + 0.5f)`.
@@ -44,7 +44,7 @@ The key insight: with CV-driven type switching, voice 0 might switch to 24dB whi
 
 - `make -j4 2>&1 | grep -cE "warning:|error:"` returns `0`
 - Code review: no remaining references to global `crossfadeCounter` or global `prevFilterType` (they should all be array accesses with `[c]`)
-- `grep -n "prevFilterType\b\|crossfadeCounter\b" src/HydraQuartetVCF.cpp` shows only array declarations and `[c]` accesses
+- `grep -n "prevFilterType\b\|crossfadeCounter\b" src/CipherOB.cpp` shows only array declarations and `[c]` accesses
 
 ## Observability Impact
 
@@ -56,7 +56,7 @@ The key insight: with CV-driven type switching, voice 0 might switch to 24dB whi
 
 ## Inputs
 
-- `src/HydraQuartetVCF.cpp` — current process loop with global crossfade state
+- `src/CipherOB.cpp` — current process loop with global crossfade state
 - `src/SVFilter.hpp` — SVFilter interface (unchanged by this task)
 - Decision: "Schmitt trigger hysteresis (2.6V rising, 2.4V falling)"
 - Decision: "Per-voice crossfade arrays replace global crossfadeCounter/prevFilterType"
@@ -64,4 +64,4 @@ The key insight: with CV-driven type switching, voice 0 might switch to 24dB whi
 
 ## Expected Output
 
-- `src/HydraQuartetVCF.cpp` — refactored with per-voice crossfade arrays, Schmitt trigger, CV input enum/config/widget, and CV override logic. Clean build.
+- `src/CipherOB.cpp` — refactored with per-voice crossfade arrays, Schmitt trigger, CV input enum/config/widget, and CV override logic. Clean build.

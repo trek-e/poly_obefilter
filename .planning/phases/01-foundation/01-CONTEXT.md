@@ -6,7 +6,7 @@
 <domain>
 ## Phase Boundary
 
-Plugin scaffold, panel design, and build infrastructure for HydraQuartet VCF-OB. This phase establishes the module shell that compiles and loads in VCV Rack with a complete panel design showing all control positions. DSP implementation begins in Phase 2.
+Plugin scaffold, panel design, and build infrastructure for CIPHER · OB. This phase establishes the module shell that compiles and loads in VCV Rack with a complete panel design showing all control positions. DSP implementation begins in Phase 2.
 
 </domain>
 
@@ -24,7 +24,7 @@ Plugin scaffold, panel design, and build infrastructure for HydraQuartet VCF-OB.
 - Fresh design, no specific module reference
 
 ### Visual Style
-- Match HydraQuartet VCO exactly — same colors, fonts, divider style
+- Match PHANTOM · 8 exactly — same colors, fonts, divider style
 - Color palette:
   - Background: `#1a1a2e` (dark blue-grey)
   - Border: `#3a3a5e` (muted purple-grey)
@@ -48,7 +48,7 @@ Plugin scaffold, panel design, and build infrastructure for HydraQuartet VCF-OB.
 ### Project Structure
 - Standard VCV Rack template structure
 - Filter DSP in separate file from module class (for reusability)
-- PascalCase for module files (HydraQuartetVCF.cpp), lowercase for standard files (plugin.cpp)
+- PascalCase for module files (CipherOB.cpp), lowercase for standard files (plugin.cpp)
 - Panel designed in Inkscape
 
 ### Claude's Discretion
@@ -61,8 +61,8 @@ Plugin scaffold, panel design, and build infrastructure for HydraQuartet VCF-OB.
 <specifics>
 ## Specific Ideas
 
-- Panel should feel cohesive with HydraQuartet VCO — same product family
-- Reference: https://github.com/trek-e/HydraQuartet for VCO panel style
+- Panel should feel cohesive with PHANTOM · 8 — same product family
+- Reference: https://github.com/trek-e/COLOSSUS · 16 for VCO panel style
 - The dusty orange for filter outputs gives it a "warm analog" feel fitting the Oberheim inspiration
 
 </specifics>

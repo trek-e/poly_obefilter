@@ -23,7 +23,7 @@ Updated the cutoff frequency parameter default from 0.5 (mid-range 632 Hz) to 1.
 
 | Artifact | Purpose |
 |----------|---------|
-| `src/HydraQuartetVCF.cpp` | Cutoff configParam with default 1.f |
+| `src/CipherOB.cpp` | Cutoff configParam with default 1.f |
 
 ## Technical Notes
 

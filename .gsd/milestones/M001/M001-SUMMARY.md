@@ -101,13 +101,13 @@ The final codebase is 391 LOC C++ across two files. Every slice built cleanly wi
 
 ### What assumptions changed
 - Originally planned SIMD optimization (float_4) for Phase 5 — deferred to v0.90b. Scalar 16-voice processing is fast enough for now.
-- Originally planned separate DSP files (SEMFilter.hpp, OBXFilter.hpp) — kept everything in SVFilter.hpp and HydraQuartetVCF.cpp. Simpler for current scope.
+- Originally planned separate DSP files (SEMFilter.hpp, OBXFilter.hpp) — kept everything in SVFilter.hpp and CipherOB.cpp. Simpler for current scope.
 - Resonance was assumed to work identically between modes — actually needed 1.15x boost in 24dB mode for comparable perceived resonance character.
 
 ## Files Created/Modified
 
-- `src/HydraQuartetVCF.cpp` — Main module: dual-mode process() with 12dB/24dB branches, crossfade state machine, all parameter handling (258 LOC)
+- `src/CipherOB.cpp` — Main module: dual-mode process() with 12dB/24dB branches, crossfade state machine, all parameter handling (258 LOC)
 - `src/SVFilter.hpp` — State-variable filter core: trapezoidal SVF with soft saturation (133 LOC)
-- `res/HydraQuartetVCF.svg` — Panel design: 14 HP with filter type switch, all controls and outputs
+- `res/CipherOB.svg` — Panel design: 14 HP with filter type switch, all controls and outputs
 - `plugin.json` — Plugin manifest with module metadata and tags
 - `README.md` — Build instructions and usage documentation

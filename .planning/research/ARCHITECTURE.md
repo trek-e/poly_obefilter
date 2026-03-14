@@ -53,8 +53,8 @@
 src/
 ├── plugin.hpp              # Plugin metadata, model declarations
 ├── plugin.cpp              # Plugin initialization, model registration
-├── HydraQuartetVCF.cpp     # Main module implementation
-│   ├── struct HydraQuartetVCF : Module
+├── CipherOB.cpp     # Main module implementation
+│   ├── struct CipherOB : Module
 │   ├── enum ParamId (knobs, switches)
 │   ├── enum InputId (audio in, CV ins)
 │   ├── enum OutputId (filter outputs)
@@ -66,9 +66,9 @@ src/
 │   ├── OBXFilter.hpp            # OB-X 24dB filter topology
 │   └── ResonanceProcessor.hpp   # Self-oscillation handling
 ├── ui/                     # User interface components
-│   └── HydraQuartetWidget.cpp   # Panel layout and widget placement
+│   └── COLOSSUS · 16Widget.cpp   # Panel layout and widget placement
 └── res/                    # Resources
-    ├── HydraQuartet.svg         # Panel design
+    ├── COLOSSUS · 16.svg         # Panel design
     └── components/              # Custom UI components
 ```
 
@@ -217,7 +217,7 @@ class StateVariableFilter {
 
 **Example:**
 ```cpp
-struct HydraQuartetVCF : Module {
+struct CipherOB : Module {
     enum ParamId {
         CUTOFF_PARAM,
         RESONANCE_PARAM,
@@ -232,7 +232,7 @@ struct HydraQuartetVCF : Module {
         INPUTS_LEN
     };
 
-    HydraQuartetVCF() {
+    CipherOB() {
         config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 
         // Configure parameters with ranges, defaults, labels, units
@@ -267,10 +267,10 @@ struct HydraQuartetVCF : Module {
 
 **Example:**
 ```cpp
-struct HydraQuartetVCF : Module {
+struct CipherOB : Module {
     dsp::ClockDivider lightDivider;
 
-    HydraQuartetVCF() {
+    CipherOB() {
         // ... config ...
         lightDivider.setDivision(512);  // Update lights every 512 samples (~10ms at 48kHz)
     }
@@ -463,7 +463,7 @@ Nonlinear processes (saturation, resonance clipping) generate harmonics above Ny
 3. **Bandlimited Algorithms:** For oscillators/waveforms (not directly applicable to filters).
 4. **Pre/Post Filtering:** Lowpass before nonlinear stage, lowpass after. Adds latency.
 
-**Recommendation for HydraQuartet:**
+**Recommendation for COLOSSUS · 16:**
 - Start with soft clipping (tanh) in feedback path (low CPU cost, effective)
 - Add optional 2x oversampling if CPU budget allows (right-click menu toggle)
 - Monitor for aliasing during testing with spectrum analyzer
@@ -590,7 +590,7 @@ outputs[AUDIO_OUTPUT].setChannels(channels);
 
 VCV Rack community expectation: modules should use <5% CPU per instance on mid-range system (16 polyphonic voices).
 
-**Budget Breakdown for HydraQuartet (16 voices):**
+**Budget Breakdown for COLOSSUS · 16 (16 voices):**
 - **Input/Output handling:** <0.5% (trivial operations)
 - **Parameter processing:** <0.5% (reading params, CV, clamping)
 - **Filter DSP (per voice):** ~3.0% (main cost, optimize here)
@@ -701,6 +701,6 @@ These can be developed concurrently:
 - [State Space Filters (DSP Related)](https://www.dsprelated.com/freebooks/filters/State_Space_Filters.html) - Advanced filter theory
 
 ---
-*Architecture research for: HydraQuartet VCF-OB — 8-voice polyphonic Oberheim-style filter module*
+*Architecture research for: CIPHER · OB — 8-voice polyphonic Oberheim-style filter module*
 *Researched: 2026-01-29*
 *Confidence: HIGH (verified with official VCV Rack documentation and community implementations)*

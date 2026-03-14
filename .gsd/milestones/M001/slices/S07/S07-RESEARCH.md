@@ -407,7 +407,7 @@ float smoothedDrive = driveSmoother.process(1.f / args.sampleRate, driveParam);
 
 ### Primary (HIGH confidence)
 - Music-DSP Archive (musicdsp.org) - Rational tanh approximation, variable hardness clipping, waveshaping algorithms
-- VCV Rack SDK and existing module codebase (SVFilter.hpp, HydraQuartetVCF.cpp) - Parameter patterns, signal flow, smoothing
+- VCV Rack SDK and existing module codebase (SVFilter.hpp, CipherOB.cpp) - Parameter patterns, signal flow, smoothing
 - Elementary Audio Tutorial on Distortion/Saturation - Asymmetric waveshaping implementation and theory
 
 ### Secondary (MEDIUM confidence)

@@ -11,7 +11,7 @@
 ## Preconditions
 
 - VCV Rack 2.x installed and running on macOS
-- HydraQuartet VCF-OB module built with `make install` (plugin installed to VCV Rack plugins directory)
+- CIPHER · OB module built with `make install` (plugin installed to VCV Rack plugins directory)
 - A polyphonic oscillator module available (e.g., VCV VCO or Bogaudio VCO)
 - A gate/trigger source available (e.g., VCV GATE, clock module, or MIDI-CV)
 - An LFO module available (e.g., VCV LFO)
@@ -20,7 +20,7 @@
 
 ## Smoke Test
 
-1. Launch VCV Rack → right-click → search "HydraQuartet VCF-OB" → add to patch.
+1. Launch VCV Rack → right-click → search "CIPHER · OB" → add to patch.
 2. Confirm the module loads without crash and the new "CV" jack is visible in the filter section, below the 12/24 toggle switch.
 3. Patch a polyphonic oscillator → VCF-OB audio input → VCF-OB LP output → Audio output. Confirm sound passes through.
 

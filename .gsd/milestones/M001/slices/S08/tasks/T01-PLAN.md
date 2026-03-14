@@ -8,7 +8,7 @@ Implement the cascaded 24dB SVF filter with panel switch, click-free mode switch
 
 Purpose: Add OB-X style 24dB/oct lowpass filter mode as the core new feature of v0.60b, alongside the existing 12dB SEM mode, selectable via a 2-position toggle switch.
 
-Output: Working HydraQuartetVCF module with both 12dB and 24dB filter modes, click-free switching, and updated panel SVG.
+Output: Working CipherOB module with both 12dB and 24dB filter modes, click-free switching, and updated panel SVG.
 
 ## Must-Haves
 
@@ -21,5 +21,5 @@ Output: Working HydraQuartetVCF module with both 12dB and 24dB filter modes, cli
 
 ## Files
 
-- `src/HydraQuartetVCF.cpp`
-- `res/HydraQuartetVCF.svg`
+- `src/CipherOB.cpp`
+- `res/CipherOB.svg`

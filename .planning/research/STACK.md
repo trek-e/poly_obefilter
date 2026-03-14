@@ -1,6 +1,6 @@
 # Technology Stack
 
-**Project:** HydraQuartet VCF-OB (VCV Rack Module)
+**Project:** CIPHER · OB (VCV Rack Module)
 **Researched:** 2026-01-29
 **Confidence:** HIGH
 
@@ -222,8 +222,8 @@ CXXFLAGS += -O3 -march=nehalem -funsafe-math-optimizations
 {
   "modules": [
     {
-      "slug": "HydraQuartetVCF",
-      "name": "HydraQuartet VCF-OB",
+      "slug": "CipherOB",
+      "name": "CIPHER · OB",
       "description": "8-voice polyphonic multimode filter (SEM 12dB, OB-X 24dB)",
       "tags": ["Filter", "Polyphonic"],
       "keywords": ["oberheim", "sem", "obx", "state variable", "multimode"]

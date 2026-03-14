@@ -21,8 +21,8 @@ score: 6/6 must-haves verified
 | 1 | Plugin compiles without errors | ✓ VERIFIED | .vcvplugin file exists in dist/ (25KB), Makefile includes plugin.mk, no build errors |
 | 2 | Plugin loads in VCV Rack library browser | ✓ VERIFIED | Human checkpoint confirmed: "Plugin loads correctly in VCV Rack, module appears in library browser under Synth-etic Intelligence" |
 | 3 | Module appears with correct branding (Synth-etic Intelligence) | ✓ VERIFIED | plugin.json contains brand: "Synth-etic Intelligence", user confirmed module appears correctly |
-| 4 | Panel shows all control positions (knobs, ports, sections) | ✓ VERIFIED | SVG contains 11 component circles (4 red params, 3 green inputs, 4 blue outputs), HydraQuartetVCF.cpp has 11 widget positioning calls, user confirmed all components visible |
-| 5 | Panel matches HydraQuartet VCO visual style | ✓ VERIFIED | SVG uses matching color palette (#1a1a2e background, #8888aa labels, #aa8866 outputs section), user confirmed visual style matches |
+| 4 | Panel shows all control positions (knobs, ports, sections) | ✓ VERIFIED | SVG contains 11 component circles (4 red params, 3 green inputs, 4 blue outputs), CipherOB.cpp has 11 widget positioning calls, user confirmed all components visible |
+| 5 | Panel matches PHANTOM · 8 visual style | ✓ VERIFIED | SVG uses matching color palette (#1a1a2e background, #8888aa labels, #aa8866 outputs section), user confirmed visual style matches |
 | 6 | README contains build instructions | ✓ VERIFIED | README.md 152 lines with "Building from Source" section, prerequisites, troubleshooting |
 
 **Score:** 6/6 truths verified (100%)
@@ -31,11 +31,11 @@ score: 6/6 must-haves verified
 
 | Artifact | Expected | Status | Details |
 |----------|----------|--------|---------|
-| `plugin.json` | Plugin manifest with metadata, contains HydraQuartetVCF | ✓ VERIFIED | EXISTS (18 lines), SUBSTANTIVE (complete metadata), WIRED (referenced by VCV Rack) |
+| `plugin.json` | Plugin manifest with metadata, contains CipherOB | ✓ VERIFIED | EXISTS (18 lines), SUBSTANTIVE (complete metadata), WIRED (referenced by VCV Rack) |
 | `Makefile` | Build configuration, contains plugin.mk | ✓ VERIFIED | EXISTS (12 lines), SUBSTANTIVE (includes plugin.mk line 12), WIRED (builds successfully to .vcvplugin) |
-| `src/plugin.cpp` | Plugin registration, exports init | ✓ VERIFIED | EXISTS (9 lines), SUBSTANTIVE (exports init, registers modelHydraQuartetVCF), WIRED (addModel call line 8) |
-| `res/HydraQuartetVCF.svg` | Panel design with component placeholders, min 100 lines | ✓ VERIFIED | EXISTS (149 lines), SUBSTANTIVE (149 > 100, components layer with 11 circles), WIRED (loaded by createPanel in widget) |
-| `src/HydraQuartetVCF.cpp` | Module and widget implementation, exports HydraQuartetVCF and HydraQuartetVCFWidget | ✓ VERIFIED | EXISTS (80 lines), SUBSTANTIVE (complete module/widget classes, 11 widget calls), WIRED (model exported line 80, registered in plugin.cpp) |
+| `src/plugin.cpp` | Plugin registration, exports init | ✓ VERIFIED | EXISTS (9 lines), SUBSTANTIVE (exports init, registers modelCipherOB), WIRED (addModel call line 8) |
+| `res/CipherOB.svg` | Panel design with component placeholders, min 100 lines | ✓ VERIFIED | EXISTS (149 lines), SUBSTANTIVE (149 > 100, components layer with 11 circles), WIRED (loaded by createPanel in widget) |
+| `src/CipherOB.cpp` | Module and widget implementation, exports CipherOB and CipherOBWidget | ✓ VERIFIED | EXISTS (80 lines), SUBSTANTIVE (complete module/widget classes, 11 widget calls), WIRED (model exported line 80, registered in plugin.cpp) |
 | `README.md` | Build instructions and usage documentation, min 30 lines | ✓ VERIFIED | EXISTS (152 lines), SUBSTANTIVE (152 > 30, comprehensive sections), WIRED (documentation) |
 
 **Score:** 6/6 artifacts verified (100%)
@@ -44,10 +44,10 @@ score: 6/6 must-haves verified
 
 | From | To | Via | Status | Details |
 |------|----|----|--------|---------|
-| plugin.json | src/HydraQuartetVCF.cpp | module slug reference | ✓ WIRED | plugin.json line 12 contains "slug": "HydraQuartetVCF" matching module class name |
-| res/HydraQuartetVCF.svg | src/HydraQuartetVCF.cpp | helper.py SVG extraction | ✓ WIRED | 11 createParamCentered/createInputCentered/createOutputCentered calls (4 params lines 62-65, 3 inputs lines 68-70, 4 outputs lines 73-76) match SVG component positions |
+| plugin.json | src/CipherOB.cpp | module slug reference | ✓ WIRED | plugin.json line 12 contains "slug": "CipherOB" matching module class name |
+| res/CipherOB.svg | src/CipherOB.cpp | helper.py SVG extraction | ✓ WIRED | 11 createParamCentered/createInputCentered/createOutputCentered calls (4 params lines 62-65, 3 inputs lines 68-70, 4 outputs lines 73-76) match SVG component positions |
 | Makefile | plugin.mk | SDK include | ✓ WIRED | Makefile line 12: `include $(RACK_DIR)/plugin.mk` |
-| src/plugin.cpp | modelHydraQuartetVCF | model registration | ✓ WIRED | plugin.cpp line 8 calls p->addModel(modelHydraQuartetVCF), model defined in HydraQuartetVCF.cpp line 80, declared in plugin.hpp line 8 |
+| src/plugin.cpp | modelCipherOB | model registration | ✓ WIRED | plugin.cpp line 8 calls p->addModel(modelCipherOB), model defined in CipherOB.cpp line 80, declared in plugin.hpp line 8 |
 
 **Score:** 4/4 key links verified (100%)
 
@@ -67,7 +67,7 @@ score: 6/6 must-haves verified
 
 | File | Line | Pattern | Severity | Impact |
 |------|------|---------|----------|--------|
-| src/HydraQuartetVCF.cpp | 47 | Comment "// DSP implementation in Phase 2" | ℹ️ INFO | Empty process() method is expected - DSP implementation is Phase 2 scope |
+| src/CipherOB.cpp | 47 | Comment "// DSP implementation in Phase 2" | ℹ️ INFO | Empty process() method is expected - DSP implementation is Phase 2 scope |
 
 **Analysis:**
 - No TODO/FIXME comments indicating incomplete work

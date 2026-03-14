@@ -20,5 +20,5 @@ Output: Working resonance attenuverter with panel widget, matching cutoff's beha
 
 ## Files
 
-- `src/HydraQuartetVCF.cpp`
-- `res/HydraQuartetVCF.svg`
+- `src/CipherOB.cpp`
+- `res/CipherOB.svg`

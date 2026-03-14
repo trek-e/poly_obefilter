@@ -30,16 +30,16 @@ score: 4/4 must-haves verified
 | Artifact | Expected | Status | Details |
 |----------|----------|--------|---------|
 | `src/SVFilter.hpp` | SVFilterOutputs struct and multi-output process() | VERIFIED | 101 lines, struct at line 5-10, process() returns struct at line 65 |
-| `src/HydraQuartetVCF.cpp` | All four filter outputs wired | VERIFIED | 112 lines, all setVoltage calls at lines 76-79 |
+| `src/CipherOB.cpp` | All four filter outputs wired | VERIFIED | 112 lines, all setVoltage calls at lines 76-79 |
 
 ### Artifact Verification Details
 
 **src/SVFilter.hpp**
 - Level 1 (Exists): EXISTS (101 lines)
 - Level 2 (Substantive): SUBSTANTIVE - Full SVF implementation with trapezoidal integration, no TODOs/FIXMEs/placeholders
-- Level 3 (Wired): WIRED - Included by HydraQuartetVCF.cpp (line 2), SVFilter instance created (line 29)
+- Level 3 (Wired): WIRED - Included by CipherOB.cpp (line 2), SVFilter instance created (line 29)
 
-**src/HydraQuartetVCF.cpp**
+**src/CipherOB.cpp**
 - Level 1 (Exists): EXISTS (112 lines)
 - Level 2 (Substantive): SUBSTANTIVE - Full module implementation with params, inputs, outputs, process method
 - Level 3 (Wired): WIRED - Registered as VCV Rack model (line 112)
@@ -48,8 +48,8 @@ score: 4/4 must-haves verified
 
 | From | To | Via | Status | Details |
 |------|-----|-----|--------|---------|
-| src/SVFilter.hpp | src/HydraQuartetVCF.cpp | SVFilterOutputs return type | WIRED | `SVFilterOutputs process(float input)` in SVFilter.hpp, `SVFilterOutputs out = filter.process(input)` in HydraQuartetVCF.cpp (line 73) |
-| src/HydraQuartetVCF.cpp | HP_OUTPUT, BP_OUTPUT, NOTCH_OUTPUT | setVoltage calls | WIRED | `out.highpass` (line 77), `out.bandpass` (line 78), `out.notch` (line 79) |
+| src/SVFilter.hpp | src/CipherOB.cpp | SVFilterOutputs return type | WIRED | `SVFilterOutputs process(float input)` in SVFilter.hpp, `SVFilterOutputs out = filter.process(input)` in CipherOB.cpp (line 73) |
+| src/CipherOB.cpp | HP_OUTPUT, BP_OUTPUT, NOTCH_OUTPUT | setVoltage calls | WIRED | `out.highpass` (line 77), `out.bandpass` (line 78), `out.notch` (line 79) |
 
 ### Requirements Coverage
 
@@ -94,7 +94,7 @@ All four filter mode outputs are fully implemented and wired:
    - Highpass: `v3 - g * v1_raw` (Cytomic direct form)
    - Bandpass: `v1_raw` (pre-saturation for clean response)
    - Notch: `lp + hp` (sum of LP and HP)
-3. **Output wiring** (lines 76-79 in HydraQuartetVCF.cpp) sends all four outputs to panel jacks
+3. **Output wiring** (lines 76-79 in CipherOB.cpp) sends all four outputs to panel jacks
 
 Phase goal "Complete multimode filter with all four outputs" is achieved.
 

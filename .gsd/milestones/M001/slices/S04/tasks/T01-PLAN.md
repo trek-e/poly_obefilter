@@ -4,7 +4,7 @@
 
 ## Description
 
-Transform the monophonic HydraQuartetVCF into a polyphonic processor supporting up to 16 voices.
+Transform the monophonic CipherOB into a polyphonic processor supporting up to 16 voices.
 
 Purpose: Enable polyphonic patches where each voice in a chord/sequence gets independent filter processing
 Output: Working polyphonic filter module with per-voice CV modulation
@@ -17,4 +17,4 @@ Output: Working polyphonic filter module with per-voice CV modulation
 
 ## Files
 
-- `src/HydraQuartetVCF.cpp`
+- `src/CipherOB.cpp`

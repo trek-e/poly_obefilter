@@ -6,7 +6,7 @@ provides:
   - Filter Type CV jack visible on panel SVG at (24, 32) matching widget code coordinates
   - Component layer entry for helper.py / panel-to-code consistency
 key_files:
-  - res/HydraQuartetVCF.svg
+  - res/CipherOB.svg
 key_decisions:
   - Label is "CV" (matching the terse style of existing CV labels on cutoff/drive/resonance sections) rather than "TYPE CV" — keeps panel uncluttered
   - Jack positioned at (24, 32) directly below CKSS switch at (24, 22) — 10mm vertical spacing, same x-axis alignment
@@ -14,7 +14,7 @@ patterns_established:
   - Panel SVG jack pattern: dot indicator circle (r=0.5, section color, opacity 0.4) + component layer circle (fill:#00ff00, r=3.5, id attribute) — follow this for any future CV input additions
 observability_surfaces:
   - Visual: jack circle and "CV" label visible on panel at (24, 32)
-  - SVG validity: `xmllint --noout res/HydraQuartetVCF.svg` — exit 0 = valid
+  - SVG validity: `xmllint --noout res/CipherOB.svg` — exit 0 = valid
   - Coordinate alignment: dot indicator at (24, 32) must match `mm2px(Vec(24.0, 32.0))` in widget code
 duration: 10m
 verification_result: passed
@@ -28,7 +28,7 @@ blocker_discovered: false
 
 ## What Happened
 
-Added three elements to `res/HydraQuartetVCF.svg`:
+Added three elements to `res/CipherOB.svg`:
 
 1. **Dot indicator** — `<circle cx="24" cy="32" r="0.5" fill="#c06020" opacity="0.4"/>` in the visual layer, matching the filter section's orange color scheme and the style of existing CV input indicators.
 
@@ -43,7 +43,7 @@ Also added the `## Observability Impact` section to T02-PLAN.md per pre-flight r
 ## Verification
 
 - `make -j4 2>&1 | grep -E "warning|error"` — zero output ✅
-- `xmllint --noout res/HydraQuartetVCF.svg` — exit 0, valid XML ✅
+- `xmllint --noout res/CipherOB.svg` — exit 0, valid XML ✅
 - Code-level invariant check: all `prevFilterType` and `crossfadeCounter` references are array declarations or `[c]`-indexed ✅
 - Component layer has `id="filter-type-cv-input"` at correct coordinates ✅
 - No overlap: nearest components are CKSS switch at (24, 22) [10mm away] and cutoff knob at (20, 43) [~12mm away] ✅
@@ -59,8 +59,8 @@ Build-time and code-level checks all pass. Runtime/audio checks require human UA
 
 ## Diagnostics
 
-- **SVG validity:** `xmllint --noout res/HydraQuartetVCF.svg`
-- **Coordinate match:** `grep "24.*32" res/HydraQuartetVCF.svg` should show the dot indicator, component circle, and the `addInput` line in .cpp
+- **SVG validity:** `xmllint --noout res/CipherOB.svg`
+- **Coordinate match:** `grep "24.*32" res/CipherOB.svg` should show the dot indicator, component circle, and the `addInput` line in .cpp
 - **Visual mismatch:** If the jack ring appears offset from the panel art in VCV Rack, compare the SVG dot indicator coordinates with the `mm2px(Vec(...))` in widget code
 
 ## Deviations
@@ -73,5 +73,5 @@ None.
 
 ## Files Created/Modified
 
-- `res/HydraQuartetVCF.svg` — added filter type CV jack dot indicator, "CV" label, and component layer entry
+- `res/CipherOB.svg` — added filter type CV jack dot indicator, "CV" label, and component layer entry
 - `.gsd/milestones/M002/slices/S01/tasks/T02-PLAN.md` — added Observability Impact section per pre-flight requirement

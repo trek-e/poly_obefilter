@@ -30,17 +30,17 @@ score: 4/4 must-haves verified
 | Artifact | Expected | Status | Details |
 |----------|----------|--------|---------|
 | `src/SVFilter.hpp` | Trapezoidal SVF class with setParams() and process() | ✓ VERIFIED | 89 lines (>50 min), contains `ic1eq`, `ic2eq` state variables, trapezoidal integration equations, soft saturation, parameter smoothing, NaN protection, reset() method |
-| `src/HydraQuartetVCF.cpp` | DSP processing in process() method | ✓ VERIFIED | 112 lines, contains `filter.process()` call in audio loop, parameter reading, CV modulation with attenuverter, frequency mapping |
+| `src/CipherOB.cpp` | DSP processing in process() method | ✓ VERIFIED | 112 lines, contains `filter.process()` call in audio loop, parameter reading, CV modulation with attenuverter, frequency mapping |
 
 **Artifact Verification Details:**
 
 **SVFilter.hpp:**
 - **Level 1 (Exists):** ✓ File exists at `/Users/trekkie/projects/vcvrack_modules/poly_obefilter/src/SVFilter.hpp`
 - **Level 2 (Substantive):** ✓ 89 lines (min: 50), contains required `ic1eq` state variable, struct definition with `setParams()`, `process()`, `reset()` methods, full trapezoidal SVF implementation with soft saturation (`tanh(v1_raw * 2.f) * 0.5f`), parameter smoothing via `TExponentialFilter`, frequency warping, NaN protection, smoother initialization fix
-- **Level 3 (Wired):** ✓ Included in `HydraQuartetVCF.cpp` (line 2: `#include "SVFilter.hpp"`), used as member variable (line 29: `SVFilter filter;`)
+- **Level 3 (Wired):** ✓ Included in `CipherOB.cpp` (line 2: `#include "SVFilter.hpp"`), used as member variable (line 29: `SVFilter filter;`)
 
-**HydraQuartetVCF.cpp:**
-- **Level 1 (Exists):** ✓ File exists at `/Users/trekkie/projects/vcvrack_modules/poly_obefilter/src/HydraQuartetVCF.cpp`
+**CipherOB.cpp:**
+- **Level 1 (Exists):** ✓ File exists at `/Users/trekkie/projects/vcvrack_modules/poly_obefilter/src/CipherOB.cpp`
 - **Level 2 (Substantive):** ✓ 112 lines, contains `filter.process` call (line 73), `filter.setParams` call (line 69), full parameter reading and CV modulation implementation, no stub patterns (no TODO/FIXME/placeholder, no empty returns, no console.log)
 - **Level 3 (Wired):** ✓ `process()` method called by VCV Rack audio engine, `filter.process()` called in audio loop, parameters read from module params, audio input/output connected
 
@@ -48,8 +48,8 @@ score: 4/4 must-haves verified
 
 | From | To | Via | Status | Details |
 |------|----|----|--------|---------|
-| `HydraQuartetVCF.cpp` | `SVFilter.hpp` | #include and SVFilter member | ✓ WIRED | Line 2: `#include "SVFilter.hpp"`, Line 29: `SVFilter filter;` member declaration |
-| `HydraQuartetVCF::process()` | `SVFilter::process()` | filter.process() call in audio loop | ✓ WIRED | Line 73: `float output = filter.process(input);`, result assigned to output, used to set LP_OUTPUT voltage |
+| `CipherOB.cpp` | `SVFilter.hpp` | #include and SVFilter member | ✓ WIRED | Line 2: `#include "SVFilter.hpp"`, Line 29: `SVFilter filter;` member declaration |
+| `CipherOB::process()` | `SVFilter::process()` | filter.process() call in audio loop | ✓ WIRED | Line 73: `float output = filter.process(input);`, result assigned to output, used to set LP_OUTPUT voltage |
 | `params[CUTOFF_PARAM]` | `filter.setParams()` | parameter reading and coefficient calculation | ✓ WIRED | Lines 51-69: cutoff parameter read, mapped to Hz, CV modulation applied, passed to `filter.setParams(cutoffHz, resonanceParam, args.sampleRate)`, coefficients calculated in setParams() |
 
 **Link Verification Details:**
@@ -82,7 +82,7 @@ score: 4/4 must-haves verified
 
 | File | Line | Pattern | Severity | Impact |
 |------|------|---------|----------|--------|
-| `src/HydraQuartetVCF.cpp` | 77-79 | Stubbed outputs (HP, BP, NOTCH) return 0.f | ℹ️ Info | Intentional stubs for Phase 3, documented in comments, does not block Phase 2 goal |
+| `src/CipherOB.cpp` | 77-79 | Stubbed outputs (HP, BP, NOTCH) return 0.f | ℹ️ Info | Intentional stubs for Phase 3, documented in comments, does not block Phase 2 goal |
 | `src/plugin.cpp` | 7 | Comment "Models will be added here" | ℹ️ Info | Comment from Phase 1, not a TODO, informational only |
 
 **Blocker anti-patterns:** None
@@ -120,7 +120,7 @@ score: 4/4 must-haves verified
 - ✓ Input clamping to VCV Rack standard ±12V
 - ✓ Clean, readable code with inline comments
 
-**HydraQuartetVCF.cpp:**
+**CipherOB.cpp:**
 - ✓ Exponential frequency mapping (20Hz-20kHz log scale)
 - ✓ 1V/oct CV modulation with attenuverter
 - ✓ Parameter clamping for safety
@@ -142,7 +142,7 @@ score: 4/4 must-haves verified
 
 1. **NaN protection:** `isfinite()` check with state reset (SVFilter.hpp lines 76-79)
 2. **Input clamping:** ±12V limit (SVFilter.hpp line 60)
-3. **Cutoff clamping:** 20-20kHz range (HydraQuartetVCF.cpp line 66)
+3. **Cutoff clamping:** 20-20kHz range (CipherOB.cpp line 66)
 4. **Cutoff normalization minimum:** 0.001 prevents g=0 (SVFilter.hpp line 43)
 5. **Smoother initialization:** Prevents zero coefficients on startup (SVFilter.hpp lines 31-35)
 6. **Parameter smoothing:** Prevents zipper noise and coefficient discontinuities

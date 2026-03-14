@@ -1,4 +1,4 @@
-# HydraQuartet VCF-OB
+# CIPHER · OB
 
 ## What This Is
 
@@ -8,7 +8,7 @@ A polyphonic 16-voice multimode filter module for VCV Rack 2.x by Synth-etic Int
 
 The distinctive Oberheim filter sound — musical, characterful, and versatile — in a polyphonic VCV Rack module.
 
-## Current Milestone: v0.70b CV Control (in progress)
+## Current Milestone: v0.70b CV Control (completing — awaiting runtime UAT)
 
 **Goal:** Add CV inputs for filter type switching, FM, and pitch tracking
 
@@ -17,7 +17,7 @@ The distinctive Oberheim filter sound — musical, characterful, and versatile �
 **Shipped:** v0.60b OB-X Filter (2026-02-21)
 
 **Codebase:**
-- 391 LOC C++ (src/HydraQuartetVCF.cpp, src/SVFilter.hpp)
+- ~430 LOC C++ (src/CipherOB.cpp, src/SVFilter.hpp)
 - 14 HP panel with dark industrial aesthetic
 - Builds on macOS with VCV Rack 2.x SDK
 
@@ -30,6 +30,8 @@ The distinctive Oberheim filter sound — musical, characterful, and versatile �
 - Click-free 128-sample per-voice crossfade on mode switching
 - LP-only output in 24dB mode (HP/BP/Notch silent, authentic OB-Xa)
 - 4 simultaneous outputs (LP, HP, BP, Notch) in 12dB mode
+- FM input with bipolar attenuverter — audio-rate cutoff modulation bypassing parameter smoothing
+- 1V/Oct pitch tracking input — logarithmic domain sum with cutoff CV
 - 16-voice polyphony with independent filter state
 - Cutoff (20Hz-20kHz) with V/Oct CV + attenuverter
 - Resonance (0.5-20 Q) with CV + attenuverter
@@ -61,9 +63,9 @@ The distinctive Oberheim filter sound — musical, characterful, and versatile �
 - [ ] OB-X style 24dB/oct filter (v0.60b)
 - [ ] Filter type selection switch (v0.60b)
 - [x] CV input for filter type switching (v0.70b, S01)
-- [ ] CV input for mode selection (v0.70b)
-- [ ] FM input with attenuverter (v0.70b)
-- [ ] 1V/Oct pitch tracking input (v0.70b)
+- [ ] CV input for mode selection (v0.70b — deferred, revisit with v0.90b mixed output)
+- [x] FM input with attenuverter (v0.70b, S02)
+- [x] 1V/Oct pitch tracking input (v0.70b, S02)
 - [ ] Per-voice cutoff control option (v0.80b)
 - [ ] Per-voice resonance control option (v0.80b)
 - [ ] Mixed/selected output jack (v0.90b)
@@ -84,7 +86,7 @@ The distinctive Oberheim filter sound — musical, characterful, and versatile �
 ## Context
 
 **Brand:** Synth-etic Intelligence
-**Module:** HydraQuartet VCF-OB
+**Module:** CIPHER · OB
 
 **Oberheim Filter Background:**
 - SEM (Synthesizer Expander Module): 12dB/oct state-variable filter known for smooth, musical character
@@ -131,4 +133,4 @@ The distinctive Oberheim filter sound — musical, characterful, and versatile �
 | Multiple simultaneous outputs | State-variable naturally provides all modes | ✓ Good |
 
 ---
-*Last updated: 2026-03-13 after M002/S01 completion*
+*Last updated: 2026-03-13 after M002/S02 completion*

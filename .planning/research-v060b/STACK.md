@@ -1,6 +1,6 @@
 # Stack Research: v0.60b OB-X 24dB Filter Addition
 
-**Project:** HydraQuartet VCF-OB
+**Project:** CIPHER · OB
 **Milestone:** v0.60b - Add OB-X 24dB filter type
 **Researched:** 2026-02-03
 **Confidence:** HIGH
@@ -35,7 +35,7 @@ The current codebase already contains everything needed:
 4. **Cascade logic:** In `process()`, route first filter output to second filter input when 24dB mode active
 5. **Resonance scaling:** Reduce resonance for second stage (typically 0.7x) to prevent instability
 
-**Estimated addition:** ~30-40 lines of C++ in HydraQuartetVCF.cpp
+**Estimated addition:** ~30-40 lines of C++ in CipherOB.cpp
 
 ## Integration Points
 
@@ -43,7 +43,7 @@ The current codebase already contains everything needed:
 
 **DO NOT modify SVFilter.hpp.** It's complete and validated. Use it as-is.
 
-### How to Extend HydraQuartetVCF.cpp
+### How to Extend CipherOB.cpp
 
 ```cpp
 // 1. Add filter type enum
@@ -151,7 +151,7 @@ struct OBXFilter {
 - Harder to debug (state split across nested objects)
 - Doesn't follow VCV Rack patterns (modules usually compose simple DSP primitives)
 
-**Better:** Keep cascade logic in `HydraQuartetVCF::process()` where it's visible, debuggable, and maintainable.
+**Better:** Keep cascade logic in `CipherOB::process()` where it's visible, debuggable, and maintainable.
 
 ### NO: Additional DSP Libraries
 
@@ -290,8 +290,8 @@ struct OBXFilter {
 | **Total** | **~30-40 lines** |
 
 **File changes:**
-- Modify: `src/HydraQuartetVCF.cpp` (+30-40 lines)
-- Modify: `res/HydraQuartetVCF.svg` (add switch widget position)
+- Modify: `src/CipherOB.cpp` (+30-40 lines)
+- Modify: `res/CipherOB.svg` (add switch widget position)
 - Unchanged: `src/SVFilter.hpp` (reuse as-is)
 
 ## Performance Impact
@@ -368,7 +368,7 @@ Implement 24dB filter by:
 4. Scale down stage 2 resonance by ~0.7x
 5. Apply `blendedSaturation()` between stages
 
-**Total code addition: ~30-40 lines in HydraQuartetVCF.cpp**
+**Total code addition: ~30-40 lines in CipherOB.cpp**
 
 **Key insight:** The 24dB filter is not a new architecture—it's "run the 12dB filter twice." All infrastructure exists. This is a feature addition, not a stack expansion.
 

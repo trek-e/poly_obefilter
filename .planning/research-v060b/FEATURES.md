@@ -1,6 +1,6 @@
 # Features Research: v0.60b OB-X Filter
 
-**Project:** HydraQuartet VCF-OB
+**Project:** CIPHER · OB
 **Milestone:** v0.60b - Adding OB-X 24dB filter
 **Researched:** 2026-02-03
 **Overall confidence:** MEDIUM

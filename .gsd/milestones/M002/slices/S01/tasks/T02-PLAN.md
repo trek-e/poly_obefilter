@@ -14,7 +14,7 @@ Add the filter type CV jack to the panel SVG so the new input is visible and pat
 
 ## Steps
 
-1. Read `res/HydraQuartetVCF.svg` to understand current layout: component positions, label styles, jack circle styling, and available space near the filter type switch.
+1. Read `res/CipherOB.svg` to understand current layout: component positions, label styles, jack circle styling, and available space near the filter type switch.
 2. Identify the exact coordinates used in T01's `addInput` call and convert to SVG coordinate space if needed (VCV uses mm2px — SVG should use the same mm-based coordinate system the existing jacks use).
 3. Add a jack circle element for Filter Type CV matching the style of existing jack circles (stroke, fill, radius).
 4. Add a text label ("TYPE" or "TYPE CV") near the jack, matching existing label font, size, and color.
@@ -36,16 +36,16 @@ Add the filter type CV jack to the panel SVG so the new input is visible and pat
 ## Observability Impact
 
 - **Visual panel inspection:** The new jack circle and "CV" label at (24, 32) are visible in VCV Rack's module browser and on the panel. A missing or mispositioned jack is immediately obvious.
-- **SVG validity:** Invalid SVG causes module load failure at runtime — the module simply won't appear. `xmllint --noout res/HydraQuartetVCF.svg` catches structural errors before launch.
+- **SVG validity:** Invalid SVG causes module load failure at runtime — the module simply won't appear. `xmllint --noout res/CipherOB.svg` catches structural errors before launch.
 - **Component layer registration:** The `id="filter-type-cv-input"` circle in the hidden components layer is used by helper scripts (e.g., `helper.py`) to map SVG positions to widget code. If this entry is missing, automated panel-to-code consistency checks will flag the discrepancy.
 - **Coordinate alignment:** If the SVG dot indicator position doesn't match the `mm2px(Vec(24.0, 32.0))` in widget code, the jack ring will render offset from the panel art — visible as a misaligned circle on the panel.
 
 ## Inputs
 
-- `res/HydraQuartetVCF.svg` — current panel design
+- `res/CipherOB.svg` — current panel design
 - T01's `addInput` coordinates — jack position must match
 - Decision: "CKSS switch at (55mm, 28mm)" — but actual current position is (24.0, 22.0) per widget code; use widget code as ground truth
 
 ## Expected Output
 
-- `res/HydraQuartetVCF.svg` — updated with filter type CV jack circle and label
+- `res/CipherOB.svg` — updated with filter type CV jack circle and label

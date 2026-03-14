@@ -18,7 +18,7 @@ score: 5/5 must-haves verified
 
 | # | Truth | Status | Evidence |
 |---|-------|--------|----------|
-| 1 | Drive knob adds harmonic saturation to filtered signal | VERIFIED | `blendedSaturation()` function applies tanh + asymmetric waveshaping with gain=1+drive*4 (lines 14-42 SVFilter.hpp), called for all 4 outputs (lines 120-123 HydraQuartetVCF.cpp) |
+| 1 | Drive knob adds harmonic saturation to filtered signal | VERIFIED | `blendedSaturation()` function applies tanh + asymmetric waveshaping with gain=1+drive*4 (lines 14-42 SVFilter.hpp), called for all 4 outputs (lines 120-123 CipherOB.cpp) |
 | 2 | Drive at 0 produces clean (unaffected) signal | VERIFIED | True bypass: `if (drive < 0.01f) return x;` at line 16 SVFilter.hpp returns input unchanged |
 | 3 | Full drive produces thick, compressed saturation (not harsh) | VERIFIED | Gain compensation `makeup = 1.0f / (1.0f + drive * 0.5f)` at line 39 prevents harsh clipping; tanh soft-clips at ~1.0; asymBlend max 40% adds warmth |
 | 4 | Drive CV modulates saturation amount with attenuverter control | VERIFIED | DRIVE_CV_INPUT (line 18), DRIVE_ATTEN_PARAM (line 11), CV processing with `driveCV * driveCvAmount * 0.1f` at lines 108-110 |
@@ -31,8 +31,8 @@ score: 5/5 must-haves verified
 | Artifact | Expected | Status | Details |
 |----------|----------|--------|---------|
 | `src/SVFilter.hpp` | blendedSaturation function | VERIFIED | 29-line inline function (lines 14-42) with tanh + asymmetric blending, gain compensation, true bypass |
-| `src/HydraQuartetVCF.cpp` | DRIVE_CV_INPUT | VERIFIED | Enum member (line 18), configInput (line 49), widget (line 162), processing (lines 108-110) |
-| `res/HydraQuartetVCF.svg` | drive-cv-input | VERIFIED | Circle element at cx=55 cy=50 r=3.5 (line 133) |
+| `src/CipherOB.cpp` | DRIVE_CV_INPUT | VERIFIED | Enum member (line 18), configInput (line 49), widget (line 162), processing (lines 108-110) |
+| `res/CipherOB.svg` | drive-cv-input | VERIFIED | Circle element at cx=55 cy=50 r=3.5 (line 133) |
 
 ### Artifact Verification (Three Levels)
 
@@ -42,9 +42,9 @@ score: 5/5 must-haves verified
 |-------|-------|--------|
 | Existence | File exists | EXISTS |
 | Substantive | 29 lines, no stubs | SUBSTANTIVE - complete algorithm with gain scaling, soft saturation, asymmetric shaping, blending, makeup gain |
-| Wired | Called from HydraQuartetVCF.cpp | WIRED - 4 calls (lines 120-123) for LP/BP/HP/Notch outputs |
+| Wired | Called from CipherOB.cpp | WIRED - 4 calls (lines 120-123) for LP/BP/HP/Notch outputs |
 
-#### src/HydraQuartetVCF.cpp - DRIVE_CV_INPUT
+#### src/CipherOB.cpp - DRIVE_CV_INPUT
 
 | Level | Check | Result |
 |-------|-------|--------|
@@ -52,7 +52,7 @@ score: 5/5 must-haves verified
 | Substantive | Full implementation | SUBSTANTIVE - enum, configInput, widget creation, CV processing with attenuverter |
 | Wired | Connected to processing | WIRED - getPolyVoltage (line 109), feeds into blendedSaturation via smoothedDrive |
 
-#### res/HydraQuartetVCF.svg - drive-cv-input
+#### res/CipherOB.svg - drive-cv-input
 
 | Level | Check | Result |
 |-------|-------|--------|
@@ -64,7 +64,7 @@ score: 5/5 must-haves verified
 
 | From | To | Via | Status | Details |
 |------|-----|-----|--------|---------|
-| HydraQuartetVCF.cpp | SVFilter.hpp | blendedSaturation() call | WIRED | 4 calls at lines 120-123 with output-specific scaling factors |
+| CipherOB.cpp | SVFilter.hpp | blendedSaturation() call | WIRED | 4 calls at lines 120-123 with output-specific scaling factors |
 | DRIVE_PARAM | blendedSaturation | driveParam -> smoothedDrive | WIRED | driveParam (line 70) -> drive (line 107) -> smoothedDrive (line 114) -> blendedSaturation (lines 120-123) |
 | DRIVE_CV_INPUT | blendedSaturation | CV modulation | WIRED | getPolyVoltage (line 109) -> drive calculation (line 110) -> smoothedDrive -> blendedSaturation |
 | DRIVE_ATTEN_PARAM | CV processing | driveCvAmount | WIRED | getValue (line 71) -> scales CV at line 110 |
@@ -136,7 +136,7 @@ All 3 artifacts verified at all 3 levels (existence, substantive, wired):
 - SVG drive-cv-input: properly positioned placeholder
 
 All key links verified:
-- blendedSaturation called from HydraQuartetVCF.cpp
+- blendedSaturation called from CipherOB.cpp
 - Drive parameter flows through smoothing to saturation
 - CV input with attenuverter scales drive amount
 

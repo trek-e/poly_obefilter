@@ -54,7 +54,7 @@ This milestone is complete only when all are true:
 
 - [x] **S01: Filter Type CV with Per-Voice Crossfade** `risk:high` `depends:[]`
   > After this: a CV signal (gate, LFO, sequencer) patched to the new Filter Type CV input switches between 12dB SEM and 24dB OB-X per-voice with click-free crossfade. Panel switch still works when CV is disconnected. Module builds with zero warnings.
-- [ ] **S02: FM Input and 1V/Oct Pitch Tracking** `risk:medium` `depends:[S01]`
+- [x] **S02: FM Input and 1V/Oct Pitch Tracking** `risk:medium` `depends:[S01]`
   > After this: an audio-rate FM source patched to the FM input audibly modulates cutoff with adjustable depth, and a 1V/Oct CV makes the filter track pitch from a keyboard/sequencer. All new inputs work polyphonically alongside existing CV inputs. Module builds with zero warnings.
 
 ## Boundary Map

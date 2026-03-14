@@ -21,7 +21,7 @@ tech-stack:
 
 key-files:
   created: []
-  modified: [src/SVFilter.hpp, src/HydraQuartetVCF.cpp]
+  modified: [src/SVFilter.hpp, src/CipherOB.cpp]
 
 key-decisions:
   - "Use SVFilterOutputs struct for clean multi-output return"
@@ -70,7 +70,7 @@ Each task was committed atomically:
 ## Files Created/Modified
 
 - `src/SVFilter.hpp` - Added SVFilterOutputs struct, modified process() to return all four outputs
-- `src/HydraQuartetVCF.cpp` - Updated to use SVFilterOutputs, wired all four output jacks
+- `src/CipherOB.cpp` - Updated to use SVFilterOutputs, wired all four output jacks
 
 ## Decisions Made
 

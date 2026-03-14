@@ -1,6 +1,6 @@
 # Research Summary: v0.60b OB-X 24dB Filter
 
-**Project:** HydraQuartet VCF-OB (VCV Rack polyphonic filter module)
+**Project:** CIPHER · OB (VCV Rack polyphonic filter module)
 **Milestone:** v0.60b - Add OB-X 24dB filter alongside existing 12dB SEM filter
 **Domain:** Audio DSP - Cascaded State Variable Filter Implementation
 **Researched:** 2026-02-03
@@ -26,7 +26,7 @@ Key risks center on **resonance instability** (cascaded high-Q filters compound 
 - **Cascade logic:** Conditional routing where stage1 LP output feeds stage2 input in 24dB mode
 - **Resonance scaling:** Multiply stage2 resonance by ~0.7x to prevent instability
 
-**Estimated code addition:** 30-40 lines in HydraQuartetVCF.cpp
+**Estimated code addition:** 30-40 lines in CipherOB.cpp
 
 **Integration points:**
 - Reuse existing SVFilter.hpp (no modifications)

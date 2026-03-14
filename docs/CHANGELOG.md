@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to HydraQuartet VCF-OB are documented here.
+All notable changes to CIPHER · OB are documented here.
 
 ## [0.60b] — 2026-02-21
 
@@ -28,5 +28,5 @@ All notable changes to HydraQuartet VCF-OB are documented here.
 - **Drive control** — blended tanh + asymmetric saturation with output-specific scaling
 - **Self-oscillation** — stable sine-like tone at maximum resonance
 - **Parameter smoothing** — 1ms exponential smoothers on all controls
-- **14HP panel** — dark industrial aesthetic matching HydraQuartet VCO
+- **14HP panel** — dark industrial aesthetic matching PHANTOM · 8
 - Plugin scaffold, build system, and documentation

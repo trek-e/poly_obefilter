@@ -6,11 +6,11 @@
   "brand": "Synth-etic Intelligence",
   "author": "Synth-etic Intelligence",
   "authorEmail": "syntheticint@thepainterofsilence.com",
-  "sourceUrl": "https://github.com/trek-e/HydraQuartetVCF",
+  "sourceUrl": "https://github.com/trek-e/CipherOB",
   "modules": [
     {
-      "slug": "HydraQuartetVCF",
-      "name": "HydraQuartet VCF-OB",
+      "slug": "CipherOB",
+      "name": "CIPHER · OB",
       "description": "16-voice polyphonic Oberheim-style multimode filter with dual 12dB SEM / 24dB OB-X modes, four simultaneous outputs, and comprehensive CV control",
       "tags": ["Filter", "Polyphonic", "VCF", "Multimode"]
     }

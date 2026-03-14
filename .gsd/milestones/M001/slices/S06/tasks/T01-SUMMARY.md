@@ -51,8 +51,8 @@ Each task was committed atomically:
 3. **Task 3: Build and functional verification** - (no commit - verification only)
 
 ## Files Created/Modified
-- `src/HydraQuartetVCF.cpp` - Added RESONANCE_ATTEN_PARAM enum, configParam, CV processing with attenuverter, widget
-- `res/HydraQuartetVCF.svg` - Added resonance-atten-knob component marker at (35.56, 98)
+- `src/CipherOB.cpp` - Added RESONANCE_ATTEN_PARAM enum, configParam, CV processing with attenuverter, widget
+- `res/CipherOB.svg` - Added resonance-atten-knob component marker at (35.56, 98)
 
 ## Decisions Made
 
