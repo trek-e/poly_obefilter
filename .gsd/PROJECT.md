@@ -8,13 +8,13 @@ A polyphonic 16-voice multimode filter module for VCV Rack 2.x by Synth-etic Int
 
 The distinctive Oberheim filter sound — musical, characterful, and versatile — in a polyphonic VCV Rack module.
 
-## Current Milestone: v0.70b CV Control (completing — awaiting runtime UAT)
+## Current Milestone: v0.80b Per-Voice Control (next)
 
-**Goal:** Add CV inputs for filter type switching, FM, and pitch tracking
+**Goal:** Per-voice cutoff and resonance control options
 
 ## Current State
 
-**Shipped:** v0.60b OB-X Filter (2026-02-21)
+**Shipped:** v0.70b CV Control (2026-03-13) — build-verified, awaiting runtime UAT
 
 **Codebase:**
 - ~430 LOC C++ (src/CipherOB.cpp, src/SVFilter.hpp)
@@ -102,7 +102,7 @@ The distinctive Oberheim filter sound — musical, characterful, and versatile �
 |---------|-------|--------|
 | 0.50b | Core filter — SEM-style, global controls, basic I/O | ✅ Shipped |
 | 0.60b | Add OB-X style 24dB filter | ✅ Shipped |
-| 0.70b | CV mode/type switching | Next |
+| 0.70b | CV mode/type switching, FM, 1V/Oct | ✅ Build-verified (UAT pending) |
 | 0.80b | Per-voice control option | Planned |
 | 0.90b | Bugfixes, stabilization | Planned |
 | 1.0 | Full release, VCV Library submission | Planned |
@@ -129,8 +129,8 @@ The distinctive Oberheim filter sound — musical, characterful, and versatile �
 | 10%/volt CV scaling | Musical control without wild parameter swings | ✓ Good |
 | Blended saturation | tanh + asymmetric gives even+odd harmonics | ✓ Good |
 | Output-specific drive | LP/BP 100%, HP 50%, Notch 70% matches acoustic behavior | ✓ Good |
-| Both panel + CV mode switching | Maximum flexibility for users | — Pending (v0.60b+) |
+| Both panel + CV mode switching | Maximum flexibility for users | ✓ Good (v0.70b) |
 | Multiple simultaneous outputs | State-variable naturally provides all modes | ✓ Good |
 
 ---
-*Last updated: 2026-03-13 after M002/S02 completion*
+*Last updated: 2026-03-13 after M002 completion*
