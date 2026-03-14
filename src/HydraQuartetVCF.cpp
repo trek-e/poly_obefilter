@@ -102,6 +102,10 @@ struct HydraQuartetVCF : Module {
 			// Read per-voice audio
 			float input = inputs[AUDIO_INPUT].getPolyVoltage(c);
 
+			// Analog noise floor: tiny dither enables self-oscillation from zero state
+			// ~1µV RMS, completely inaudible, mimics thermal noise in analog circuits
+			input += 1e-6f * ((float)((c * 1013 + args.frame * 2731) & 0xFFFF) / 32768.f - 1.f);
+
 			// Calculate per-voice cutoff (CV is polyphonic)
 			float cutoffHz = baseCutoffHz;
 			if (inputs[CUTOFF_CV_INPUT].isConnected()) {
