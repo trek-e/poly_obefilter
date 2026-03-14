@@ -2,6 +2,80 @@
 
 ## Active
 
+### CTRL-06 — CV input for filter type switching (12dB ↔ 24dB)
+
+- Status: active
+- Class: core-capability
+- Source: M002-CONTEXT
+- Primary Slice: M002/S01
+
+CV input that accepts a gate, trigger, or continuous CV to switch between 12dB SEM and 24dB OB-X filter modes. Polyphonic (per-voice switching).
+
+### CTRL-08 — FM input with attenuverter for audio-rate cutoff modulation
+
+- Status: active
+- Class: core-capability
+- Source: M002-CONTEXT
+- Primary Slice: M002/S02
+
+Dedicated FM input with attenuverter knob for modulating cutoff frequency. Must work at audio rates (bypass parameter smoothing). Exponential FM (V/Oct scaled).
+
+### CTRL-09 — 1V/Oct pitch tracking input
+
+- Status: active
+- Class: core-capability
+- Source: M002-CONTEXT
+- Primary Slice: M002/S02
+
+Dedicated 1V/Oct input for pitch tracking. No attenuverter — true tracking. Sums with cutoff knob in logarithmic domain.
+
+### CTRL-10 — Filter type CV overrides panel switch when connected
+
+- Status: active
+- Class: convention
+- Source: M002-RESEARCH (candidate requirement)
+- Primary Slice: M002/S01
+
+When filter type CV is patched, CV determines filter type and panel switch has no effect. When CV is disconnected, panel switch works normally.
+
+### CTRL-11 — Schmitt trigger hysteresis on filter type CV threshold
+
+- Status: active
+- Class: convention
+- Source: M002-RESEARCH (candidate requirement)
+- Primary Slice: M002/S01
+
+Filter type CV uses Schmitt trigger with ~0.1V hysteresis (switch at 2.6V rising, 2.4V falling) to prevent chatter near threshold.
+
+### CTRL-12 — FM input bypasses cutoff parameter smoothing
+
+- Status: active
+- Class: domain-standard
+- Source: M002-RESEARCH (candidate requirement)
+- Primary Slice: M002/S02
+
+FM modulation component bypasses the SVFilter's cutoffSmoother so audio-rate FM is not attenuated above ~160Hz. Base cutoff (knob + cutoff CV) still smoothed.
+
+### CTRL-13 — 1V/Oct sums with cutoff knob in logarithmic domain
+
+- Status: active
+- Class: convention
+- Source: M002-RESEARCH (candidate requirement)
+- Primary Slice: M002/S02
+
+1V/Oct input sums in V/Oct (logarithmic) domain: `cutoffHz * pow(2, voct)`. Knob sets base frequency, 1V/Oct offsets it.
+
+## Deferred
+
+### CTRL-07 — CV input for mode selection
+
+- Status: deferred
+- Class: core-capability
+- Source: M002-CONTEXT
+- Deferred reason: Architecture doesn't support mode selection — all 4 outputs are always active in 12dB mode. Revisit when mixed/selected output jack is added in v0.90b.
+
+CV input for selecting between LP/HP/BP/Notch modes. Currently meaningless since all outputs are simultaneously available.
+
 ## Validated
 
 ### FILT-08 — OB-X character tuning (bright/edgy saturation distinct from SEM warm/smooth)
